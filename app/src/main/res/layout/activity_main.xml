@@ -12,7 +12,59 @@
     tools:context="com.fromthemind.quizrush.MainActivity">
 
     <TextView
+        android:text="Quiz Rush"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/Logo_placeholder"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:fontFamily="sans-serif-condensed"
+        android:textSize="50sp"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:textAlignment="center"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/NicknameField"
+        android:layout_marginRight="11dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="88dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/NicknameSave"
+        android:layout_toStartOf="@+id/NicknameSave"
+        android:hint="Nickname"
+        android:maxLength="10"
+        />
+
+    <Button
+        android:text="Save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/NicknameSave"
+        android:layout_toRightOf="@+id/Logo_placeholder"
+        android:layout_toEndOf="@+id/Logo_placeholder"
+        android:layout_alignBottom="@+id/NicknameField"
+        android:onClick="onClickNicknameSave"/>
+
+    <Button
+        android:text="Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:id="@+id/start"
+        android:elevation="0dp"
+        android:height="75dp"
+        android:width="150dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_below="@+id/Logo_placeholder"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickStart"/>
 </RelativeLayout>
