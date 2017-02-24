@@ -1,33 +1,40 @@
 package com.fromthemind.quizrush;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Created by Melih on 24.02.2017.
  */
 
-public class QuestionSelectActivity extends AppCompatActivity {
-
+public class QuestionSelectActivity extends Activity {
+    private static GameController gc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_questionselect);
+        gc = GameController.getInstance();
+        TextView t0 = (TextView) findViewById(R.id.topic1);
+        t0.setText(gc.getCategory(0).getTopic());
+        TextView t1 = (TextView) findViewById(R.id.topic2);
+        t1.setText(gc.getCategory(1).getTopic());
+        TextView t2 = (TextView) findViewById(R.id.topic3);
+        t2.setText(gc.getCategory(2).getTopic());
     }
 
     @Override
     protected void onStart(){
         super.onStart();
-        Button start = (Button) findViewById(R.id.start);
-        start.setEnabled(false);
-        start.setVisibility(View.INVISIBLE);
+
     }
 
-    protected void onClickTopic1Button1(View view){
+    protected void onClickQuestion(View view){
         switch (view.getId()){
             case R.id.topic1button1:
 
@@ -77,12 +84,6 @@ public class QuestionSelectActivity extends AppCompatActivity {
         }
     }
 
-    protected void onClickTopic1Button2(View view){
 
-    }
-
-    protected void onClickStart(View view){
-        Log.d("Start ","Clicked");
-    }
 
 }

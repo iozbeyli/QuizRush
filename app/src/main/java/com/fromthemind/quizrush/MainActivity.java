@@ -1,5 +1,7 @@
 package com.fromthemind.quizrush;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +52,15 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Nickname ",nickname);
             start.setEnabled(true);
             start.setVisibility(View.VISIBLE);
+            User.getInstance().setNickname(nickname);
         }
 
     }
 
     protected void onClickStart(View view){
         Log.d("Start ","Clicked");
+        Intent intent = new Intent(this, QuestionSelectActivity.class);
+        startActivity(intent);
     }
 
 
