@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<categories>
+    <category topic="category1">
+        <questions>
+            <question definition="question1" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question2" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+        </questions>
+    </category>
+    <category topic="category2">
+        <questions>
+            <question definition="question1" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question2" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+        </questions>
+    </category>
+</categories>

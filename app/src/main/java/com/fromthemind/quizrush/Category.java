@@ -1,5 +1,7 @@
 package com.fromthemind.quizrush;
 
+import java.util.Arrays;
+
 /**
  * Created by Melih on 24.02.2017.
  */
@@ -12,11 +14,19 @@ public class Category {
         questions=new Question[5];
     }
 
-    public void addQuestion(Question question,int index){
+    @Override
+    public String toString() {
+        return "Category{" +
+                "\ntopic='" + topic + '\'' +
+                ",\nquestions=" + Arrays.toString(questions) +
+                "}\n";
+    }
+
+    public void addQuestion(Question question, int index){
         questions[index]=question;
     }
 
-    public void getQuestion(int index){
+    public Question getQuestion(int index){
         return questions[index];
     }
 
