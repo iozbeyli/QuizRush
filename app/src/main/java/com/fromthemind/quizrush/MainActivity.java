@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void onClickStart(View view){
-
         Log.d("Start ","Clicked");
-
     }
+
+
 }
