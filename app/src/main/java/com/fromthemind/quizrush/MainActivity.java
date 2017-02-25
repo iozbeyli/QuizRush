@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,8 +31,6 @@ public class MainActivity extends Activity {
     protected void onStart(){
         super.onStart();
         Button start = (Button) findViewById(R.id.start);
-        start.setEnabled(false);
-        start.setVisibility(View.INVISIBLE);
         File fXmlFile = null;
         try {
             InputStream is = getApplicationContext().getAssets().open("game.xml");
@@ -59,6 +58,12 @@ public class MainActivity extends Activity {
 
     protected void onClickStart(View view){
         Log.d("Start ","Clicked");
+        EditText usernameEditText = (EditText) findViewById(R.id.NicknameField);
+        String nick = usernameEditText.getText().toString();
+        if (nick.matches("")) {
+            Toast.makeText(this, "You did not enter a nickname", Toast.LENGTH_SHORT).show();
+            return;
+        }
         Intent intent = new Intent(this, QuestionSelectActivity.class);
         startActivity(intent);
     }
