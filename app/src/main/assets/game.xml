@@ -18,6 +18,30 @@
                     <option label="answer4" isAnswer="false" />
                 </options>
             </question>
+            <question definition="question3" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question4" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question5" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
         </questions>
     </category>
     <category topic="Art">
@@ -38,6 +62,30 @@
                     <option label="answer4" isAnswer="false" />
                 </options>
             </question>
+            <question definition="question3" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question4" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question5" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
         </questions>
     </category>
     <category topic="Music">
@@ -51,6 +99,30 @@
                 </options>
             </question>
             <question definition="question2" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question3" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question4" time="60">
+                <options>
+                    <option label="answer1" isAnswer="false" />
+                    <option label="answer2" isAnswer="false" />
+                    <option label="answer3" isAnswer="true" />
+                    <option label="answer4" isAnswer="false" />
+                </options>
+            </question>
+            <question definition="question5" time="60">
                 <options>
                     <option label="answer1" isAnswer="false" />
                     <option label="answer2" isAnswer="false" />

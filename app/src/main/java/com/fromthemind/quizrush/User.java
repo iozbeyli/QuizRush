@@ -36,4 +36,14 @@ public class User {
         return score;
     }
 
+
+    public boolean repOK() {
+        if(nickname == null || nickname.isEmpty())
+            return false;
+
+        if(score<0)
+            return false;
+
+        return true;
+    }
 }

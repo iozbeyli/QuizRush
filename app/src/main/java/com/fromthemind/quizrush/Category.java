@@ -37,4 +37,19 @@ public class Category {
     public String getTopic(){
         return topic;
     }
+
+    public boolean repOK() {
+        if(topic == null || topic.isEmpty())
+            return false;
+
+        for (Question obj:questions) {
+            if (obj == null)
+                return false;
+
+            if(!obj.repOK())
+                return false;
+        }
+
+        return true;
+    }
 }

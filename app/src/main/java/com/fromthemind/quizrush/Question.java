@@ -62,4 +62,24 @@ public class Question {
         return status;
     }
 
+    public boolean repOK() {
+        if(definition == null || definition.isEmpty())
+            return false;
+
+        if(status == null)
+            return false;
+
+        if(time < 0)
+            return false;
+
+        if(correctAnswerIndex<0 || correctAnswerIndex>3)
+            return false;
+
+        for (String obj:options) {
+            if (obj == null || obj.isEmpty())
+                return false;
+        }
+
+        return true;
+    }
 }

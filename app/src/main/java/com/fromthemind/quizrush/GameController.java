@@ -34,4 +34,16 @@ public class GameController {
     public Category getCategory(int index){
         return categories[index];
     }
+
+    public boolean repOK() {
+
+        for (Category obj:categories) {
+            if (obj == null)
+                return false;
+
+            if(!obj.repOK())
+                return false;
+        }
+        return true;
+    }
 }

@@ -11,6 +11,14 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.fromthemind.quizrush.QuestionSelectActivity">
 
+    <TextView
+        android:text="Topic0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic0"
+        android:textSize="30sp"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:text="Topic1"
@@ -18,173 +26,166 @@
         android:layout_height="wrap_content"
         android:id="@+id/topic1"
         android:textSize="30sp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@android:color/white"
+        android:textAlignment="center" />
 
     <TextView
         android:text="Topic2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topic2"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Topic3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic3"
-        android:textSize="30sp"
-        android:layout_alignParentTop="true"
+        android:textSize="30dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@android:color/white" />
 
     <Button
         android:text="100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic0button0"
+        android:layout_alignTop="@+id/topic0button1"
+        android:layout_marginTop="70dp"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="200"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic0button1"
+        android:layout_alignTop="@+id/topic0button2"
+        android:layout_marginTop="70dp"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="300"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic0button2"
+        android:layout_alignTop="@+id/topic0button3"
+        android:layout_marginTop="70dp"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic0button3"
+        android:layout_alignTop="@+id/topic0button4"
+        android:layout_marginTop="70dp"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="500"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic0button4"
+        android:layout_alignTop="@+id/topic0"
+        android:layout_marginTop="70dp"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic1button0"
+        android:layout_alignTop="@+id/topic1button1"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="200"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topic1button1"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/topic1button2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignTop="@+id/topic1button2"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickQuestion"/>
 
     <Button
-        android:text="200"
+        android:text="300"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topic1button2"
-        android:layout_below="@+id/topic1button3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
+        android:layout_alignTop="@+id/topic1button3"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickQuestion"/>
 
     <Button
-        android:text="300"
+        android:text="400"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topic1button3"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignTop="@+id/topic1button4"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickQuestion"/>
 
     <Button
-        android:text="400"
+        android:text="500"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topic1button4"
-        android:layout_above="@+id/topic1button3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="30dp" />
-
-    <Button
-        android:text="500"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic1button5"
-        android:layout_marginBottom="30dp"
-        android:layout_above="@+id/topic1button4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="200"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic2button2"
-        android:layout_alignBaseline="@+id/topic1button2"
-        android:layout_alignBottom="@+id/topic1button2"
-        android:layout_alignLeft="@+id/topic2button3"
-        android:layout_alignStart="@+id/topic2button3" />
-
-    <Button
-        android:text="300"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic2button3"
-        android:layout_alignBaseline="@+id/topic1button3"
-        android:layout_alignBottom="@+id/topic1button3"
-        android:layout_alignLeft="@+id/topic2button4"
-        android:layout_alignStart="@+id/topic2button4" />
-
-    <Button
-        android:text="400"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic2button4"
-        android:layout_alignBaseline="@+id/topic1button4"
-        android:layout_alignBottom="@+id/topic1button4"
-        android:layout_alignLeft="@+id/topic2button5"
-        android:layout_alignStart="@+id/topic2button5" />
-
-    <Button
-        android:text="500"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic2button5"
-        android:layout_alignBaseline="@+id/topic1button5"
-        android:layout_alignBottom="@+id/topic1button5"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/topic1"
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClickQuestion"/>
 
     <Button
         android:text="100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/topic3button1"
-        android:layout_alignBaseline="@+id/topic2button1"
-        android:layout_alignBottom="@+id/topic2button1"
+        android:id="@+id/topic2button0"
+        android:layout_alignTop="@+id/topic2button1"
+        android:layout_marginTop="70dp"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:onClick="onClickQuestion"/>
 
     <Button
         android:text="200"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic3button2"
-        android:layout_alignBaseline="@+id/topic2button2"
-        android:layout_alignBottom="@+id/topic2button2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="300"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic3button3"
-        android:layout_alignBaseline="@+id/topic2button3"
-        android:layout_alignBottom="@+id/topic2button3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="400"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic3button4"
-        android:layout_alignBaseline="@+id/topic2button4"
-        android:layout_alignBottom="@+id/topic2button4"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="500"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/topic3button5"
-        android:layout_alignBaseline="@+id/topic2button5"
-        android:layout_alignBottom="@+id/topic2button5"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        android:text="100"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/topic2button1"
-        android:layout_alignBottom="@+id/topic1button1"
-        android:layout_alignLeft="@+id/topic2button2" />
+        android:layout_alignTop="@+id/topic2button2"
+        android:layout_marginTop="70dp"
+        android:layout_alignParentRight="true"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="300"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic2button2"
+        android:layout_alignTop="@+id/topic2button3"
+        android:layout_marginTop="70dp"
+        android:layout_alignParentRight="true"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="400"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic2button3"
+        android:layout_alignTop="@+id/topic2button4"
+        android:layout_marginTop="70dp"
+        android:layout_alignParentRight="true"
+        android:onClick="onClickQuestion"/>
+
+    <Button
+        android:text="500"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/topic2button4"
+        android:layout_alignTop="@+id/topic2"
+        android:layout_marginTop="70dp"
+        android:layout_alignParentRight="true"
+        android:onClick="onClickQuestion"/>
+
+
 
 </RelativeLayout>
