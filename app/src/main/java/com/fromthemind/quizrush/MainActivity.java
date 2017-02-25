@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
     }
 
 
-    protected void onClickStart(View view){
+    public void onClickStart(View view){
         EditText usernameEditText = (EditText) findViewById(R.id.NicknameField);
         String nick = usernameEditText.getText().toString();
         if (nick.matches("")) {

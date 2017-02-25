@@ -39,7 +39,7 @@ public class QuestionSelectActivity extends Activity {
 
     }
 
-    protected void onClickQuestion(View view){
+    public void onClickQuestion(View view){
         int category = -1;
         int question = -1;
         switch (view.getId()){

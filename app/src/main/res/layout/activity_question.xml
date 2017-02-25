@@ -42,7 +42,7 @@
         android:id="@+id/button1"
         android:width="130dp"
         android:height="70dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="25dp"
         android:layout_marginRight="10dp"
         android:layout_alignBottom="@+id/chronometer2"
         android:layout_toLeftOf="@+id/chronometer2" />
@@ -54,7 +54,7 @@
         android:id="@+id/button2"
         android:width="130dp"
         android:height="70dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="25dp"
         android:layout_marginLeft="10dp"
         android:layout_alignBottom="@+id/chronometer2"
         android:layout_toRightOf="@+id/chronometer2"
@@ -67,7 +67,7 @@
         android:id="@+id/button3"
         android:width="130dp"
         android:height="70dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="10dp"
         android:layout_alignTop="@+id/chronometer2"
         android:layout_toLeftOf="@+id/chronometer2" />
@@ -79,7 +79,7 @@
         android:id="@+id/button4"
         android:width="130dp"
         android:height="70dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
         android:layout_alignTop="@+id/chronometer2"
         android:layout_toRightOf="@+id/chronometer2"/>
