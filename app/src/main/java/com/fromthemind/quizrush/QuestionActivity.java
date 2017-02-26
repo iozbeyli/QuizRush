@@ -36,11 +36,11 @@ public class QuestionActivity extends Activity {
         Button option0 = (Button) findViewById(R.id.optionButton0);
         option0.setText(gc.getCurrentQuestion().getOptions()[0]);
         Button option1 = (Button) findViewById(R.id.optionButton1);
-        option0.setText(gc.getCurrentQuestion().getOptions()[1]);
+        option1.setText(gc.getCurrentQuestion().getOptions()[1]);
         Button option2 = (Button) findViewById(R.id.optionButton2);
-        option0.setText(gc.getCurrentQuestion().getOptions()[2]);
+        option2.setText(gc.getCurrentQuestion().getOptions()[2]);
         Button option3 = (Button) findViewById(R.id.optionButton3);
-        option0.setText(gc.getCurrentQuestion().getOptions()[3]);
+        option3.setText(gc.getCurrentQuestion().getOptions()[3]);
     }
 
 
