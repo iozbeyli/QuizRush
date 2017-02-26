@@ -32,6 +32,8 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "Game load failure!", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this, "Game loaded successfully!", Toast.LENGTH_SHORT).show();
+
+        Log.d("Game", GameController.getInstance().toString());
     }
 
 

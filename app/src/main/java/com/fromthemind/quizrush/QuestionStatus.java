@@ -5,5 +5,5 @@ package com.fromthemind.quizrush;
  */
 
 public enum QuestionStatus {
-    TRUE,FALSE,ONPAUSE,ONSTART
+    TRUE,FALSE,ONPAUSE,ONSTART,TIMEOUT
 }

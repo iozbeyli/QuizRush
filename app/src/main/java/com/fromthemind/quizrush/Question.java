@@ -1,5 +1,10 @@
 package com.fromthemind.quizrush;
 
+import android.graphics.Color;
+import android.util.Log;
+import android.view.View;
+import android.widget.Chronometer;
+
 import java.util.Arrays;
 
 /**
@@ -10,29 +15,16 @@ public class Question {
     private String definition;
     private String[] options;
     private int correctAnswerIndex;
+    private int value = 0;
     private int time;
 
-    QuestionStatus status=QuestionStatus.ONSTART;
+    private QuestionStatus status = QuestionStatus.ONSTART;
 
-    public Question(int time, String definition){
+    public Question(int time, String definition, int value){
         this.time=time;
         this.definition = definition;
+        this.value = value;
         options = new String[4];
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "\ndefinition='" + definition + '\'' +
-                ",\noptions=" + Arrays.toString(options) +
-                ",\ncorrectAnswerIndex=" + correctAnswerIndex +
-                ",\ntime=" + time +
-                ",\nstatus=" + status +
-                "}\n";
-    }
-
-    public void setTime(int time){
-        this.time=time;
     }
 
     public int getTime(){
@@ -43,8 +35,10 @@ public class Question {
         return definition;
     }
 
-    public void setDefinition(){
-        this.definition=definition;
+    public int getValue(){return value;}
+
+    public boolean isAnswer(int index){
+        return correctAnswerIndex==index;
     }
 
     public void setOption(String option,int index,boolean isAnswer){
@@ -52,10 +46,6 @@ public class Question {
         if(isAnswer){
             correctAnswerIndex=index;
         }
-    }
-
-    public boolean isAnswer(int index){
-        return correctAnswerIndex==index;
     }
 
     public String[] getOptions(){
@@ -68,6 +58,20 @@ public class Question {
 
     public QuestionStatus getStatus(){
         return status;
+    }
+
+    public int getCorrectAnswer(){return correctAnswerIndex;}
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "\ndefinition='" + definition + '\'' +
+                ",\noptions=" + Arrays.toString(options) +
+                ",\ncorrectAnswerIndex=" + correctAnswerIndex +
+                ",\ntime=" + time +
+                ",\nstatus=" + status +
+                ",\nvalue="+value+
+                "}\n";
     }
 
     public boolean repOK() {
@@ -90,4 +94,5 @@ public class Question {
 
         return true;
     }
+
 }

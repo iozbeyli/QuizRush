@@ -70,7 +70,7 @@ public class GameLoader {
                 Element question = (Element) questions.item(i);
                 String definition = question.getAttribute("definition");
                 int time  = Integer.parseInt(question.getAttribute("time"));
-                Question que = new Question(time, definition);
+                Question que = new Question(time, definition, 100*(i+1));
 
                 NodeList options = (NodeList) question.getElementsByTagName("option");
                 for (int j=0; j<options.getLength(); j++){
