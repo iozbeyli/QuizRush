@@ -39,6 +39,14 @@ public class Question {
         return time;
     }
 
+    public String getDefinition(){
+        return definition;
+    }
+
+    public void setDefinition(){
+        this.definition=definition;
+    }
+
     public void setOption(String option,int index,boolean isAnswer){
         options[index]=option;
         if(isAnswer){

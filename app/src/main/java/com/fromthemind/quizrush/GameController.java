@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class GameController {
     private static GameController instance;
     private Category[] categories;
+    private Question currentQuestion;
     public static GameController getInstance(){
         if(instance == null)
             instance = new GameController();
@@ -35,6 +36,14 @@ public class GameController {
         return categories[index];
     }
 
+    public void setCurrentQuestion(int category,int question){
+        currentQuestion=getCategory(category).getQuestion(question);
+    }
+
+    public Question getCurrentQuestion(){
+        return currentQuestion;
+    }
+
     public boolean repOK() {
 
         for (Category obj:categories) {
@@ -46,4 +55,5 @@ public class GameController {
         }
         return true;
     }
+
 }

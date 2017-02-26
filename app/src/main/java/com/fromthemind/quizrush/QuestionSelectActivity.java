@@ -108,6 +108,7 @@ public class QuestionSelectActivity extends Activity {
         if(category == -1 || question == -1)
             return;
 
+        gc.setCurrentQuestion(category,question);
         Intent intent = new Intent(this, QuestionActivity.class);
         startActivity(intent);
     }

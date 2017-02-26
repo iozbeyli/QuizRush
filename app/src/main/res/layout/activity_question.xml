@@ -15,11 +15,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="75dp"
-        android:id="@+id/textView"
+        android:id="@+id/questionText"
         android:textSize="25sp"
         android:width="350dp"
         android:textColor="@android:color/white"
-        android:text="Lorem ipsum dolor sit amet, at donec, nulla bibendum blandit, est tortor rhoncus. Sit egestas, praesent sit augue, omnis egestas egestas? "
+        android:textAlignment="center"
+        android:text="QUESTION TEXT"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:textAppearance="@style/TextAppearance.AppCompat" />
@@ -28,61 +29,61 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="150dp"
-        android:id="@+id/chronometer2"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/chronometer"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
 
 
     <Button
-        android:text="velit dictumst"
+        android:text="option1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button1"
+        android:id="@+id/optionButton0"
         android:width="130dp"
         android:height="70dp"
         android:layout_marginBottom="25dp"
         android:layout_marginRight="10dp"
-        android:layout_alignBottom="@+id/chronometer2"
-        android:layout_toLeftOf="@+id/chronometer2" />
+        android:layout_alignBottom="@+id/chronometer"
+        android:layout_toLeftOf="@+id/chronometer" />
 
     <Button
-        android:text="curabitur in"
+        android:text="option2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
+        android:id="@+id/optionButton1"
         android:width="130dp"
         android:height="70dp"
         android:layout_marginBottom="25dp"
         android:layout_marginLeft="10dp"
-        android:layout_alignBottom="@+id/chronometer2"
-        android:layout_toRightOf="@+id/chronometer2"
-        android:layout_toEndOf="@+id/chronometer2" />
+        android:layout_alignBottom="@+id/chronometer"
+        android:layout_toRightOf="@+id/chronometer"
+        android:layout_toEndOf="@+id/chronometer" />
 
     <Button
-        android:text="donec suscipit"
+        android:text="option3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button3"
+        android:id="@+id/optionButton2"
         android:width="130dp"
         android:height="70dp"
         android:layout_marginTop="25dp"
         android:layout_marginRight="10dp"
-        android:layout_alignTop="@+id/chronometer2"
-        android:layout_toLeftOf="@+id/chronometer2" />
+        android:layout_alignTop="@+id/chronometer"
+        android:layout_toLeftOf="@+id/chronometer" />
 
     <Button
-        android:text="eu malesuada"
+        android:text="option4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button4"
+        android:id="@+id/optionButton3"
         android:width="130dp"
         android:height="70dp"
         android:layout_marginTop="25dp"
         android:layout_marginLeft="10dp"
-        android:layout_alignTop="@+id/chronometer2"
-        android:layout_toRightOf="@+id/chronometer2"/>
+        android:layout_alignTop="@+id/chronometer"
+        android:layout_toRightOf="@+id/chronometer"/>
 
 
 
