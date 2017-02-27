@@ -5,11 +5,14 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+
+import java.net.ResponseCache;
 
 import static com.fromthemind.quizrush.QuestionStatus.FALSE;
 import static com.fromthemind.quizrush.QuestionStatus.TIMEOUT;
@@ -39,6 +42,11 @@ public class QuestionActivity extends Activity {
     @Override
     protected void onStart(){
         super.onStart();
+    }
+
+    protected void onPause(){
+        super.onPause();
+
     }
 
 
@@ -74,22 +82,22 @@ public class QuestionActivity extends Activity {
 
     public void update(Button selected, Button correct) {
         if(correct != null)
-            correct.setBackgroundColor(Color.parseColor("#27AE60"));
+            correct.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.rightAnswer,null));
 
         switch (currentQuestion.getStatus()){
             case TRUE:
-                selected.setBackgroundColor(Color.parseColor("#27AE60"));
+                selected.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.rightAnswer,null));
                 cm.stop();
                 setOptionsClickable(false);
                 break;
             case FALSE:
-                selected.setBackgroundColor(Color.parseColor("#c0392b"));
+                selected.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.wrongAnswer,null));
                 cm.stop();
                 setOptionsClickable(false);
                 break;
             case TIMEOUT:
                 cm.stop();
-                cm.setTextColor(Color.parseColor("#c0392b"));
+                cm.setTextColor(ResourcesCompat.getColor(getResources(),R.color.wrongAnswer,null));
                 setOptionsClickable(false);
                 break;
 
