@@ -29,15 +29,28 @@ public class QuestionActivity extends Activity {
     private static Question currentQuestion;
     private static Button[] optionsButtons;
     private static Chronometer cm;
+    private int fColor;
+    private int tColor;
+    private int pColor;
+    private int oColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+        initColors();
         currentQuestion = GameController.getInstance().getCurrentQuestion();
         setChronometer();
         setQuestionText();
         setOptionButtons();
     }
+
+    private void initColors(){
+        fColor = ResourcesCompat.getColor(getResources(),R.color.red,null);
+        tColor = ResourcesCompat.getColor(getResources(),R.color.green,null);
+        pColor = ResourcesCompat.getColor(getResources(),R.color.blue,null);
+        oColor = ResourcesCompat.getColor(getResources(),R.color.orange,null);
+    }
+
 
     @Override
     protected void onStart(){
@@ -71,39 +84,42 @@ public class QuestionActivity extends Activity {
         if(answer == -1 )
             return;
 
-        if(currentQuestion.isAnswer(answer))
+        if(currentQuestion.isAnswer(answer)){
             currentQuestion.setStatus(TRUE);
-        else
+            User.getInstance().addScore(currentQuestion.getValue());
+        } else {
             currentQuestion.setStatus(FALSE);
+        }
 
         update(optionsButtons[answer], optionsButtons[currentQuestion.getCorrectAnswer()]);
 
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(currentQuestion.getStatus() == QuestionStatus.ONSTART)
+            currentQuestion.setStatus(QuestionStatus.ONPAUSE);
+    }
 
     public void update(Button selected, Button correct) {
         if(correct != null)
-            correct.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.rightAnswer,null));
+            correct.setBackgroundColor(tColor);
 
         switch (currentQuestion.getStatus()){
             case TRUE:
-                selected.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.rightAnswer,null));
+                selected.setBackgroundColor(tColor);
                 cm.stop();
                 setOptionsClickable(false);
                 break;
             case FALSE:
-                selected.setBackgroundColor(ResourcesCompat.getColor(getResources(),R.color.wrongAnswer,null));
+                selected.setBackgroundColor(fColor);
                 cm.stop();
                 setOptionsClickable(false);
                 break;
             case TIMEOUT:
                 cm.stop();
-                cm.setTextColor(ResourcesCompat.getColor(getResources(),R.color.wrongAnswer,null));
+                cm.setTextColor(fColor);
                 setOptionsClickable(false);
-                break;
-
-            case ONPAUSE:
-                break;
-            case ONSTART:
                 break;
         }
 
@@ -142,10 +158,8 @@ public class QuestionActivity extends Activity {
     }
 
     private void setOptionsClickable(boolean bool){
-        findViewById(R.id.optionButton0).setClickable(bool);
-        findViewById(R.id.optionButton1).setClickable(bool);
-        findViewById(R.id.optionButton2).setClickable(bool);
-        findViewById(R.id.optionButton3).setClickable(bool);
+        for (int i=0; i<optionsButtons.length; i++)
+            optionsButtons[i].setClickable(bool);
     }
 
     private class RushListener implements Chronometer.OnChronometerTickListener{
@@ -155,7 +169,7 @@ public class QuestionActivity extends Activity {
                 String sec = ((String) chronometer.getText()).substring(3);
                 chronometer.setText(sec);
                 if(Integer.parseInt(sec)==(currentQuestion.getTime()/3))
-                    chronometer.setTextColor(Color.parseColor("#e67e22"));
+                    chronometer.setTextColor(oColor);
 
                 if(Integer.parseInt(sec)==0){
                     currentQuestion.setStatus(TIMEOUT);

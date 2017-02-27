@@ -2,7 +2,9 @@ package com.fromthemind.quizrush;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -15,28 +17,82 @@ import android.widget.TextView;
  */
 
 public class QuestionSelectActivity extends Activity {
-    private static GameController gc;
+
+    private int fColor;
+    private int tColor;
+    private int pColor;
+    private int oColor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionselect);
+        initColors();
         setTopicTexts();
     }
 
     private void setTopicTexts() {
-        gc = GameController.getInstance();
         TextView t0 = (TextView) findViewById(R.id.topic0);
-        t0.setText(gc.getCategory(0).getTopic());
+        t0.setText(GameController.getInstance().getCategory(0).getTopic());
         TextView t1 = (TextView) findViewById(R.id.topic1);
-        t1.setText(gc.getCategory(1).getTopic());
+        t1.setText(GameController.getInstance().getCategory(1).getTopic());
         TextView t2 = (TextView) findViewById(R.id.topic2);
-        t2.setText(gc.getCategory(2).getTopic());
+        t2.setText(GameController.getInstance().getCategory(2).getTopic());
+    }
+
+    private void initColors(){
+        fColor = ResourcesCompat.getColor(getResources(),R.color.red,null);
+        tColor = ResourcesCompat.getColor(getResources(),R.color.green,null);
+        pColor = ResourcesCompat.getColor(getResources(),R.color.blue,null);
+        oColor = ResourcesCompat.getColor(getResources(),R.color.orange,null);
     }
 
     @Override
     protected void onStart(){
         super.onStart();
+    }
 
+    protected void onResume(){
+        super.onResume();
+        setSelectionView();
+    }
+
+    private void setSelectionView(){
+        Button button = null;
+        for(int cat=0; cat<3; cat++) {
+            for (int que=0; que<5; que++)
+            {
+                String buttonID = "topic"+cat+"button"+que;
+                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
+                button = ((Button) findViewById(resID));
+
+                QuestionStatus status = GameController.getInstance().getCategory(cat).getQuestion(que).getStatus();
+                updateButton(button, status);
+            }
+        }
+
+    }
+
+    private void updateButton(Button button, QuestionStatus status){
+        int color = -1;
+        switch (status){
+            case TRUE:
+                color = tColor;
+                break;
+            case FALSE:
+                color = fColor;
+                break;
+            case TIMEOUT:
+                color = fColor;
+                break;
+            case ONPAUSE:
+                color = pColor;
+                break;
+        }
+
+        if(color != -1){
+            button.setClickable(false);
+            button.setBackgroundColor(color);
+        }
     }
 
     public void onClickQuestion(View view){
@@ -108,7 +164,7 @@ public class QuestionSelectActivity extends Activity {
         if(category == -1 || question == -1)
             return;
 
-        gc.setCurrentQuestion(category,question);
+        GameController.getInstance().setCurrentQuestion(category,question);
         Intent intent = new Intent(this, QuestionActivity.class);
         startActivity(intent);
     }
