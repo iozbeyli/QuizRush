@@ -3,9 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="green">#27AE60</color>
-    <color name="red">#c0392b</color>
-    <color name="blue">#2980b9</color>
-    <color name="orange">#e67e22</color>
+    <color name="colorTrue">#27AE60</color>
+    <color name="colorFalse">#c0392b</color>
+    <color name="colorPause">#2980b9</color>
+    <color name="colorChronometer">#e67e22</color>
+    <color name="colorNormal">#FF4081</color>
 
 </resources>

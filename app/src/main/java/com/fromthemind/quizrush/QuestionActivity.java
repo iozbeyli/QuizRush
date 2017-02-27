@@ -1,7 +1,7 @@
 package com.fromthemind.quizrush;
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
-
-import java.net.ResponseCache;
 
 import static com.fromthemind.quizrush.QuestionStatus.FALSE;
 import static com.fromthemind.quizrush.QuestionStatus.TIMEOUT;
@@ -33,22 +31,24 @@ public class QuestionActivity extends Activity {
     private int tColor;
     private int pColor;
     private int oColor;
+    private int currentTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         initColors();
         currentQuestion = GameController.getInstance().getCurrentQuestion();
+        currentTime=currentQuestion.getTime();
         setChronometer();
         setQuestionText();
         setOptionButtons();
     }
 
     private void initColors(){
-        fColor = ResourcesCompat.getColor(getResources(),R.color.red,null);
-        tColor = ResourcesCompat.getColor(getResources(),R.color.green,null);
-        pColor = ResourcesCompat.getColor(getResources(),R.color.blue,null);
-        oColor = ResourcesCompat.getColor(getResources(),R.color.orange,null);
+        fColor = ResourcesCompat.getColor(getResources(),R.color.colorFalse,null);
+        tColor = ResourcesCompat.getColor(getResources(),R.color.colorTrue,null);
+        pColor = ResourcesCompat.getColor(getResources(),R.color.colorPause,null);
+        oColor = ResourcesCompat.getColor(getResources(),R.color.colorChronometer,null);
     }
 
 
@@ -57,9 +57,32 @@ public class QuestionActivity extends Activity {
         super.onStart();
     }
 
+    @Override
     protected void onPause(){
         super.onPause();
+        cm = (Chronometer) findViewById(R.id.chronometer);
+        String sec = ((String) cm.getText());
+        currentTime = Integer.parseInt(sec);
+    }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setChronometer();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putInt("currentTime",currentTime);
+        Log.d("Save Instance",""+currentTime);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        currentTime = savedInstanceState.getInt("currentTime");
+        Log.d("Restore Instance","called");
     }
 
 
@@ -92,13 +115,15 @@ public class QuestionActivity extends Activity {
         }
 
         update(optionsButtons[answer], optionsButtons[currentQuestion.getCorrectAnswer()]);
-
+        Intent intent = new Intent(this,QuestionSelectActivity.class);
+        startActivity(intent);
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if(currentQuestion.getStatus() == QuestionStatus.ONSTART)
+        if(currentQuestion.getStatus() == QuestionStatus.ONSTART){
             currentQuestion.setStatus(QuestionStatus.ONPAUSE);
+        }
     }
 
     public void update(Button selected, Button correct) {
@@ -151,8 +176,7 @@ public class QuestionActivity extends Activity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             cm.setCountDown(true);
         }
-        final int time = currentQuestion.getTime();
-        cm.setBase(SystemClock.elapsedRealtime() + (time*1000));
+        cm.setBase(SystemClock.elapsedRealtime() + (currentTime*1000));
         cm.setOnChronometerTickListener(new RushListener());
         cm.start();
     }
@@ -166,7 +190,8 @@ public class QuestionActivity extends Activity {
 
         @Override
         public void onChronometerTick(Chronometer chronometer) {
-                String sec = ((String) chronometer.getText()).substring(3);
+                String chronometerText = (String) chronometer.getText();
+                String sec = chronometerText.substring(chronometerText.length()-2);
                 chronometer.setText(sec);
                 if(Integer.parseInt(sec)==(currentQuestion.getTime()/3))
                     chronometer.setTextColor(oColor);

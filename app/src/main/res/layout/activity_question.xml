@@ -35,20 +35,6 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
 
-
-    <Button
-        android:text="option1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/optionButton0"
-        android:width="130dp"
-        android:height="70dp"
-        android:layout_marginBottom="25dp"
-        android:layout_marginRight="10dp"
-        android:layout_alignBottom="@+id/chronometer"
-        android:layout_toLeftOf="@+id/chronometer"
-        android:onClick="onClickAnswer"/>
-
     <Button
         android:text="option2"
         android:layout_width="wrap_content"
@@ -61,7 +47,9 @@
         android:layout_alignBottom="@+id/chronometer"
         android:layout_toRightOf="@+id/chronometer"
         android:layout_toEndOf="@+id/chronometer"
-        android:onClick="onClickAnswer"/>
+        android:onClick="onClickAnswer"
+        android:background="@color/colorNormal"
+        />
 
     <Button
         android:text="option3"
@@ -74,7 +62,9 @@
         android:layout_marginRight="10dp"
         android:layout_alignTop="@+id/chronometer"
         android:layout_toLeftOf="@+id/chronometer"
-        android:onClick="onClickAnswer"/>
+        android:onClick="onClickAnswer"
+        android:background="@color/colorNormal"
+        />
 
     <Button
         android:text="option4"
@@ -87,8 +77,23 @@
         android:layout_marginLeft="10dp"
         android:layout_alignTop="@+id/chronometer"
         android:layout_toRightOf="@+id/chronometer"
+        android:background="@color/colorNormal"
         android:onClick="onClickAnswer"/>
 
+    <Button
+        android:text="option1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/optionButton0"
+        android:width="130dp"
+        android:height="70dp"
+        android:onClick="onClickAnswer"
+        android:layout_alignBaseline="@+id/optionButton1"
+        android:layout_alignBottom="@+id/optionButton1"
+        android:layout_alignLeft="@+id/optionButton2"
+        android:layout_alignStart="@+id/optionButton2"
+        android:background="@color/colorNormal"
+        />
 
 
 </RelativeLayout>

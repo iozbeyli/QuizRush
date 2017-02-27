@@ -2,14 +2,10 @@ package com.fromthemind.quizrush;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 /**
@@ -40,15 +36,16 @@ public class QuestionSelectActivity extends Activity {
     }
 
     private void initColors(){
-        fColor = ResourcesCompat.getColor(getResources(),R.color.red,null);
-        tColor = ResourcesCompat.getColor(getResources(),R.color.green,null);
-        pColor = ResourcesCompat.getColor(getResources(),R.color.blue,null);
-        oColor = ResourcesCompat.getColor(getResources(),R.color.orange,null);
+        fColor = ResourcesCompat.getColor(getResources(),R.color.colorFalse,null);
+        tColor = ResourcesCompat.getColor(getResources(),R.color.colorTrue,null);
+        pColor = ResourcesCompat.getColor(getResources(),R.color.colorPause,null);
+        oColor = ResourcesCompat.getColor(getResources(),R.color.colorChronometer,null);
     }
 
     @Override
     protected void onStart(){
         super.onStart();
+
     }
 
     protected void onResume(){
@@ -58,6 +55,7 @@ public class QuestionSelectActivity extends Activity {
 
     private void setSelectionView(){
         Button button = null;
+        GameController gm = GameController.getInstance();
         for(int cat=0; cat<3; cat++) {
             for (int que=0; que<5; que++)
             {
@@ -65,7 +63,7 @@ public class QuestionSelectActivity extends Activity {
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 button = ((Button) findViewById(resID));
 
-                QuestionStatus status = GameController.getInstance().getCategory(cat).getQuestion(que).getStatus();
+                QuestionStatus status = gm.getCategory(cat).getQuestion(que).getStatus();
                 updateButton(button, status);
             }
         }
