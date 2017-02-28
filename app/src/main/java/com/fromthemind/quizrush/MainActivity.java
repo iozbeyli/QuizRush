@@ -16,15 +16,21 @@ import java.io.InputStream;
 
 public class MainActivity extends Activity {
 
+    private int backButtonCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        backButtonCount = 0;
     }
 
     @Override
     protected void onStart(){
         super.onStart();
+
+    }
+
+    private void loadGame(){
         AssetManager am = getApplicationContext().getAssets();
         GameLoader.getInstance().loadGame("game.xml", am);
         boolean status = GameController.getInstance().repOK();
@@ -32,8 +38,26 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "Game load failure!", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(this, "Game loaded successfully!", Toast.LENGTH_SHORT).show();
-
-        Log.d("Game", GameController.getInstance().toString());
+    }
+    /**
+     * Back button listener.
+     * Will close the application if the back button pressed twice.
+     */
+    @Override
+    public void onBackPressed()
+    {
+        if(backButtonCount >= 1)
+        {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        else
+        {
+            Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
+            backButtonCount++;
+        }
     }
 
 
@@ -48,9 +72,11 @@ public class MainActivity extends Activity {
         User.getInstance().setNickname(nick);
         boolean status = User.getInstance().repOK();
 
-        if(!status)
+        if(!status) {
             Toast.makeText(this, "User failure", Toast.LENGTH_SHORT).show();
-
+            return;
+        }
+        loadGame();
         Intent intent = new Intent(this, QuestionSelectActivity.class);
         startActivity(intent);
     }

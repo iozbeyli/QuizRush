@@ -122,7 +122,7 @@ public class QuestionActivity extends Activity {
     public void onBackPressed() {
         super.onBackPressed();
         if(currentQuestion.getStatus() == QuestionStatus.ONSTART){
-            currentQuestion.setStatus(QuestionStatus.ONPAUSE);
+            currentQuestion.setStatus(QuestionStatus.PASS);
         }
     }
 

@@ -26,6 +26,12 @@ public class QuestionSelectActivity extends Activity {
         setTopicTexts();
     }
 
+    public void onBackPressed() {
+        GameController.deleteGame();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
     private void setTopicTexts() {
         TextView t0 = (TextView) findViewById(R.id.topic0);
         t0.setText(GameController.getInstance().getCategory(0).getTopic());
@@ -56,6 +62,7 @@ public class QuestionSelectActivity extends Activity {
     private void setSelectionView(){
         Button button = null;
         GameController gm = GameController.getInstance();
+        int flag = 0;
         for(int cat=0; cat<3; cat++) {
             for (int que=0; que<5; que++)
             {
@@ -65,9 +72,15 @@ public class QuestionSelectActivity extends Activity {
 
                 QuestionStatus status = gm.getCategory(cat).getQuestion(que).getStatus();
                 updateButton(button, status);
+                if(status != QuestionStatus.ONSTART)
+                    flag++;
             }
         }
 
+        if(flag == 15){
+            Intent intent = new Intent(this, ScoreActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void updateButton(Button button, QuestionStatus status){
@@ -82,7 +95,7 @@ public class QuestionSelectActivity extends Activity {
             case TIMEOUT:
                 color = fColor;
                 break;
-            case ONPAUSE:
+            case PASS:
                 color = pColor;
                 break;
         }

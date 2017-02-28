@@ -1,5 +1,7 @@
 package com.fromthemind.quizrush;
 
+import android.util.Log;
+
 /**
  * Created by Melih on 24.02.2017.
  */
@@ -30,6 +32,7 @@ public class User {
 
     public void addScore(int score){
         this.score+=score;
+        Log.d("Added "+score, ""+this.score);
     }
 
     public int getScore(){

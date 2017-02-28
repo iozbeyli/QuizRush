@@ -21,6 +21,17 @@ public class GameController {
         categories=new Category[3];
     }
 
+    public static boolean isGameLoaded(){
+        if(instance == null || !instance.repOK())
+            return false;
+        else
+            return true;
+    }
+
+    public static void deleteGame(){
+        instance = null;
+    }
+
     public void setCategory(Category cat,int index){
         categories[index]=cat;
     }
