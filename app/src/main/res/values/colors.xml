@@ -8,5 +8,5 @@
     <color name="colorPause">#2980b9</color>
     <color name="colorChronometer">#e67e22</color>
     <color name="colorNormal">#FF4081</color>
-
+    <color name="white">#FFFFFF</color>
 </resources>
