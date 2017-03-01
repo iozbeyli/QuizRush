@@ -2,134 +2,135 @@
 <categories>
     <category topic="Space">
         <questions>
-            <question definition="question1" time="60">
+            <question definition="Who was the first human in space?" time="10">
                 <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
+                    <option label="Buzz Aldrin" isAnswer="false" />
+                    <option label="Neil Armstrong" isAnswer="false" />
+                    <option label="Yuri Gagarin" isAnswer="true" />
+                    <option label="Laika" isAnswer="false" />
                 </options>
             </question>
-            <question definition="question2" time="60">
+            <question definition="What is the name of the nearest star system to the Sun?" time="10">
                 <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
+                    <option label="Barnard's Star" isAnswer="false" />
+                    <option label="Alpha Centauri" isAnswer="true" />
+                    <option label="Sirius" isAnswer="false" />
+                    <option label="Epsilon Aurigae" isAnswer="false" />
                 </options>
             </question>
-            <question definition="question3" time="60">
+            <question definition="Which one of these object is not a space probe?" time="10">
                 <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
+                    <option label="Dawn" isAnswer="false" />
+                    <option label="New Horizons" isAnswer="false" />
+                    <option label="Rosetta" isAnswer="false" />
+                    <option label="Ceres" isAnswer="true" />
                 </options>
             </question>
-            <question definition="question4" time="60">
+            <question definition="How many known moons does jupiter have?" time="15">
                 <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
+                    <option label="67" isAnswer="true" />
+                    <option label="49" isAnswer="false" />
+                    <option label="23" isAnswer="false" />
+                    <option label="12" isAnswer="false" />
                 </options>
             </question>
-            <question definition="question5" time="60">
+            <question definition="”Which planet has the most water in the solar system?”" time="15">
                 <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
+                    <option label="Europa" isAnswer="false" />
+                    <option label="Earth" isAnswer="false" />
+                    <option label="Ganymede" isAnswer="true" />
+                    <option label="Titan" isAnswer="false" />
                 </options>
             </question>
         </questions>
     </category>
-    <category topic="Art">
+    <category topic="Geography">
         <questions>
-            <question definition="question1" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
+            <question definition="What is the exact translation of Greek word Geographia?" time="10">
+            <options>
+                <option label="World Science" isAnswer="false" />
+                <option label="Earth Description" isAnswer="true" />
+                <option label="Truth of Nature" isAnswer="false" />
+                <option label="Vast Lands" isAnswer="false" />
+            </options>
             </question>
-            <question definition="question2" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-            <question definition="question3" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-            <question definition="question4" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-            <question definition="question5" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
+        <question definition="Which is the second largest continent in order of size?" time="10">
+            <options>
+                <option label="Asia" isAnswer="false" />
+                <option label="North America" isAnswer="false" />
+                <option label="Africa" isAnswer="true" />
+                <option label="Antarctica" isAnswer="false" />
+            </options>
+        </question>
+        <question definition="Which one is the most visited country on Earth?" time="10">
+            <options>
+                <option label="France" isAnswer="true" />
+                <option label="Turkey" isAnswer="false" />
+                <option label="United States" isAnswer="false" />
+                <option label="Italy" isAnswer="false" />
+            </options>
+        </question>
+        <question definition="Between which countries the Niagara Falls straddle the international border?" time="15">
+            <options>
+                <option label="Turkey and Syria" isAnswer="false" />
+                <option label="Peru and Bolivia" isAnswer="false" />
+                <option label="United States and Canada" isAnswer="true" />
+                <option label="Russia and Ukraine" isAnswer="false" />
+            </options>
+        </question>
+        <question definition="Which one is the longest beach in the World?" time="15">
+            <options>
+                <option label="Ninety Miles Beach, Australia" isAnswer="false" />
+                <option label="Cox’s Bazar, Bangladesh" isAnswer="false" />
+                <option label="Virginia Beach, United States" isAnswer="false" />
+                <option label="Praia do Cassino Beach, Brazil" isAnswer="true" />
+            </options>
+        </question>
         </questions>
     </category>
-    <category topic="Music">
-        <questions>
-            <question definition="question1" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-            <question definition="question2" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-            <question definition="question3" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-            <question definition="question4" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-            <question definition="question5" time="60">
-                <options>
-                    <option label="answer1" isAnswer="false" />
-                    <option label="answer2" isAnswer="false" />
-                    <option label="answer3" isAnswer="true" />
-                    <option label="answer4" isAnswer="false" />
-                </options>
-            </question>
-        </questions>
-    </category>
-</categories>
+<category topic="Art">
+<questions>
+    <question definition="What was the name of tallest man made building before 20th century?" time="10">
+        <options>
+            <option label="Giza Pyramid" isAnswer="false" />
+            <option label="Washington Monument" isAnswer="false" />
+            <option label="Eiffel Tower" isAnswer="true" />
+            <option label="Big Ben" isAnswer="false" />
+        </options>
+    </question>
+    <question definition="Which one of these singers have won a grammy award?" time="10">
+        <options>
+            <option label="Katy Perry" isAnswer="false" />
+            <option label="Jimi Hendrix" isAnswer="false" />
+            <option label="Lady Gaga" isAnswer="true" />
+            <option label="Gun’s N Roses" isAnswer="false" />
+        </options>
+    </question>
+    <question definition="Which one of these is not an art movement?" time="10">
+        <options>
+            <option label="Surrealism" isAnswer="false" />
+            <option label="Rococo" isAnswer="false" />
+            <option label="Nihilism" isAnswer="true" />
+            <option label="Renaissance" isAnswer="false" />
+        </options>
+    </question>
+    <question definition="Which one, is the art school that rejected Adolf Hitler twice?" time="15">
+        <options>
+            <option label="University of Music and Performing Arts, Graz" isAnswer="false" />
+            <option label="Vienna Academy of Fine Arts" isAnswer="true" />
+            <option label="Heatherly School of Fine Arts" isAnswer="false" />
+            <option label="Amsterdam University of the Arts" isAnswer="false" />
+        </options>
+    </question>
+    <question definition="Who is the choreographer of Rosas danst Rosas (Roses Dances Roses)?" time="15">
+        <options>
+            <option label="Rudolf von Laban" isAnswer="false" />
+            <option label="Anne Teresa De Keersmaeker" isAnswer="true" />
+            <option label="Merce Cunningham" isAnswer="false" />
+            <option label="Pina Bausch" isAnswer="false" />
+        </options>
+    </question>
+</questions>
+</category>
+    </categories>
+

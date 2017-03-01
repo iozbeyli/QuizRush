@@ -19,14 +19,14 @@
         android:weightSum="7"
         android:orientation="vertical"
         android:layout_marginLeft="2.5dp"
-        android:layout_marginRight="2.5dp"
+        android:layout_marginRight="10dp"
     >
         <TextView
             android:text="Topic0"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/topic0"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:fontFamily="sans-serif-condensed"
             android:textColor="@android:color/white"
             android:textAlignment="center"
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/topic1"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:fontFamily="sans-serif-condensed"
             android:textColor="@android:color/white"
             android:textAlignment="center"
@@ -162,7 +162,7 @@
         android:layout_weight="1"
         android:weightSum="7"
         android:orientation="vertical"
-        android:layout_marginLeft="2.5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="2.5dp"
         >
         <TextView
@@ -170,7 +170,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/topic2"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:fontFamily="sans-serif-condensed"
             android:textColor="@android:color/white"
             android:textAlignment="center"

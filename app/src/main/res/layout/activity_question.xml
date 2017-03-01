@@ -22,7 +22,8 @@
         android:textSize="25sp"
         android:textColor="@android:color/white"
         android:gravity="center"
-        android:text="QUESTION TEXT"
+        android:text="Question Text"
+        android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat" />
 
     <LinearLayout
@@ -41,20 +42,24 @@
             android:layout_weight="1"
             android:onClick="onClickAnswer"
             android:background="@color/colorNormal"
-            android:layout_marginLeft="2.5dp"
-            android:layout_marginRight="2.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="20sp"
+            android:textAllCaps="false"
             />
 
         <Button
-            android:text="option2"
+            android:text="Option2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/optionButton1"
             android:onClick="onClickAnswer"
             android:background="@color/colorNormal"
-            android:layout_marginLeft="2.5dp"
-            android:layout_marginRight="2.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textSize="20sp"
+            android:textAllCaps="false"
             />
     </LinearLayout>
 
@@ -80,10 +85,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="2.5dp"
-            android:layout_marginRight="2.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/colorNormal"
-            android:onClick="onClickAnswer"/>
+            android:onClick="onClickAnswer"
+            android:textSize="20sp"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/optionButton3"
@@ -91,10 +98,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="2.5dp"
-            android:layout_marginRight="2.5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:background="@color/colorNormal"
             android:onClick="onClickAnswer"
+            android:textSize="20sp"
+            android:textAllCaps="false"
             />
     </LinearLayout>
 
