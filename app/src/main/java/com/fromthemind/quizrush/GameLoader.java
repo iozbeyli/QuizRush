@@ -1,7 +1,6 @@
 package com.fromthemind.quizrush;
 
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -106,8 +105,6 @@ public class GameLoader {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        if(doc==null)
-            Log.d("error", "null");
 
         return doc;
     }

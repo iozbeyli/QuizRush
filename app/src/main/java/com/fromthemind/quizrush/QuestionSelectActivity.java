@@ -93,7 +93,7 @@ public class QuestionSelectActivity extends Activity {
                 color = fColor;
                 break;
             case TIMEOUT:
-                color = fColor;
+                color = pColor;
                 break;
             case PASS:
                 color = pColor;

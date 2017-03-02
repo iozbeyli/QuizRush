@@ -72,7 +72,7 @@
         </question>
         <question definition="Between which countries the Niagara Falls straddle the international border?" time="15">
             <options>
-                <option label="Turkey and Syria" isAnswer="false" />
+                <option label="Argentina and Brazil" isAnswer="false" />
                 <option label="Peru and Bolivia" isAnswer="false" />
                 <option label="United States and Canada" isAnswer="true" />
                 <option label="Russia and Ukraine" isAnswer="false" />

@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "You did not enter a nickname", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        User.deleteUser();
         User.getInstance().setNickname(nick);
         boolean status = User.getInstance().repOK();
 

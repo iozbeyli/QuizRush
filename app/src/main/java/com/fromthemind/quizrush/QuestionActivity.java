@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -75,14 +75,12 @@ public class QuestionActivity extends Activity {
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState){
         savedInstanceState.putInt("currentTime",currentTime);
-        Log.d("Save Instance",""+currentTime);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
         currentTime = savedInstanceState.getInt("currentTime");
-        Log.d("Restore Instance","called");
     }
 
 
@@ -115,8 +113,7 @@ public class QuestionActivity extends Activity {
         }
 
         update(optionsButtons[answer], optionsButtons[currentQuestion.getCorrectAnswer()]);
-        Intent intent = new Intent(this,QuestionSelectActivity.class);
-        startActivity(intent);
+
     }
     @Override
     public void onBackPressed() {
@@ -147,6 +144,16 @@ public class QuestionActivity extends Activity {
                 setOptionsClickable(false);
                 break;
         }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(QuestionActivity.this,QuestionSelectActivity.class);
+                startActivity(intent);
+            }
+
+        },1000);
+
 
     }
 
@@ -191,8 +198,18 @@ public class QuestionActivity extends Activity {
         @Override
         public void onChronometerTick(Chronometer chronometer) {
                 String chronometerText = (String) chronometer.getText();
-                String sec = chronometerText.substring(chronometerText.length()-2);
+                String sec="";
+                if(chronometerText.length()>=2){
+                    sec = chronometerText.substring(chronometerText.length()-2);
+                }else{
+                    sec = chronometerText.substring(chronometerText.length()-1);
+                }
+
+                if(sec.contains("-")){
+                    sec=sec.substring(sec.length()-1);
+                }
                 chronometer.setText(sec);
+
                 if(Integer.parseInt(sec)==(currentQuestion.getTime()/3))
                     chronometer.setTextColor(oColor);
 
