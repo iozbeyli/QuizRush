@@ -1,9 +1,11 @@
-package com.fromthemind.quizrush;
+package com.fromthemind.quizrush.Question;
 
 import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
+
+import com.fromthemind.quizrush.QuestionStatus;
 
 import java.util.Arrays;
 

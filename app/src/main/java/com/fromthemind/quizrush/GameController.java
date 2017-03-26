@@ -1,6 +1,8 @@
 package com.fromthemind.quizrush;
 
-import java.io.BufferedReader;
+import com.fromthemind.quizrush.Category.Category;
+import com.fromthemind.quizrush.Question.Question;
+
 import java.util.Arrays;
 
 /**

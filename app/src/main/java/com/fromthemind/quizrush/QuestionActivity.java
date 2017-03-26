@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.fromthemind.quizrush.Question.Question;
+
 import static com.fromthemind.quizrush.QuestionStatus.FALSE;
 import static com.fromthemind.quizrush.QuestionStatus.TIMEOUT;
 import static com.fromthemind.quizrush.QuestionStatus.TRUE;

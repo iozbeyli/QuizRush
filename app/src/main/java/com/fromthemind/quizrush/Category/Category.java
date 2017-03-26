@@ -1,4 +1,6 @@
-package com.fromthemind.quizrush;
+package com.fromthemind.quizrush.Category;
+
+import com.fromthemind.quizrush.Question.Question;
 
 import java.util.Arrays;
 
@@ -9,9 +11,9 @@ import java.util.Arrays;
 public class Category {
     private String topic;
     private Question[] questions;
-    public Category(String topic){
+    public Category(String topic,int numberOfQuestions){
         this.topic=topic;
-        questions=new Question[5];
+        questions=new Question[numberOfQuestions];
     }
 
     @Override

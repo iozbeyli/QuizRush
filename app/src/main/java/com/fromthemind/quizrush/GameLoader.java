@@ -2,6 +2,9 @@ package com.fromthemind.quizrush;
 
 import android.content.res.AssetManager;
 
+import com.fromthemind.quizrush.Category.Category;
+import com.fromthemind.quizrush.Question.Question;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -9,14 +12,12 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.StringReader;
 
 public class GameLoader {
