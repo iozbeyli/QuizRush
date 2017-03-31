@@ -3,8 +3,12 @@ package com.fromthemind.quizrush;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,63 +20,63 @@ import com.fromthemind.quizrush.Question.QuestionStatus;
  * Created by Melih on 24.02.2017.
  */
 
-public class QuizSelectActivity extends Activity {
+public class QuizSelectFragment extends Fragment implements View.OnClickListener {
 
+
+    static interface Listener{
+        void showScore();
+        void questionSelect();
+    }
+
+    private Listener listener;
     private int fColor;
     private int tColor;
     private int pColor;
     private int oColor;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_questionselect);
-        initColors();
-        setCategoryTexts();
     }
 
-    public void onBackPressed() {
-        GameController.deleteGame();
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View layout = inflater.inflate(R.layout.activity_questionselect, container, false);
+        Button button = null;
+        for(int cat=0; cat<3; cat++) {
+            for (int que=0; que<5; que++)
+            {
+                String buttonID = "topic"+cat+"button"+que;
+                int resID = getResources().getIdentifier(buttonID, "id", getActivity().getPackageName());
+                button = (Button) layout.findViewById(resID);
+                button.setOnClickListener(this);
+            }
+        }
+        return layout;
     }
 
-    private void setCategoryTexts() {
-        Category[] cats = GameController.getCategories();
-        TextView t0 = (TextView) findViewById(R.id.topic0);
-        t0.setText(cats[0].getLabel());
-        TextView t1 = (TextView) findViewById(R.id.topic1);
-        t1.setText(cats[1].getLabel());
-        TextView t2 = (TextView) findViewById(R.id.topic2);
-        t2.setText(cats[2].getLabel());
-    }
-
-    private void initColors(){
-        fColor = ResourcesCompat.getColor(getResources(),R.color.colorFalse,null);
-        tColor = ResourcesCompat.getColor(getResources(),R.color.colorTrue,null);
-        pColor = ResourcesCompat.getColor(getResources(),R.color.colorPause,null);
-        oColor = ResourcesCompat.getColor(getResources(),R.color.colorChronometer,null);
-    }
-
-    @Override
-    protected void onStart(){
+    public void onStart(){
         super.onStart();
-
+        View view = getView();
+        initColors();
+        setCategoryTexts(view);
+        Activity gact = getActivity();
+        this.listener = (GameActivity)gact;
     }
 
-    protected void onResume(){
+    public void onResume(){
         super.onResume();
-        setSelectionView();
+        View view = getView();
+        setSelectionView(view);
     }
 
-    private void setSelectionView(){
+    private void setSelectionView(View view){
         Button button = null;
         int flag = 0;
         for(int cat=0; cat<3; cat++) {
             for (int que=0; que<5; que++)
             {
                 String buttonID = "topic"+cat+"button"+que;
-                int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
-                button = ((Button) findViewById(resID));
+                int resID = getResources().getIdentifier(buttonID, "id", getActivity().getPackageName());
+                button = ((Button) getActivity().findViewById(resID));
 
                 QuestionStatus status = GameController.getCategory(cat).getQuestion(que).getStatus();
                 updateButton(button, status);
@@ -82,8 +86,7 @@ public class QuizSelectActivity extends Activity {
         }
 
         if(flag == 15){
-            Intent intent = new Intent(this, ScoreActivity.class);
-            startActivity(intent);
+            listener.showScore();
         }
     }
 
@@ -110,7 +113,9 @@ public class QuizSelectActivity extends Activity {
         }
     }
 
-    public void onClickQuestion(View view){
+    public void onClick(View view){
+        Log.d("item", "cliecked");
+
         int category = -1;
         int question = -1;
         switch (view.getId()){
@@ -180,8 +185,25 @@ public class QuizSelectActivity extends Activity {
             return;
 
         GameController.setCurrentQuestion(category,question);
-        Intent intent = new Intent(this, QuestionActivity.class);
-        startActivity(intent);
+        listener.questionSelect();
+    }
+
+
+    private void setCategoryTexts(View view) {
+        Category[] cats = GameController.getCategories();
+        TextView t0 = (TextView) view.findViewById(R.id.topic0);
+        t0.setText(cats[0].getLabel());
+        TextView t1 = (TextView) view.findViewById(R.id.topic1);
+        t1.setText(cats[1].getLabel());
+        TextView t2 = (TextView) view.findViewById(R.id.topic2);
+        t2.setText(cats[2].getLabel());
+    }
+
+    private void initColors(){
+        fColor = ResourcesCompat.getColor(getResources(),R.color.colorFalse,null);
+        tColor = ResourcesCompat.getColor(getResources(),R.color.colorTrue,null);
+        pColor = ResourcesCompat.getColor(getResources(),R.color.colorPause,null);
+        oColor = ResourcesCompat.getColor(getResources(),R.color.colorChronometer,null);
     }
 
 

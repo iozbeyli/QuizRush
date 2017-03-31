@@ -1,13 +1,16 @@
 package com.fromthemind.quizrush;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.content.res.ResourcesCompat;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Question.Question;
 import com.fromthemind.quizrush.Question.QuestionStatus;
+import com.fromthemind.quizrush.Question.QuizQuestion;
 
 import static com.fromthemind.quizrush.Question.QuestionStatus.FALSE;
 import static com.fromthemind.quizrush.Question.QuestionStatus.TIMEOUT;
@@ -27,7 +31,7 @@ import static com.fromthemind.quizrush.Question.QuestionStatus.TRUE;
 
 
 
-public class QuestionActivity extends Activity {
+public class QuizQuestionFragment extends Fragment implements View.OnClickListener {
     private static Question currentQuestion;
     private static Button[] optionsButtons;
     private static Chronometer cm;
@@ -36,18 +40,23 @@ public class QuestionActivity extends Activity {
     private int pColor;
     private int oColor;
     private int currentTime;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
-        initColors();
-        currentQuestion = GameController.getInstance().getGame().getCurrentQuestion();
-        currentTime=currentQuestion.getTime();
-        setChronometer();
-        setQuestionText();
-        setOptionButtons();
     }
 
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View layout = inflater.inflate(R.layout.activity_question, container, false);
+        Button button = null;
+        for (int que=0; que<4; que++)
+        {
+            String buttonID = "optionButton"+que;
+            int resID = getResources().getIdentifier(buttonID, "id", getActivity().getPackageName());
+            button = (Button) layout.findViewById(resID);
+            button.setOnClickListener(this);
+        }
+        return layout;
+    }
     private void initColors(){
         fColor = ResourcesCompat.getColor(getResources(),R.color.colorFalse,null);
         tColor = ResourcesCompat.getColor(getResources(),R.color.colorTrue,null);
@@ -57,75 +66,50 @@ public class QuestionActivity extends Activity {
 
 
     @Override
-    protected void onStart(){
+    public void onStart(){
         super.onStart();
+        initColors();
+        currentQuestion = GameController.getCurrentQuestion();
+        currentTime=currentQuestion.getTime();
+        setChronometer();
+        setQuestionText();
+        setOptionButtons();
     }
 
     @Override
-    protected void onPause(){
+    public void onPause(){
         super.onPause();
-        cm = (Chronometer) findViewById(R.id.chronometer);
+        cm = (Chronometer) getView().findViewById(R.id.chronometer);
         String sec = ((String) cm.getText());
         currentTime = Integer.parseInt(sec);
     }
 
     @Override
-    protected void onResume(){
+    public void onResume(){
         super.onResume();
         setChronometer();
 
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle savedInstanceState){
+    public void onSaveInstanceState(Bundle savedInstanceState){
         savedInstanceState.putInt("currentTime",currentTime);
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState){
+    /*@Override
+    public void onRestoreInstanceState(Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
         currentTime = savedInstanceState.getInt("currentTime");
-    }
+    }*/
 
 
-    public void onClickAnswer(View view){
-        int answer = -1;
-
-        switch (view.getId()){
-            case R.id.optionButton0:
-                answer = 0;
-                break;
-            case R.id.optionButton1:
-                answer = 1;
-                break;
-            case R.id.optionButton2:
-                answer = 2;
-                break;
-            case R.id.optionButton3:
-                answer = 3;
-                break;
-        }
-
-        if(answer == -1 )
-            return;
-
-        if(currentQuestion.isAnswer(answer)){
-            currentQuestion.setStatus(TRUE);
-            User.getInstance().addScore(currentQuestion.getValue());
-        } else {
-            currentQuestion.setStatus(FALSE);
-        }
-
-        update(optionsButtons[answer], optionsButtons[currentQuestion.getCorrectAnswer()]);
-
-    }
-    @Override
+    /*@Override
     public void onBackPressed() {
         super.onBackPressed();
         if(currentQuestion.getStatus() == QuestionStatus.ONSTART){
             currentQuestion.setStatus(QuestionStatus.PASS);
         }
-    }
+    }*/
 
     public void update(Button selected, Button correct) {
         if(correct != null)
@@ -149,41 +133,41 @@ public class QuestionActivity extends Activity {
                 break;
         }
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        /*handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(QuestionActivity.this,QuizSelectActivity.class);
+                Intent intent = new Intent(QuizQuestionFragment.this,QuizSelectFragment.class);
                 startActivity(intent);
             }
 
-        },1000);
+        },1000);*/
 
 
     }
 
     private void setQuestionText(){
-        TextView questionText = (TextView) findViewById(R.id.questionText);
-        questionText.setText(currentQuestion.getDefinition());
+        TextView questionText = (TextView) getView().findViewById(R.id.questionText);
+        questionText.setText(((QuizQuestion)currentQuestion).getDefinition());
     }
 
     private void setOptionButtons(){
         optionsButtons = new Button[4];
 
-        optionsButtons[0] = (Button) findViewById(R.id.optionButton0);
-        optionsButtons[0].setText(currentQuestion.getOptions()[0]);
+        optionsButtons[0] = (Button) getView().findViewById(R.id.optionButton0);
+        optionsButtons[0].setText(((QuizQuestion)currentQuestion).getOptions()[0]);
 
-        optionsButtons[1]= (Button) findViewById(R.id.optionButton1);
-        optionsButtons[1].setText(currentQuestion.getOptions()[1]);
+        optionsButtons[1]= (Button) getView().findViewById(R.id.optionButton1);
+        optionsButtons[1].setText(((QuizQuestion)currentQuestion).getOptions()[1]);
 
-        optionsButtons[2]= (Button) findViewById(R.id.optionButton2);
-        optionsButtons[2].setText(currentQuestion.getOptions()[2]);
+        optionsButtons[2]= (Button) getView().findViewById(R.id.optionButton2);
+        optionsButtons[2].setText(((QuizQuestion)currentQuestion).getOptions()[2]);
 
-        optionsButtons[3]= (Button) findViewById(R.id.optionButton3);
-        optionsButtons[3].setText(currentQuestion.getOptions()[3]);
+        optionsButtons[3]= (Button) getView().findViewById(R.id.optionButton3);
+        optionsButtons[3].setText(((QuizQuestion)currentQuestion).getOptions()[3]);
     }
 
     private void setChronometer() {
-        cm = (Chronometer) findViewById(R.id.chronometer);
+        cm = (Chronometer) getView().findViewById(R.id.chronometer);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             cm.setCountDown(true);
         }
@@ -195,6 +179,38 @@ public class QuestionActivity extends Activity {
     private void setOptionsClickable(boolean bool){
         for (int i=0; i<optionsButtons.length; i++)
             optionsButtons[i].setClickable(bool);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int answer = -1;
+
+        switch (view.getId()){
+            case R.id.optionButton0:
+                answer = 0;
+                break;
+            case R.id.optionButton1:
+                answer = 1;
+                break;
+            case R.id.optionButton2:
+                answer = 2;
+                break;
+            case R.id.optionButton3:
+                answer = 3;
+                break;
+        }
+
+        if(answer == -1 )
+            return;
+
+        if(((QuizQuestion)currentQuestion).isAnswer(answer)){
+            currentQuestion.setStatus(TRUE);
+            User.getInstance().addScore(currentQuestion.getValue());
+        } else {
+            currentQuestion.setStatus(FALSE);
+        }
+
+        update(optionsButtons[answer], optionsButtons[((QuizQuestion)currentQuestion).getCorrectAnswer()]);
     }
 
     private class RushListener implements Chronometer.OnChronometerTickListener{
@@ -219,7 +235,7 @@ public class QuestionActivity extends Activity {
 
                 if(Integer.parseInt(sec)==0){
                     currentQuestion.setStatus(TIMEOUT);
-                    update(null, optionsButtons[currentQuestion.getCorrectAnswer()]);
+                    update(null, optionsButtons[((QuizQuestion)currentQuestion).getCorrectAnswer()]);
 
             }
         }

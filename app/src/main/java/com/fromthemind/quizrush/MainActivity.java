@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.GameType;
+import com.fromthemind.quizrush.Loader.GameLoader;
 
 public class MainActivity extends Activity {
 
@@ -71,9 +72,15 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "User failure", Toast.LENGTH_SHORT).show();
             return;
         }
-        //loadGame();
-        //Intent intent = new Intent(this, QuizSelectActivity.class);
-        //startActivity(intent);
+
+        GameLoader.setContext(getApplicationContext());
+        try {
+            loadGame(GameType.QUIZ);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
 
 

@@ -11,7 +11,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:weightSum="10"
     android:orientation="vertical"
-    tools:context="com.fromthemind.quizrush.QuestionActivity"
+    tools:context="com.fromthemind.quizrush.QuizQuestionFragment"
     >
 
     <TextView
@@ -40,7 +40,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="onClickAnswer"
             android:background="@color/colorNormal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -54,7 +53,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:id="@+id/optionButton1"
-            android:onClick="onClickAnswer"
             android:background="@color/colorNormal"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -88,7 +86,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/colorNormal"
-            android:onClick="onClickAnswer"
             android:textSize="20sp"
             android:textAllCaps="false"/>
 
@@ -101,7 +98,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/colorNormal"
-            android:onClick="onClickAnswer"
             android:textSize="20sp"
             android:textAllCaps="false"
             />

@@ -12,6 +12,9 @@ public class Quiz extends Game{
 
     protected Quiz(){
         super(GameType.QUIZ);
+    }
+
+    protected void load(){
         QuizLoader.getInstance().loadGame(this);
     }
 

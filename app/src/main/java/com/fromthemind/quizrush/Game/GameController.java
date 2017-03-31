@@ -1,6 +1,7 @@
 package com.fromthemind.quizrush.Game;
 
 import com.fromthemind.quizrush.Category.Category;
+import com.fromthemind.quizrush.Question.Question;
 
 /**
  * Created by Melih on 24.02.2017.
@@ -27,10 +28,12 @@ public class GameController {
         switch (type){
             case QUIZ:
                 game = new Quiz();
+                ((Quiz)game).load();
                 break;
 
             case MEMO:
                 game = new Memo();
+                ((Memo)game).load();
                 break;
 
             default:
@@ -52,6 +55,10 @@ public class GameController {
 
     public static void setCurrentQuestion(int category, int question){
         game.setCurrentQuestion(category,question);
+    }
+
+    public static Question getCurrentQuestion(){
+        return game.getCurrentQuestion();
     }
 
     @Override
