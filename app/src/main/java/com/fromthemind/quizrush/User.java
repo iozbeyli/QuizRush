@@ -17,27 +17,27 @@ public class User {
     }
     private User(){}
 
-    public static void deleteUser(){
+    protected static void deleteUser(){
         instance=null;
     }
 
-    public void setNickname(String nickname){
+    protected void setNickname(String nickname){
         this.nickname=nickname;
     }
 
-    public String getNickname(){
+    protected String getNickname(){
         return nickname;
     }
 
-    public void setScore(int score){
+    protected void setScore(int score){
         this.score=score;
     }
 
-    public void addScore(int score){
+    protected void addScore(int score){
         this.score+=score;
     }
 
-    public int getScore(){
+    protected int getScore(){
         return score;
     }
 

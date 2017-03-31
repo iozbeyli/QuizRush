@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.fromthemind.quizrush.Category.Category;
+import com.fromthemind.quizrush.Game.GameController;
+import com.fromthemind.quizrush.Question.QuestionStatus;
+
 /**
  * Created by Melih on 24.02.2017.
  */
 
-public class QuestionSelectActivity extends Activity {
+public class QuizSelectActivity extends Activity {
 
     private int fColor;
     private int tColor;
@@ -23,7 +27,7 @@ public class QuestionSelectActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questionselect);
         initColors();
-        setTopicTexts();
+        setCategoryTexts();
     }
 
     public void onBackPressed() {
@@ -32,13 +36,14 @@ public class QuestionSelectActivity extends Activity {
         startActivity(intent);
     }
 
-    private void setTopicTexts() {
+    private void setCategoryTexts() {
+        Category[] cats = GameController.getCategories();
         TextView t0 = (TextView) findViewById(R.id.topic0);
-        t0.setText(GameController.getInstance().getCategory(0).getTopic());
+        t0.setText(cats[0].getLabel());
         TextView t1 = (TextView) findViewById(R.id.topic1);
-        t1.setText(GameController.getInstance().getCategory(1).getTopic());
+        t1.setText(cats[1].getLabel());
         TextView t2 = (TextView) findViewById(R.id.topic2);
-        t2.setText(GameController.getInstance().getCategory(2).getTopic());
+        t2.setText(cats[2].getLabel());
     }
 
     private void initColors(){
@@ -61,7 +66,6 @@ public class QuestionSelectActivity extends Activity {
 
     private void setSelectionView(){
         Button button = null;
-        GameController gm = GameController.getInstance();
         int flag = 0;
         for(int cat=0; cat<3; cat++) {
             for (int que=0; que<5; que++)
@@ -70,7 +74,7 @@ public class QuestionSelectActivity extends Activity {
                 int resID = getResources().getIdentifier(buttonID, "id", getPackageName());
                 button = ((Button) findViewById(resID));
 
-                QuestionStatus status = gm.getCategory(cat).getQuestion(que).getStatus();
+                QuestionStatus status = GameController.getCategory(cat).getQuestion(que).getStatus();
                 updateButton(button, status);
                 if(status != QuestionStatus.ONSTART)
                     flag++;
@@ -175,7 +179,7 @@ public class QuestionSelectActivity extends Activity {
         if(category == -1 || question == -1)
             return;
 
-        GameController.getInstance().setCurrentQuestion(category,question);
+        GameController.setCurrentQuestion(category,question);
         Intent intent = new Intent(this, QuestionActivity.class);
         startActivity(intent);
     }

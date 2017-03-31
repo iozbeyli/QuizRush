@@ -2,17 +2,13 @@ package com.fromthemind.quizrush;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import com.fromthemind.quizrush.Game.GameController;
+import com.fromthemind.quizrush.Game.GameType;
 
 public class MainActivity extends Activity {
 
@@ -30,10 +26,9 @@ public class MainActivity extends Activity {
 
     }
 
-    private void loadGame(){
-        AssetManager am = getApplicationContext().getAssets();
-        GameLoader.getInstance().loadGame("game.xml", am);
-        boolean status = GameController.getInstance().repOK();
+    private void loadGame(GameType type) throws Exception {
+        GameController.loadGame(type);
+        boolean status = GameController.repOK();
         if(!status)
             Toast.makeText(this, "Game load failure!", Toast.LENGTH_SHORT).show();
         else
@@ -76,9 +71,9 @@ public class MainActivity extends Activity {
             Toast.makeText(this, "User failure", Toast.LENGTH_SHORT).show();
             return;
         }
-        loadGame();
-        Intent intent = new Intent(this, QuestionSelectActivity.class);
-        startActivity(intent);
+        //loadGame();
+        //Intent intent = new Intent(this, QuizSelectActivity.class);
+        //startActivity(intent);
     }
 
 

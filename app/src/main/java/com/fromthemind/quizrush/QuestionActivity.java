@@ -12,11 +12,13 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
+import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Question.Question;
+import com.fromthemind.quizrush.Question.QuestionStatus;
 
-import static com.fromthemind.quizrush.QuestionStatus.FALSE;
-import static com.fromthemind.quizrush.QuestionStatus.TIMEOUT;
-import static com.fromthemind.quizrush.QuestionStatus.TRUE;
+import static com.fromthemind.quizrush.Question.QuestionStatus.FALSE;
+import static com.fromthemind.quizrush.Question.QuestionStatus.TIMEOUT;
+import static com.fromthemind.quizrush.Question.QuestionStatus.TRUE;
 
 
 /**
@@ -39,7 +41,7 @@ public class QuestionActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         initColors();
-        currentQuestion = GameController.getInstance().getCurrentQuestion();
+        currentQuestion = GameController.getInstance().getGame().getCurrentQuestion();
         currentTime=currentQuestion.getTime();
         setChronometer();
         setQuestionText();
@@ -150,7 +152,7 @@ public class QuestionActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(QuestionActivity.this,QuestionSelectActivity.class);
+                Intent intent = new Intent(QuestionActivity.this,QuizSelectActivity.class);
                 startActivity(intent);
             }
 

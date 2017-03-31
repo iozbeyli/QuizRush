@@ -10,7 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:weightSum="3"
-    tools:context="com.fromthemind.quizrush.QuestionSelectActivity">
+    tools:context="com.fromthemind.quizrush.QuizSelectActivity">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"

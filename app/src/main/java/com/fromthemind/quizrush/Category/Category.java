@@ -9,17 +9,17 @@ import java.util.Arrays;
  */
 
 public class Category {
-    private String topic;
+    private String label;
     private Question[] questions;
-    public Category(String topic,int numberOfQuestions){
-        this.topic=topic;
-        questions=new Question[numberOfQuestions];
+    public Category(String label,Question[] questions){
+        this.label=label;
+        this.questions= questions;
     }
 
     @Override
     public String toString() {
         return "Category{" +
-                "\ntopic='" + topic + '\'' +
+                "\nlabel='" + label + '\'' +
                 ",\nquestions=" + Arrays.toString(questions) +
                 "}\n";
     }
@@ -32,16 +32,16 @@ public class Category {
         return questions[index];
     }
 
-    public void setTopic(String topic){
-        this.topic=topic;
+    public void setLabel(String label){
+        this.label=label;
     }
 
-    public String getTopic(){
-        return topic;
+    public String getLabel(){
+        return label;
     }
 
     public boolean repOK() {
-        if(topic == null || topic.isEmpty())
+        if(label == null || label.isEmpty())
             return false;
 
         for (Question obj:questions) {
