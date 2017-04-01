@@ -8,9 +8,9 @@ import com.fromthemind.quizrush.Loader.QuizLoader;
  * Created by Melih on 24.03.2017.
  */
 
-public class Quiz extends Game{
+public class QuizGame extends Game{
 
-    protected Quiz(){
+    protected QuizGame(){
         super(GameType.QUIZ);
     }
 

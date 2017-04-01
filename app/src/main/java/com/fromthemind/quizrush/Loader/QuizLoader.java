@@ -2,7 +2,7 @@ package com.fromthemind.quizrush.Loader;
 
 import com.fromthemind.quizrush.Category.QuizCategory;
 import com.fromthemind.quizrush.Game.GameController;
-import com.fromthemind.quizrush.Game.Quiz;
+import com.fromthemind.quizrush.Game.QuizGame;
 import com.fromthemind.quizrush.Question.QuizQuestion;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -41,7 +41,7 @@ public class QuizLoader extends GameLoader{
      *             , IOException, SAXException; if the file is missing,
      *             corrupted, or not in proper format.
      */
-    public void loadGame(Quiz game) {
+    public void loadGame(QuizGame game) {
         Document doc = getDocument("game.xml", getContext().getAssets());
 
         // optional, but recommended

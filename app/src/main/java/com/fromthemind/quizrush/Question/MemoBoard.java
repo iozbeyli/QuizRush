@@ -6,7 +6,27 @@ package com.fromthemind.quizrush.Question;
 
 public class MemoBoard {
 
-    public MemoBoard(int boardSize){
+    private int[] targets;
+    private int[][] flags;
+    private final int boardSize;
 
+    public MemoBoard(int boardSize){
+        targets = new int[boardSize];
+        flags = new int[boardSize][boardSize];
+        this.boardSize = boardSize;
     }
+
+    public void setTargets(int[] targets){
+        this.targets = targets;
+    }
+
+    public void setFlags(int[][] flags){
+        this.flags = flags;
+    }
+
+    public int getBoardSize(){
+        return boardSize;
+    }
+
+
 }

@@ -58,13 +58,21 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
         Log.d("item", "clicked");
         View fragmentContainer = findViewById(R.id.fragment_container);
         if(fragmentContainer != null){
-            QuizSelectFragment fragment = new QuizSelectFragment();
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_container, fragment);
-            ft.addToBackStack(null);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.commit();
-
+            if(id == 0){
+                QuizSelectFragment fragment = new QuizSelectFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, fragment);
+                ft.addToBackStack(null);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            }else{
+                MemoQuestionFragment fragment = new MemoQuestionFragment();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.fragment_container, fragment);
+                ft.addToBackStack(null);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
+            }
         }else{
         }
     }

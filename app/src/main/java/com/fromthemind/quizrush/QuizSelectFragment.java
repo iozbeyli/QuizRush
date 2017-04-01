@@ -1,7 +1,6 @@
 package com.fromthemind.quizrush;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
@@ -39,7 +38,7 @@ public class QuizSelectFragment extends Fragment implements View.OnClickListener
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View layout = inflater.inflate(R.layout.activity_questionselect, container, false);
+        View layout = inflater.inflate(R.layout.activity_quizquestionselect, container, false);
         Button button = null;
         for(int cat=0; cat<3; cat++) {
             for (int que=0; que<5; que++)

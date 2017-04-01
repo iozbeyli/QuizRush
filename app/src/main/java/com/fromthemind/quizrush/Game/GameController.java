@@ -1,6 +1,7 @@
 package com.fromthemind.quizrush.Game;
 
 import com.fromthemind.quizrush.Category.Category;
+import com.fromthemind.quizrush.Question.MemoBoard;
 import com.fromthemind.quizrush.Question.Question;
 
 /**
@@ -27,13 +28,30 @@ public class GameController {
     public static void loadGame(GameType type) throws Exception {
         switch (type){
             case QUIZ:
-                game = new Quiz();
-                ((Quiz)game).load();
+                game = new QuizGame();
+                ((QuizGame)game).load();
                 break;
 
             case MEMO:
-                game = new Memo();
-                ((Memo)game).load();
+                game = new MemoGame(4);
+                ((MemoGame)game).load();
+                break;
+
+            default:
+                throw new Exception("Unknown Game Type");
+        }
+    }
+
+    public static void loadGame(GameType type, int size) throws Exception {
+        switch (type){
+            case QUIZ:
+                game = new QuizGame();
+                ((QuizGame)game).load();
+                break;
+
+            case MEMO:
+                game = new MemoGame(size);
+                ((MemoGame)game).load();
                 break;
 
             default:
@@ -78,4 +96,15 @@ public class GameController {
         return true;
     }
 
+    public static MemoBoard getMemoBoard() {
+        if(game instanceof MemoGame)
+            return ((MemoGame)game).getBoard();
+
+        return null;
+    }
+
+    public static void setMemoBoard(MemoBoard mb) {
+        if(game instanceof MemoGame)
+            ((MemoGame)game).setBoard(mb);
+    }
 }

@@ -1,8 +1,6 @@
 package com.fromthemind.quizrush;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +15,6 @@ import android.widget.TextView;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Question.Question;
-import com.fromthemind.quizrush.Question.QuestionStatus;
 import com.fromthemind.quizrush.Question.QuizQuestion;
 
 import static com.fromthemind.quizrush.Question.QuestionStatus.FALSE;
@@ -46,7 +43,7 @@ public class QuizQuestionFragment extends Fragment implements View.OnClickListen
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View layout = inflater.inflate(R.layout.activity_question, container, false);
+        View layout = inflater.inflate(R.layout.activity_quizquestion, container, false);
         Button button = null;
         for (int que=0; que<4; que++)
         {
