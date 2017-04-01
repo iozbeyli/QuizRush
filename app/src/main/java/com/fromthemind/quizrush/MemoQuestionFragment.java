@@ -4,6 +4,7 @@ import android.app.Fragment;
 
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,15 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
 
             initializeTargetFlags();
             initializeAllFlags();
-            hideFlags();
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideFlags();
+            }
+
+            },5000);
+
 
             return layout;
         }
@@ -125,16 +134,22 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
     public void updateHearts(){
         User user = User.getInstance();
         int lives = user.getLives();
-        LinearLayout healthLayout = (LinearLayout)layout.findViewById(R.id.healthLayout);
-        healthLayout.removeAllViews();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT);
-        for (int i = 0; i < lives ; i++) {
-            ImageView iv = new ImageView(getActivity());
-            iv.setImageResource(R.drawable.heart);
-            params.weight=1;
-            iv.setLayoutParams(params);
-            healthLayout.addView(iv);
+        if(lives == 0){
+            GameActivity activity = (GameActivity) getActivity();
+            activity.showScore();
+        }else{
+            LinearLayout healthLayout = (LinearLayout)layout.findViewById(R.id.healthLayout);
+            healthLayout.removeAllViews();
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT);
+            for (int i = 0; i < lives ; i++) {
+                ImageView iv = new ImageView(getActivity());
+                iv.setImageResource(R.drawable.heart);
+                params.weight=1;
+                iv.setLayoutParams(params);
+                healthLayout.addView(iv);
+            }
         }
+
     }
 
     public void hideFlags(){
