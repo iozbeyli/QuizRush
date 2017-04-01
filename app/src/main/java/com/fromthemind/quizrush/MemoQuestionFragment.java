@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.GameType;
@@ -34,6 +35,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         }
         private View layout;
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+            User.getInstance().resetLives();
             layout = inflater.inflate(R.layout.activity_memoquestion, container, false);
             LinearLayout targets = (LinearLayout) layout.findViewById(R.id.targetLayout);
             LinearLayout board = (LinearLayout) layout.findViewById(R.id.boardLayout);
@@ -112,7 +114,6 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 break;
             }
         }
-
         ImageView iv = (ImageView)view;
         String imageID = "flag_"+id;
         int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
@@ -127,10 +128,14 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 found.add(id);
                 lastSelectedIDs.clear();
                 lastSelectedTags.clear();
+                User.getInstance().addScore(100);
+                changeScoreText();
             }else if(lastSelectedIDs.get(0)==id&&lastSelectedTags.get(0).equals(currentTag)){
             }else{
                 lastSelectedIDs.add(id);
                 lastSelectedTags.add(currentTag);
+                User.getInstance().loseLife();
+                updateHearts();
             }
         }else if(lastSelectedIDs.size()==2){
             if(!lastSelectedTags.contains(currentTag)){
@@ -145,6 +150,26 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 lastSelectedIDs.add(id);
                 lastSelectedTags.add(currentTag);
             }
+        }
+    }
+
+    public void changeScoreText(){
+        TextView scoreText = (TextView)layout.findViewById(R.id.memoScoreText);
+        scoreText.setText(""+User.getInstance().getScore());
+    }
+
+    public void updateHearts(){
+        User user = User.getInstance();
+        int lives = user.getLives();
+        LinearLayout healthLayout = (LinearLayout)layout.findViewById(R.id.healthLayout);
+        healthLayout.removeAllViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT);
+        for (int i = 0; i < lives ; i++) {
+            ImageView iv = new ImageView(getActivity());
+            iv.setImageResource(R.drawable.heart);
+            params.weight=1;
+            iv.setLayoutParams(params);
+            healthLayout.addView(iv);
         }
     }
 }

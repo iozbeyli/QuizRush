@@ -4,39 +4,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/healthLayout"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_gravity="right"
-        android:layout_margin="10dp"
+        android:orientation="horizontal"
         >
-        <ImageView
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/memoScoreText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/heart"
-            />
-        <ImageView
             android:layout_weight="1"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:id="@+id/healthLayout"
+            android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/heart"
-            />
-        <ImageView
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/heart"
-            />
-        <ImageView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/heart"
-            />
+            android:layout_gravity="right"
+            android:layout_marginTop="10dp"
+            >
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/heart"
+                />
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/heart"
+                />
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/heart"
+                />
+            <ImageView
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/heart"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/targetLayout"
         android:orientation="horizontal"

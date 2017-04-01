@@ -2,6 +2,7 @@ package com.fromthemind.quizrush.Game;
 
 import com.fromthemind.quizrush.Loader.MemoLoader;
 import com.fromthemind.quizrush.Question.MemoBoard;
+import com.fromthemind.quizrush.User;
 
 /**
  * Created by Melih on 24.03.2017.

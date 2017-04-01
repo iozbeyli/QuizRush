@@ -1,6 +1,8 @@
 package com.fromthemind.quizrush;
 
 
+import android.util.Log;
+
 /**
  * Created by Melih on 24.02.2017.
  */
@@ -8,6 +10,7 @@ package com.fromthemind.quizrush;
 public class User {
     private String nickname;
     private int score=0;
+    private int lives=4;
     private static User instance=null;
     public static User getInstance(){
         if(instance==null){
@@ -41,6 +44,20 @@ public class User {
         return score;
     }
 
+    protected int getLives(){
+        return lives;
+    }
+
+    protected void loseLife(){
+        lives-=1;
+        if(lives==0){
+            Log.d("Fin","fin");
+        }
+    }
+
+    protected void resetLives(){
+        lives=4;
+    }
 
     public boolean repOK() {
         if(nickname == null || nickname.isEmpty())
