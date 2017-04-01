@@ -1,6 +1,7 @@
 package com.fromthemind.quizrush;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.fromthemind.quizrush.Game.GameController;
+import com.fromthemind.quizrush.Game.GameType;
 
 /**
  * Created by MEHMET on 31.03.2017.
@@ -57,22 +59,29 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
     public void itemClicked(long id) {
         Log.d("item", "clicked");
         View fragmentContainer = findViewById(R.id.fragment_container);
+        Fragment fragment;
         if(fragmentContainer != null){
             if(id == 0){
-                QuizSelectFragment fragment = new QuizSelectFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, fragment);
-                ft.addToBackStack(null);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                try {
+                    GameController.loadGame(GameType.QUIZ);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                fragment = new QuizSelectFragment();
+
             }else{
-                MemoQuestionFragment fragment = new MemoQuestionFragment();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.replace(R.id.fragment_container, fragment);
-                ft.addToBackStack(null);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
+                try {
+                    GameController.loadGame(GameType.MEMO,4);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                fragment = new MemoQuestionFragment();
             }
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_container, fragment);
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
         }else{
         }
     }

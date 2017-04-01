@@ -24,6 +24,14 @@ public class MemoBoard {
         this.flags = flags;
     }
 
+    public int[] getTargets(){
+        return targets;
+    }
+
+    public int[][] getFlags(){
+        return flags;
+    }
+
     public int getBoardSize(){
         return boardSize;
     }

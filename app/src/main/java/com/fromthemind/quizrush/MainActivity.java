@@ -27,14 +27,6 @@ public class MainActivity extends Activity {
 
     }
 
-    private void loadGame(GameType type) throws Exception {
-        GameController.loadGame(type);
-        boolean status = GameController.repOK();
-        if(!status)
-            Toast.makeText(this, "Game load failure!", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(this, "Game loaded successfully!", Toast.LENGTH_SHORT).show();
-    }
     /**
      * Back button listener.
      * Will close the application if the back button pressed twice.
@@ -74,11 +66,7 @@ public class MainActivity extends Activity {
         }
 
         GameLoader.setContext(getApplicationContext());
-        try {
-            loadGame(GameType.QUIZ);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }

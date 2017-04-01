@@ -1,6 +1,7 @@
 package com.fromthemind.quizrush.Loader;
 
 import android.support.annotation.IntegerRes;
+import android.util.Log;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.MemoGame;
@@ -43,30 +44,34 @@ public class MemoLoader extends GameLoader {
         for(int i=0;i<size*size;i++) {
             positions.add(i);
         }
-        for(int i=1;i<=226;i++){
+        Collections.shuffle(positions);
+        for(int i=1;i<=223;i++){
             flagsGeneral.add(i);
         }
         Collections.shuffle(flagsGeneral);
+        int positionIndex=0;
         for(int i=0;i<size;i++){
             targets[i]=flagsGeneral.get(i);
-            placeFlag(positions,flags,flagsGeneral.get(i));
-            placeFlag(positions,flags,flagsGeneral.get(i));
+            placeFlag(positions.get(positionIndex),flags,flagsGeneral.get(i));
+            positionIndex++;
+            placeFlag(positions.get(positionIndex),flags,flagsGeneral.get(i));
+            positionIndex++;
         }
-        for(int i=size;i<((size*size)-(2*size));i++){
-            placeFlag(positions,flags,flagsGeneral.get(i));
+        for(int i=size;i<((size*size)-size);i++){
+            placeFlag(positions.get(positionIndex),flags,flagsGeneral.get(i));
+            positionIndex++;
         }
+
         board.setFlags(flags);
         board.setTargets(targets);
         GameController.setMemoBoard(board);
 
     }
 
-    private static void placeFlag(ArrayList<Integer> positions,int[][] flags,int flag){
-        Random rand = new Random();
-        int randomIndex = rand.nextInt(positions.size());
-        int x = randomIndex%flags.length;
-        int y = randomIndex/flags.length;
+    private static void placeFlag(int position,int[][] flags,int flag){
+
+        int x = position%flags.length;
+        int y = position/flags.length;
         flags[x][y]=flag;
-        positions.remove(randomIndex);
     }
 }
