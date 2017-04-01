@@ -38,7 +38,7 @@ public class QuizSelectFragment extends Fragment implements View.OnClickListener
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View layout = inflater.inflate(R.layout.activity_quizquestionselect, container, false);
+        View layout = inflater.inflate(R.layout.fragment_quizquestionselect, container, false);
         Button button = null;
         for(int cat=0; cat<3; cat++) {
             for (int que=0; que<5; que++)

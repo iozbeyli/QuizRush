@@ -43,7 +43,7 @@ public class QuizQuestionFragment extends Fragment implements View.OnClickListen
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View layout = inflater.inflate(R.layout.activity_quizquestion, container, false);
+        View layout = inflater.inflate(R.layout.fragment_quizquestion, container, false);
         Button button = null;
         for (int que=0; que<4; que++)
         {

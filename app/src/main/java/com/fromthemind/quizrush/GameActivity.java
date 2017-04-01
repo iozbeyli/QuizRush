@@ -83,6 +83,22 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
         }else{
+            if(id == 0){
+                try {
+                    GameController.loadGame(GameType.QUIZ);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(this,QuizSelectionActivity.class);
+                startActivity(intent);
+
+            }else{
+                try {
+                    GameController.loadGame(GameType.MEMO,4);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

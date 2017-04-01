@@ -2,10 +2,8 @@ package com.fromthemind.quizrush;
 
 import android.app.Fragment;
 
-import android.media.Image;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fromthemind.quizrush.Game.GameController;
-import com.fromthemind.quizrush.Game.GameType;
 import com.fromthemind.quizrush.Loader.GameLoader;
 
 import java.util.ArrayList;
@@ -26,58 +23,27 @@ import java.util.ArrayList;
 
 public class MemoQuestionFragment extends Fragment implements  View.OnClickListener{
 
-        private ArrayList<Integer> lastSelectedIDs = new ArrayList<Integer>();
-        private ArrayList<String> lastSelectedTags = new ArrayList<String>();
+        private ArrayList<Integer> lastSelectedIDs = new ArrayList<>();
+        private ArrayList<String> lastSelectedTags = new ArrayList<>();
+        private ArrayList<ImageView> boardImages = new ArrayList<>();
+        private ArrayList<Integer> found=new ArrayList<>();
+        private LinearLayout.LayoutParams horizontalParams = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT);
+        private LinearLayout.LayoutParams verticalParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,0);
 
-        private ArrayList<Integer> found=new ArrayList<Integer>();
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
         private View layout;
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
             User.getInstance().resetLives();
-            layout = inflater.inflate(R.layout.activity_memoquestion, container, false);
-            LinearLayout targets = (LinearLayout) layout.findViewById(R.id.targetLayout);
-            LinearLayout board = (LinearLayout) layout.findViewById(R.id.boardLayout);
-            int size = GameController.getMemoBoard().getBoardSize();
-            int[] targetFlags = GameController.getMemoBoard().getTargets();
-            int[][] boardFlags = GameController.getMemoBoard().getFlags();
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT);
-            params.weight = 1f;
-            params.setMargins(5,5,5,5);
+            layout = inflater.inflate(R.layout.fragment_memoquestion, container, false);
 
-            for (int i = 0; i < size ; i++) {
-                ImageView iv = new ImageView(getActivity());
-                String imageID = "flag_"+targetFlags[i];
-                int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
-                iv.setImageResource(resID);
-                iv.setLayoutParams(params);
-                iv.setTag("target"+targetFlags[i]);
-                targets.addView(iv);
-            }
-            LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,0);
-            params2.weight = 1f;
-            params2.setMargins(5,5,5,5);
-
-            for (int i = 0; i < size ; i++) {
-                LinearLayout ll = new LinearLayout(GameLoader.getContext());
-                ll.setLayoutParams(params2);
-                for (int j = 0; j < size ; j++) {
-                    ImageView iv = new ImageView(getActivity());
-                    iv.setImageResource(R.mipmap.secret);
-                    iv.setId(boardFlags[j][i]);
-                    iv.setTag("flag"+j+","+i);
-                    iv.setLayoutParams(params);
-                    iv.setOnClickListener(this);
-                    ll.addView(iv);
-                }
-                board.addView(ll);
-            }
+            initializeTargetFlags();
+            initializeAllFlags();
+            hideFlags();
 
             return layout;
         }
-
-
 
         @Override
         public void onStart(){
@@ -88,13 +54,11 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         @Override
         public void onPause(){
             super.onPause();
-
         }
 
         @Override
         public void onResume(){
             super.onResume();
-
         }
 
         @Override
@@ -170,6 +134,58 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             params.weight=1;
             iv.setLayoutParams(params);
             healthLayout.addView(iv);
+        }
+    }
+
+    public void hideFlags(){
+        for (int i = 0; i < boardImages.size(); i++) {
+            boardImages.get(i).setImageResource(R.mipmap.secret);
+        }
+    }
+
+    public void initializeAllFlags(){
+        LinearLayout board = (LinearLayout) layout.findViewById(R.id.boardLayout);
+        int size = GameController.getMemoBoard().getBoardSize();
+        int[][] boardFlags = GameController.getMemoBoard().getFlags();
+
+        verticalParams.weight = 1f;
+        verticalParams.setMargins(5,5,5,5);
+
+        horizontalParams.weight = 1f;
+        horizontalParams.setMargins(5,5,5,5);
+        for (int i = 0; i < size ; i++) {
+            LinearLayout ll = new LinearLayout(GameLoader.getContext());
+            ll.setLayoutParams(verticalParams);
+            for (int j = 0; j < size ; j++) {
+                ImageView iv = new ImageView(getActivity());
+                boardImages.add(iv);
+                String imageID = "flag_"+boardFlags[j][i];
+                int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
+                iv.setImageResource(resID);
+                iv.setId(boardFlags[j][i]);
+                iv.setTag("flag"+j+","+i);
+                iv.setLayoutParams(horizontalParams);
+                iv.setOnClickListener(this);
+                ll.addView(iv);
+            }
+            board.addView(ll);
+        }
+    }
+
+    public void initializeTargetFlags(){
+        LinearLayout targets = (LinearLayout) layout.findViewById(R.id.targetLayout);
+        int size = GameController.getMemoBoard().getBoardSize();
+        int[] targetFlags = GameController.getMemoBoard().getTargets();
+        horizontalParams.weight = 1f;
+        horizontalParams.setMargins(5,5,5,5);
+        for (int i = 0; i < size ; i++) {
+            ImageView iv = new ImageView(getActivity());
+            String imageID = "flag_"+targetFlags[i];
+            int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
+            iv.setImageResource(resID);
+            iv.setLayoutParams(horizontalParams);
+            iv.setTag("target"+targetFlags[i]);
+            targets.addView(iv);
         }
     }
 }
