@@ -27,7 +27,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuizQuestionFragment" />
+        <activity android:name=".QuizSelectionActivity" />
+        <activity android:name=".MemoActivity" />
+        <activity android:name=".QuizQuestionActivity" />
         <activity android:name=".ScoreActivity" />
         <activity android:name=".GameActivity" />
 

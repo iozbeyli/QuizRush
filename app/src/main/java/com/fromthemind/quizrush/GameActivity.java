@@ -15,7 +15,7 @@ import com.fromthemind.quizrush.Game.GameType;
  * Created by MEHMET on 31.03.2017.
  */
 
-public class GameActivity extends Activity implements QuizSelectFragment.Listener, GameSelectFragment.Listener {
+public class GameActivity extends Activity implements QuizSelectFragment.Listener, GameSelectFragment.Listener, MemoQuestionFragment.MemoInterface, QuizQuestionFragment.QuizInterface {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +51,6 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
 
-        }else{
         }
     }
 
@@ -71,7 +70,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
 
             }else{
                 try {
-                    GameController.loadGame(GameType.MEMO,4);
+                    GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -94,11 +93,33 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
 
             }else{
                 try {
-                    GameController.loadGame(GameType.MEMO,4);
+                    GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                Intent intent = new Intent(this,MemoActivity.class);
+                startActivity(intent);
             }
         }
+    }
+
+    @Override
+    public void loadNextMemoLevel() {
+        if(User.getInstance().getMemoLevel() == 7){
+            showScore();
+        }else{
+            itemClicked(1);
+        }
+    }
+
+    @Override
+    public void showQuizSelection() {
+        Fragment fragment = new QuizSelectFragment();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, fragment);
+        ft.addToBackStack(null);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ft.commit();
+
     }
 }

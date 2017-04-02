@@ -24,6 +24,11 @@ import java.util.ArrayList;
 
 public class MemoQuestionFragment extends Fragment implements  View.OnClickListener{
 
+    static interface MemoInterface{
+        void loadNextMemoLevel();
+        void showScore();
+    }
+
         private ArrayList<Integer> lastSelectedIDs = new ArrayList<>();
         private ArrayList<String> lastSelectedTags = new ArrayList<>();
         private ArrayList<ImageView> boardImages = new ArrayList<>();
@@ -98,11 +103,17 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             lastSelectedTags.add(currentTag);
         }else if(lastSelectedIDs.size()==1){
             if(lastSelectedIDs.get(0)==id&&!lastSelectedTags.get(0).equals(currentTag)){
-                found.add(id);
                 lastSelectedIDs.clear();
                 lastSelectedTags.clear();
                 User.getInstance().addScore(100);
                 changeScoreText();
+                found.add(id);
+                if(found.size() == GameController.getMemoBoard().getBoardSize()){
+                    User.getInstance().levelUpMemo();
+                    MemoInterface activity = (MemoInterface) getActivity();
+                    activity.loadNextMemoLevel();
+                }
+
             }else if(lastSelectedIDs.get(0)==id&&lastSelectedTags.get(0).equals(currentTag)){
             }else{
                 lastSelectedIDs.add(id);
@@ -135,7 +146,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         User user = User.getInstance();
         int lives = user.getLives();
         if(lives == 0){
-            GameActivity activity = (GameActivity) getActivity();
+            MemoInterface activity = (MemoInterface) getActivity();
             activity.showScore();
         }else{
             LinearLayout healthLayout = (LinearLayout)layout.findViewById(R.id.healthLayout);

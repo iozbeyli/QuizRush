@@ -29,6 +29,10 @@ import static com.fromthemind.quizrush.Question.QuestionStatus.TRUE;
 
 
 public class QuizQuestionFragment extends Fragment implements View.OnClickListener {
+
+    static interface QuizInterface{
+        void showQuizSelection();
+    }
     private static Question currentQuestion;
     private static Button[] optionsButtons;
     private static Chronometer cm;
@@ -100,14 +104,6 @@ public class QuizQuestionFragment extends Fragment implements View.OnClickListen
     }*/
 
 
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if(currentQuestion.getStatus() == QuestionStatus.ONSTART){
-            currentQuestion.setStatus(QuestionStatus.PASS);
-        }
-    }*/
-
     public void update(Button selected, Button correct) {
         if(correct != null)
             correct.setBackgroundColor(tColor);
@@ -130,14 +126,14 @@ public class QuizQuestionFragment extends Fragment implements View.OnClickListen
                 break;
         }
         final Handler handler = new Handler();
-        /*handler.postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(QuizQuestionFragment.this,QuizSelectFragment.class);
-                startActivity(intent);
+                QuizInterface qi = (QuizInterface) getActivity();
+                qi.showQuizSelection();
             }
 
-        },1000);*/
+        },1000);
 
 
     }

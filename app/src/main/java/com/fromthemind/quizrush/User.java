@@ -10,7 +10,8 @@ import android.util.Log;
 public class User {
     private String nickname;
     private int score=0;
-    private int lives=4;
+    private int lives = 4;
+    private int memoLevel = 4;
     private static User instance=null;
     public static User getInstance(){
         if(instance==null){
@@ -50,9 +51,15 @@ public class User {
 
     protected void loseLife(){
         lives-=1;
-        if(lives==0){
-            Log.d("Fin","fin");
-        }
+    }
+
+    protected void levelUpMemo(){
+        memoLevel++;
+        resetLives();
+    }
+
+    protected int getMemoLevel(){
+        return memoLevel;
     }
 
     protected void resetLives(){

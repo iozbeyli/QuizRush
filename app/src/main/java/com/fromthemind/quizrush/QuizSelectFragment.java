@@ -58,7 +58,7 @@ public class QuizSelectFragment extends Fragment implements View.OnClickListener
         initColors();
         setCategoryTexts(view);
         Activity gact = getActivity();
-        this.listener = (GameActivity)gact;
+        this.listener = (Listener)gact;
     }
 
     public void onResume(){
