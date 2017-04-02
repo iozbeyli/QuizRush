@@ -10,13 +10,14 @@ import android.view.View;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.GameType;
+import com.fromthemind.quizrush.Question.QuestionStatus;
 
 /**
  * Created by MEHMET on 31.03.2017.
  */
 
 public class GameActivity extends Activity implements QuizSelectFragment.Listener, GameSelectFragment.Listener, MemoQuestionFragment.MemoInterface, QuizQuestionFragment.QuizInterface {
-
+    private boolean inQuestion = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
@@ -29,9 +30,16 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
     }
 
     public void onBackPressed() {
-        GameController.deleteGame();
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+        if(!inQuestion){
+            GameController.deleteGame();
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }else{
+            if(GameController.getCurrentQuestion().getStatus() == QuestionStatus.ONSTART){
+                GameController.getCurrentQuestion().setStatus(QuestionStatus.PASS);
+            }
+            showQuizSelection();
+        }
     }
 
     public void showScore(){
@@ -50,12 +58,13 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
             ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
-
+            inQuestion=true;
         }
     }
 
     @Override
     public void itemClicked(long id) {
+        inQuestion=false;
         Log.d("item", "clicked");
         View fragmentContainer = findViewById(R.id.fragment_container);
         Fragment fragment;
@@ -75,6 +84,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                     e.printStackTrace();
                 }
                 fragment = new MemoQuestionFragment();
+
             }
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_container, fragment);
@@ -107,6 +117,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
     public void loadNextMemoLevel() {
         if(User.getInstance().getMemoLevel() == 7){
             showScore();
+            inQuestion=false;
         }else{
             itemClicked(1);
         }

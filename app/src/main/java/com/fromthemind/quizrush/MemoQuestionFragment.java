@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,8 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         void loadNextMemoLevel();
         void showScore();
     }
+        private int currentSeconds = 0;
+        private int clickedSeconds = -1;
 
         private ArrayList<Integer> lastSelectedIDs = new ArrayList<>();
         private ArrayList<String> lastSelectedTags = new ArrayList<>();
@@ -43,7 +46,6 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
             User.getInstance().resetLives();
             layout = inflater.inflate(R.layout.fragment_memoquestion, container, false);
-
             initializeTargetFlags();
             initializeAllFlags();
             final Handler handler = new Handler();
@@ -54,8 +56,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             }
 
             },5000);
-
-
+            questionTime();
             return layout;
         }
 
@@ -101,6 +102,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         if(lastSelectedIDs.size()==0){
             lastSelectedIDs.add(id);
             lastSelectedTags.add(currentTag);
+            clickedSeconds = currentSeconds;
         }else if(lastSelectedIDs.size()==1){
             if(lastSelectedIDs.get(0)==id&&!lastSelectedTags.get(0).equals(currentTag)){
                 lastSelectedIDs.clear();
@@ -113,13 +115,14 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                     MemoInterface activity = (MemoInterface) getActivity();
                     activity.loadNextMemoLevel();
                 }
-
+                clickedSeconds=-1;
             }else if(lastSelectedIDs.get(0)==id&&lastSelectedTags.get(0).equals(currentTag)){
             }else{
                 lastSelectedIDs.add(id);
                 lastSelectedTags.add(currentTag);
                 User.getInstance().loseLife();
                 updateHearts();
+                clickedSeconds=-1;
             }
         }else if(lastSelectedIDs.size()==2){
             if(!lastSelectedTags.contains(currentTag)){
@@ -213,5 +216,32 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             iv.setTag("target"+targetFlags[i]);
             targets.addView(iv);
         }
+    }
+
+    public void questionTime(){
+        final Handler handler =  new  Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                currentSeconds++;
+                if(clickedSeconds!=-1){
+                    if(currentSeconds-clickedSeconds>=5){
+                        ImageView lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(0));
+                        lastImageView.setImageResource(R.mipmap.secret);
+                        lastImageView.setImageResource(R.mipmap.secret);
+                        if(lastSelectedTags.size()==2){
+                            lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(1));
+                            lastImageView.setImageResource(R.mipmap.secret);
+                            lastImageView.setImageResource(R.mipmap.secret);
+                        }
+                        lastSelectedIDs.clear();
+                        lastSelectedTags.clear();
+                        clickedSeconds=-1;
+                    }
+                }
+
+                handler.postDelayed(this, 1000);
+            }
+        });
     }
 }
