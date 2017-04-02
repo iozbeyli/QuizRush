@@ -184,6 +184,7 @@ public class QuizSelectFragment extends Fragment implements View.OnClickListener
             return;
 
         GameController.setCurrentQuestion(category,question);
+        Log.d("question", GameController.getCurrentQuestion().toString());
         listener.questionSelect();
     }
 

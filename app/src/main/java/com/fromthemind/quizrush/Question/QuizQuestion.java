@@ -12,7 +12,7 @@ public class QuizQuestion extends Question{
     private int correctAnswerIndex;
 
     public QuizQuestion(int time, String definition, int value){
-        super(value, time);
+        super(time, value);
         this.definition = definition;
         options = new String[4];
     }

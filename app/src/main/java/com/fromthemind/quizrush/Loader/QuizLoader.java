@@ -1,5 +1,7 @@
 package com.fromthemind.quizrush.Loader;
 
+import android.util.Log;
+
 import com.fromthemind.quizrush.Category.QuizCategory;
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.QuizGame;
@@ -60,6 +62,7 @@ public class QuizLoader extends GameLoader{
                 Element question = (Element) questions.item(i);
                 String definition = question.getAttribute("definition");
                 int time  = Integer.parseInt(question.getAttribute("time"));
+                Log.d("xmlTime", ""+time);
                 QuizQuestion que = new QuizQuestion(time, definition, 100*(i+1));
 
                 NodeList options = (NodeList) question.getElementsByTagName("option");

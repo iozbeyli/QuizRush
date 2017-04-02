@@ -1,5 +1,7 @@
 package com.fromthemind.quizrush.Game;
 
+import android.util.Log;
+
 import com.fromthemind.quizrush.Category.Category;
 import com.fromthemind.quizrush.Question.Question;
 
@@ -37,6 +39,7 @@ public class Game {
 
     protected void setCurrentQuestion(int category,int question){
         currentQuestion=getCategory(category).getQuestion(question);
+        Log.d("GAme", currentQuestion.toString());
     }
 
     protected Question getCurrentQuestion(){

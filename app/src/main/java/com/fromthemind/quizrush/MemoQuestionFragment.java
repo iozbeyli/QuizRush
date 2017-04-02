@@ -36,6 +36,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         private ArrayList<String> lastSelectedTags = new ArrayList<>();
         private ArrayList<ImageView> boardImages = new ArrayList<>();
         private ArrayList<Integer> found=new ArrayList<>();
+        private ArrayList<String> foundTags = new ArrayList<>();
         private LinearLayout.LayoutParams horizontalParams = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT);
         private LinearLayout.LayoutParams verticalParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,0);
 
@@ -78,8 +79,27 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
 
         @Override
         public void onSaveInstanceState(Bundle savedInstanceState){
-
+            savedInstanceState.putStringArrayList("foundTags",foundTags);
         }
+        @Override
+        public void onActivityCreated(Bundle savedInstanceState){
+         super.onActivityCreated(savedInstanceState);
+            if(savedInstanceState!=null){
+                foundTags = savedInstanceState.getStringArrayList("foundTags");
+                for (int i = 0; i < boardImages.size() ; i++) {
+                    boardImages.get(i).setImageResource(R.mipmap.secret);
+                }
+
+                for (int i = 0; i < foundTags.size(); i++) {
+                    ImageView iv = (ImageView) layout.findViewWithTag(foundTags.get(i));
+                    int id = iv.getId();
+                    String imageID = "flag_"+id;
+                    int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
+                    iv.setImageResource(resID);
+                }
+
+            }
+         }
 
 
     @Override
@@ -98,6 +118,8 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
         iv.setImageResource(resID);
         String currentTag = (String)view.getTag();
+        if(foundTags.contains(currentTag))
+            return;
 
         if(lastSelectedIDs.size()==0){
             lastSelectedIDs.add(id);
@@ -106,10 +128,12 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         }else if(lastSelectedIDs.size()==1){
             if(lastSelectedIDs.get(0)==id&&!lastSelectedTags.get(0).equals(currentTag)){
                 lastSelectedIDs.clear();
-                lastSelectedTags.clear();
                 User.getInstance().addScore(100);
                 changeScoreText();
                 found.add(id);
+                foundTags.add(currentTag);
+                foundTags.add(lastSelectedTags.get(0));
+                lastSelectedTags.clear();
                 if(found.size() == GameController.getMemoBoard().getBoardSize()){
                     User.getInstance().levelUpMemo();
                     MemoInterface activity = (MemoInterface) getActivity();
@@ -126,16 +150,18 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             }
         }else if(lastSelectedIDs.size()==2){
             if(!lastSelectedTags.contains(currentTag)){
-                ImageView lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(0));
-                lastImageView.setImageResource(R.mipmap.secret);
-                lastImageView.setImageResource(R.mipmap.secret);
-                lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(1));
-                lastImageView.setImageResource(R.mipmap.secret);
-                lastImageView.setImageResource(R.mipmap.secret);
-                lastSelectedIDs.clear();
-                lastSelectedTags.clear();
-                lastSelectedIDs.add(id);
-                lastSelectedTags.add(currentTag);
+                if(!foundTags.contains(lastSelectedTags.get(0)) || !foundTags.contains(lastSelectedTags.get(1))) {
+                    ImageView lastImageView = (ImageView) layout.findViewWithTag(lastSelectedTags.get(0));
+                    lastImageView.setImageResource(R.mipmap.secret);
+                    lastImageView.setImageResource(R.mipmap.secret);
+                    lastImageView = (ImageView) layout.findViewWithTag(lastSelectedTags.get(1));
+                    lastImageView.setImageResource(R.mipmap.secret);
+                    lastImageView.setImageResource(R.mipmap.secret);
+                    lastSelectedIDs.clear();
+                    lastSelectedTags.clear();
+                    lastSelectedIDs.add(id);
+                    lastSelectedTags.add(currentTag);
+                }
             }
         }
     }
@@ -226,14 +252,19 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 currentSeconds++;
                 if(clickedSeconds!=-1){
                     if(currentSeconds-clickedSeconds>=5){
-                        ImageView lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(0));
-                        lastImageView.setImageResource(R.mipmap.secret);
-                        lastImageView.setImageResource(R.mipmap.secret);
-                        if(lastSelectedTags.size()==2){
+                        ImageView lastImageView;
+                        if(!foundTags.contains(lastSelectedTags.get(0))){
+                            lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(0));
+                            lastImageView.setImageResource(R.mipmap.secret);
+                            lastImageView.setImageResource(R.mipmap.secret);
+                        }
+                        if(lastSelectedTags.size()==2 && !foundTags.contains(lastSelectedTags.get(1))){
                             lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(1));
                             lastImageView.setImageResource(R.mipmap.secret);
                             lastImageView.setImageResource(R.mipmap.secret);
                         }
+                        User.getInstance().loseLife();
+                        updateHearts();
                         lastSelectedIDs.clear();
                         lastSelectedTags.clear();
                         clickedSeconds=-1;

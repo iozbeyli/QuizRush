@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,9 @@ public class QuizQuestionFragment extends Fragment implements View.OnClickListen
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentQuestion = GameController.getCurrentQuestion();
+        currentTime=currentQuestion.getTime();
+        Log.d("time", ""+currentTime);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -70,8 +74,6 @@ public class QuizQuestionFragment extends Fragment implements View.OnClickListen
     public void onStart(){
         super.onStart();
         initColors();
-        currentQuestion = GameController.getCurrentQuestion();
-        currentTime=currentQuestion.getTime();
         setChronometer();
         setQuestionText();
         setOptionButtons();
@@ -97,11 +99,12 @@ public class QuizQuestionFragment extends Fragment implements View.OnClickListen
         savedInstanceState.putInt("currentTime",currentTime);
     }
 
-    /*@Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        super.onRestoreInstanceState(savedInstanceState);
-        currentTime = savedInstanceState.getInt("currentTime");
-    }*/
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState){
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState!=null)
+            currentTime = savedInstanceState.getInt("currentTime");
+    }
 
 
     public void update(Button selected, Button correct) {

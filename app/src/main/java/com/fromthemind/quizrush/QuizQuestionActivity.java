@@ -31,4 +31,9 @@ public class QuizQuestionActivity extends Activity implements QuizQuestionFragme
             GameController.getCurrentQuestion().setStatus(QuestionStatus.PASS);
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 }
