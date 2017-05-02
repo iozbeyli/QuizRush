@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "994971019920",
+    "firebase_url": "https://quiz-6b08b.firebaseio.com",
+    "project_id": "quiz-6b08b",
+    "storage_bucket": "quiz-6b08b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994971019920:android:4ef737fe4d435ddd",
+        "android_client_info": {
+          "package_name": "com.fromthemind.quizrush"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994971019920-evhri3uq98jerqm56op9uap6nksglh0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6jaDGZs4PJ-QnAfCOfZlVvISaA7BUYts"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
