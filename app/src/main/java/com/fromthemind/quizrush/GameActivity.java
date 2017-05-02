@@ -32,7 +32,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
     public void onBackPressed() {
         if(!inQuestion){
             GameController.deleteGame();
-            Intent intent = new Intent(this,MainActivity.class);
+            Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
         }else{
             if(GameController.getCurrentQuestion().getStatus() == QuestionStatus.ONSTART){

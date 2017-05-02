@@ -20,18 +20,18 @@ public class ScoreActivity extends Activity {
         scoreText.setText(""+score);
 
         TextView nicknameText = (TextView) findViewById(R.id.nickname);
-        String nick = User.getInstance().getNickname();
+        String nick = User.getInstance().getUsername();
         nicknameText.setText(nick);
 
     }
 
     public void onClickStart(View view){
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
     }
 
     public void onBackPressed() {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
     }
 }

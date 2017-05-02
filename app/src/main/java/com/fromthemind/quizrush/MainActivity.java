@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.fromthemind.quizrush.Game.GameController;
-import com.fromthemind.quizrush.Game.GameType;
 import com.fromthemind.quizrush.Loader.GameLoader;
 
 public class MainActivity extends Activity {
@@ -57,7 +55,7 @@ public class MainActivity extends Activity {
             return;
         }
         User.deleteUser();
-        User.getInstance().setNickname(nick);
+        User.getInstance().setUsername(nick);
         boolean status = User.getInstance().repOK();
 
         if(!status) {

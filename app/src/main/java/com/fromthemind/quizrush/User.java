@@ -1,17 +1,22 @@
 package com.fromthemind.quizrush;
 
 
-import android.util.Log;
-
 /**
  * Created by Melih on 24.02.2017.
  */
 
 public class User {
-    private String nickname;
+
+
+    private String username;
+    private String name;
+    private String surname;
+    private String city;
+    private String password;
     private int score=0;
     private int lives = 4;
     private int memoLevel = 4;
+
     private static User instance=null;
     public static User getInstance(){
         if(instance==null){
@@ -19,34 +24,86 @@ public class User {
         }
         return instance;
     }
+    public static void setInstance(User user){
+        instance=user;
+    }
     private User(){}
+    public User(String username,String name,String surname,String city, String password , int score, int lives,int memoLevel){
+        this.username=username;
+        this.name=name;
+        this.surname=surname;
+        this.city=city;
+        this.password=password;
+        this.score=score;
+        this.lives=lives;
+        this.memoLevel=memoLevel;
+    }
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     protected static void deleteUser(){
         instance=null;
     }
 
-    protected void setNickname(String nickname){
-        this.nickname=nickname;
+    protected void setUsername(String username){
+        this.username =username;
     }
 
-    protected String getNickname(){
-        return nickname;
+    protected String getUsername(){
+        return username;
     }
 
-    protected void setScore(int score){
-        this.score=score;
+    public void setMemoLevel(int memoLevel) {
+        this.memoLevel = memoLevel;
     }
 
     protected void addScore(int score){
         this.score+=score;
     }
-
     protected int getScore(){
         return score;
     }
 
     protected int getLives(){
         return lives;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     protected void loseLife(){
@@ -67,12 +124,26 @@ public class User {
     }
 
     public boolean repOK() {
-        if(nickname == null || nickname.isEmpty())
+        if(username == null || username.isEmpty())
             return false;
 
         if(score<0)
             return false;
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", city='" + city + '\'' +
+                ", password='" + password + '\'' +
+                ", score=" + score +
+                ", lives=" + lives +
+                ", memoLevel=" + memoLevel +
+                '}';
     }
 }
