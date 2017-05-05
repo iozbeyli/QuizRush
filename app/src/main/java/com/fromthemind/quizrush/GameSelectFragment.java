@@ -22,7 +22,7 @@ public class GameSelectFragment extends ListFragment {
     private Listener listener;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        String[] gameLabels = {"QuizGame Rush", "Memoli"};
+        String[] gameLabels = {"QuizGame Rush", "Memoli","Friends"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 inflater.getContext(),
                 android.R.layout.simple_list_item_1,

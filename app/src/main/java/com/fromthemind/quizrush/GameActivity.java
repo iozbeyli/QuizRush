@@ -77,7 +77,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                 }
                 fragment = new QuizSelectFragment();
 
-            }else{
+            }else if(id==1){
                 try {
                     GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
                 } catch (Exception e) {
@@ -85,6 +85,8 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                 }
                 fragment = new MemoQuestionFragment();
 
+            }else{
+                fragment = new FriendFragment();
             }
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_container, fragment);
@@ -101,13 +103,16 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                 Intent intent = new Intent(this,QuizSelectionActivity.class);
                 startActivity(intent);
 
-            }else{
+            }else if(id==1){
                 try {
                     GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(this,MemoActivity.class);
+                startActivity(intent);
+            }else{
+                Intent intent = new Intent(this,FriendActivity.class);
                 startActivity(intent);
             }
         }

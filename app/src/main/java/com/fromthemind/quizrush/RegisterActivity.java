@@ -3,6 +3,7 @@ package com.fromthemind.quizrush;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -204,12 +205,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
             //mAuthTask.execute((Void) null);
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference userRef = database.getReference("user");
-            User.getInstance().setUsername(username);
-            User.getInstance().setName(name);
-            User.getInstance().setSurname(surname);
-            User.getInstance().setCity(city);
-            User.getInstance().setPassword(password);
-            userRef.child(username).setValue(User.getInstance());
+
+            userRef.child(username).setValue(new User(username,name,surname,city, password , 0, 4,4));
             userRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -222,6 +219,8 @@ public class RegisterActivity extends AppCompatActivity implements LoaderCallbac
                             snapshot.getValue().toString(),
                             Toast.LENGTH_LONG).show();
                             showProgress(false);
+                        Intent in = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(in);
                     }
 
                 }

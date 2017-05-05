@@ -2,12 +2,21 @@ package com.fromthemind.quizrush.Loader;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.support.annotation.NonNull;
+import android.util.Log;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 
@@ -22,7 +31,7 @@ public class GameLoader {
 
     private static GameLoader instance;
     private static Context context;
-
+    private static String dataRaw = "";
     protected GameLoader() {}
 
     /**
@@ -43,13 +52,25 @@ public class GameLoader {
         return context;
     }
 
-    protected Document getDocument(String DocLocation, AssetManager am){
+    protected Document loadDocument(String DocLocation){
         Document doc = null;
         try {
-            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            String theString = IOUtils.toString(am.open(DocLocation), "UTF-8");
+            FirebaseStorage fs = FirebaseStorage.getInstance();
+            Log.d("Firebase read File1", "onSuccess: "+fs);
+            StorageReference sf = fs.getReference().child(DocLocation);
+            Log.d("Firebase read File2", "onSuccess: "+sf);
 
-            InputSource iso = new InputSource(new StringReader(theString));
+
+            final long ONE_MB = 1024*1024;
+            Task<byte[]> task = sf.getBytes(ONE_MB);
+
+            while(!task.isComplete()){
+
+            }
+            dataRaw = IOUtils.toString(task.getResult(), "UTF-8");
+            Log.d("Comm", "getDocument: "+task);
+            DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            InputSource iso = new InputSource(new StringReader(dataRaw));
             doc = dBuilder.parse(iso);
         } catch (ParserConfigurationException e) {
             // TODO Auto-generated catch block
@@ -57,7 +78,7 @@ public class GameLoader {
         } catch (SAXException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }

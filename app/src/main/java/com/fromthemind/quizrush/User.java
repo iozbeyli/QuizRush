@@ -1,6 +1,8 @@
 package com.fromthemind.quizrush;
 
 
+import java.util.List;
+
 /**
  * Created by Melih on 24.02.2017.
  */
@@ -8,14 +10,31 @@ package com.fromthemind.quizrush;
 public class User {
 
 
-    private String username;
-    private String name;
-    private String surname;
-    private String city;
-    private String password;
-    private int score=0;
-    private int lives = 4;
-    private int memoLevel = 4;
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
+
+    public void setFriends(List<String> friends) {
+        this.friends = friends;
+    }
+
+    public List<String> friends;
+    public String username;
+    public String name;
+    public String surname;
+    public String city;
+    public String password;
+    public int score=0;
+    public int lives = 4;
+    public int memoLevel = 4;
 
     private static User instance=null;
     public static User getInstance(){
@@ -58,13 +77,6 @@ public class User {
         instance=null;
     }
 
-    protected void setUsername(String username){
-        this.username =username;
-    }
-
-    protected String getUsername(){
-        return username;
-    }
 
     public void setMemoLevel(int memoLevel) {
         this.memoLevel = memoLevel;
@@ -73,11 +85,11 @@ public class User {
     protected void addScore(int score){
         this.score+=score;
     }
-    protected int getScore(){
+    public int getScore(){
         return score;
     }
 
-    protected int getLives(){
+    public int getLives(){
         return lives;
     }
 
@@ -115,7 +127,7 @@ public class User {
         resetLives();
     }
 
-    protected int getMemoLevel(){
+    public int getMemoLevel(){
         return memoLevel;
     }
 

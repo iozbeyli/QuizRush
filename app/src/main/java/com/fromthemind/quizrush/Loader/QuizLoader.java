@@ -44,11 +44,10 @@ public class QuizLoader extends GameLoader{
      *             corrupted, or not in proper format.
      */
     public void loadGame(QuizGame game) {
-        Document doc = getDocument("game.xml", getContext().getAssets());
+        prepareGame(loadDocument("game.xml"));
+    }
 
-        // optional, but recommended
-        // loadGame this -
-        // http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work
+    public void prepareGame(Document doc){
         doc.getDocumentElement().normalize();
         NodeList categories = doc.getElementsByTagName("category");
 
