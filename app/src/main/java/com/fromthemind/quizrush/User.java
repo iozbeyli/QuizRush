@@ -1,6 +1,17 @@
 package com.fromthemind.quizrush;
 
 
+import android.util.Log;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,15 +29,15 @@ public class User {
         this.username = username;
     }
 
-    public List<String> getFriends() {
+    public ArrayList<String> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<String> friends) {
+    public void setFriends(ArrayList<String> friends) {
         this.friends = friends;
     }
 
-    public List<String> friends;
+    public ArrayList<String> friends;
     public String username;
     public String name;
     public String surname;
@@ -157,5 +168,32 @@ public class User {
                 ", lives=" + lives +
                 ", memoLevel=" + memoLevel +
                 '}';
+    }
+
+    public static void updateInstance(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("user");
+        Query queryRef = userRef.orderByChild("username").equalTo(instance.username);
+        queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot == null || snapshot.getValue() == null){
+                    Log.wtf("username", "error for friend listing");
+
+                }
+                else {
+                    User the = snapshot.child(instance.username).getValue(User.class);
+
+                    User.setInstance(the);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -38,9 +38,10 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="Username"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
+                    android:text="berk"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -59,6 +60,7 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:text="berkberk"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>

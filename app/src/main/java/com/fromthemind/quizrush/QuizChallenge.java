@@ -41,6 +41,10 @@ public class QuizChallenge {
     public String challengee = "";
     public int score_er = 0;
     public int score_ee = 0;
-    public QuizChallenge() {
+    public QuizChallenge(String challenger,int score_er,String challengee,int score_ee) {
+        this.challenger = challenger;
+        this.score_er=score_er;
+        this.challengee=challengee;
+        this.score_ee = score_ee;
     }
 }

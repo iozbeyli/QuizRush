@@ -100,7 +100,9 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Intent intent = new Intent(this,QuizSelectionActivity.class);
+                //Intent intent = new Intent(this,QuizSelectionActivity.class);
+                //startActivity(intent);
+                Intent intent = new Intent(this,ScoreActivity.class);
                 startActivity(intent);
 
             }else if(id==1){

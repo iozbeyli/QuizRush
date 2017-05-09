@@ -13,11 +13,11 @@
     <EditText
         android:id="@+id/add_friend_edit_text"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:text=""
         android:ems="10"
+        android:gravity="center_horizontal"
         android:hint="Username"
         android:maxLength="10"
         android:textColorLink="@color/colorAccent"
@@ -31,13 +31,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Add Friend"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Friends"
         />
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list"
@@ -49,6 +55,7 @@
         app:layoutManager="LinearLayoutManager"
         tools:listitem="@layout/fragment_friend"
         />
+    </ScrollView>
 
 </LinearLayout>
 

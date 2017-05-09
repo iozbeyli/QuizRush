@@ -2,61 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_question"
+    android:id="@+id/activity_score"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:weightSum="6"
     android:orientation="vertical"
     android:gravity="center"
     tools:context="com.fromthemind.quizrush.ScoreActivity">
-
-    <TextView
-        android:id="@+id/nickname"
-        android:text="Nickname"
+    <ScrollView
+        android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="40sp" />
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
-    <TextView
-        android:id="@+id/scoreText"
-        android:text="Score"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:textSize="50sp" />
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:weightSum="3"
-        android:gravity="center">
-        <Button
-            android:id="@+id/button"
-            android:text="Start"
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            android:onClick="onClickStart" />
-    </LinearLayout>
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/nickname"
+                android:text="Nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="40sp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/scoreText"
+                android:text="Score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="50sp" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <Button
+                android:id="@+id/challengeButton"
+                android:text="Challenge A Friend"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorPrimary"
+                android:onClick="onClickChallenge" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="6dp"/>
+            <FrameLayout
+                android:id="@+id/challengeFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                ></FrameLayout>
+            <Button
+                android:id="@+id/button"
+                android:text="Start"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/colorAccent"
+                android:onClick="onClickStart" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
