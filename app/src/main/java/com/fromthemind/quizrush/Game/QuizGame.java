@@ -2,20 +2,21 @@ package com.fromthemind.quizrush.Game;
 
 import com.fromthemind.quizrush.Loader.QuizLoader;
 import com.fromthemind.quizrush.Challenge;
+import com.fromthemind.quizrush.QuizChallenge;
 
 /**
  * Created by Melih on 24.03.2017.
  */
 
-public class QuizGame extends Game{
+public class QuizGame extends Game implements Challengable<QuizChallenge>{
 
-    protected Challenge challenge = null;
+    protected QuizChallenge challenge = null;
 
     protected QuizGame(){
         super(GameType.QUIZ);
     }
 
-    protected QuizGame(Challenge challenge){
+    protected QuizGame(QuizChallenge challenge){
         super(GameType.QUIZ);
         this.challenge = challenge;
     }
@@ -24,4 +25,13 @@ public class QuizGame extends Game{
         QuizLoader.getInstance().loadGame(this);
     }
 
+    @Override
+    public boolean hasChallenge() {
+        return challenge!=null;
+    }
+
+    @Override
+    public QuizChallenge getChallenge() {
+        return challenge;
+    }
 }
