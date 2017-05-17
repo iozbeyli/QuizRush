@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fromthemind.quizrush.Game.GameController;
+import com.fromthemind.quizrush.Game.MemoGame;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,30 +65,59 @@ public class ScoreActivity extends Activity implements ClickListener{
     public void onClickButton(String challengee, int score) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference challengesRef = database.getReference("challenges");
-        String key = challengesRef.push().getKey();
+        if(GameController.getGame() instanceof MemoGame){
+            DatabaseReference challengesRef = database.getReference("memoChallenges");
+            String key = challengesRef.push().getKey();
 
-        Challenge post = new Challenge(User.getInstance().getUsername(), score, challengee, -1);
-        challengesRef.child(key).setValue(post);
-        challengesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot == null || snapshot.getValue() == null){
-                    Toast.makeText(ScoreActivity.this,
-                            "No record found",
+            Challenge post = new MemoChallenge(User.getInstance().getUsername(), score, challengee, -1,GameController.getMemoBoard().getTargets(),GameController.getMemoBoard().getFlags());
+            challengesRef.child(key).setValue(post);
+            challengesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot == null || snapshot.getValue() == null){
+                        Toast.makeText(ScoreActivity.this,
+                                "No record found",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else {Toast.makeText(ScoreActivity.this,
+                            snapshot.getValue().toString(),
                             Toast.LENGTH_LONG).show();
-                }
-                else {Toast.makeText(ScoreActivity.this,
-                        snapshot.getValue().toString(),
-                        Toast.LENGTH_LONG).show();
                         //showProgress(false);
+                    }
+
                 }
 
-            }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+        }else{
+            DatabaseReference challengesRef = database.getReference("challenges");
+            String key = challengesRef.push().getKey();
 
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
+            Challenge post = new QuizChallenge(User.getInstance().getUsername(), score, challengee, -1);
+            challengesRef.child(key).setValue(post);
+            challengesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot == null || snapshot.getValue() == null){
+                        Toast.makeText(ScoreActivity.this,
+                                "No record found",
+                                Toast.LENGTH_LONG).show();
+                    }
+                    else {Toast.makeText(ScoreActivity.this,
+                            snapshot.getValue().toString(),
+                            Toast.LENGTH_LONG).show();
+                        //showProgress(false);
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+        }
+
     }
 }
