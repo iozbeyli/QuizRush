@@ -1,8 +1,11 @@
 package com.fromthemind.quizrush.Game;
 
 import com.fromthemind.quizrush.Category.Category;
+import com.fromthemind.quizrush.Challenge;
+import com.fromthemind.quizrush.MemoChallenge;
 import com.fromthemind.quizrush.Question.MemoBoard;
 import com.fromthemind.quizrush.Question.Question;
+import com.fromthemind.quizrush.QuizChallenge;
 
 /**
  * Created by Melih on 24.02.2017.
@@ -25,15 +28,15 @@ public class GameController {
 
     public static Game getGame() { return game;}
 
-    public static void loadGame(GameType type) throws Exception {
+    public static void loadGame(GameType type, Challenge challenge) throws Exception {
         switch (type){
             case QUIZ:
-                game = new QuizGame();
+                game = new QuizGame((QuizChallenge) challenge);
                 ((QuizGame)game).load();
                 break;
 
             case MEMO:
-                game = new MemoGame(4);
+                game = new MemoGame(4,(MemoChallenge)challenge);
                 ((MemoGame)game).load();
                 break;
 
@@ -50,7 +53,7 @@ public class GameController {
                 break;
 
             case MEMO:
-                game = new MemoGame(size);
+                game = new MemoGame(size, null);
                 ((MemoGame)game).load();
                 break;
 
@@ -58,6 +61,8 @@ public class GameController {
                 throw new Exception("Unknown Game Type");
         }
     }
+
+
 
     public static Category[] getCategories(){
         return game.getCategories();

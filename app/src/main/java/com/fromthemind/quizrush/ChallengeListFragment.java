@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fromthemind.quizrush.Game.GameController;
+import com.fromthemind.quizrush.Game.GameType;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -81,7 +83,14 @@ public class ChallengeListFragment extends Fragment {
             @Override
             public void onListFragmentInteraction(RushListItem<QuizChallenge> item) {
                 Log.d("clicked", "onListFragmentInteraction: "+item.rushItem().challenger);
+                try {
+                    GameController.loadGame(GameType.QUIZ, item.rushItem());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                ((ChallengeListActivity) getActivity()).goQuiz();
             }
+
         };
     }
 
@@ -161,7 +170,7 @@ public class ChallengeListFragment extends Fragment {
                         }
 
 
-                        recyclerView.setAdapter(new RushRecyclerViewAdapter(hm, mListener));
+                        recyclerView.setAdapter(new RushRecyclerViewAdapter(hm, null));
                     }
                 }
             }

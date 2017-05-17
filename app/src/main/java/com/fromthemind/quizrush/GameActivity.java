@@ -71,7 +71,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
         if(fragmentContainer != null){
             if(id == 0){
                 try {
-                    GameController.loadGame(GameType.QUIZ);
+                    GameController.loadGame(GameType.QUIZ, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -96,14 +96,14 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
         }else{
             if(id == 0){
                 try {
-                    GameController.loadGame(GameType.QUIZ);
+                    GameController.loadGame(GameType.QUIZ, null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //Intent intent = new Intent(this,QuizSelectionActivity.class);
-                //startActivity(intent);
-                Intent intent = new Intent(this,ScoreActivity.class);
+                Intent intent = new Intent(this,QuizSelectionActivity.class);
                 startActivity(intent);
+                //Intent intent = new Intent(this,ScoreActivity.class);
+                //startActivity(intent);
 
             }else if(id==1){
                 try {

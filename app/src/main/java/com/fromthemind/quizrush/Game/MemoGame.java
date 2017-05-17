@@ -1,6 +1,7 @@
 package com.fromthemind.quizrush.Game;
 
 import com.fromthemind.quizrush.Loader.MemoLoader;
+import com.fromthemind.quizrush.MemoChallenge;
 import com.fromthemind.quizrush.Question.MemoBoard;
 import com.fromthemind.quizrush.User;
 
@@ -8,11 +9,13 @@ import com.fromthemind.quizrush.User;
  * Created by Melih on 24.03.2017.
  */
 
-public class MemoGame extends Game{
+public class MemoGame extends Game implements Challengable<MemoChallenge>{
     private MemoBoard board;
-    protected MemoGame(int boardSize){
+    private MemoChallenge challenge;
+    protected MemoGame(int boardSize, MemoChallenge challenge){
         super(GameType.MEMO);
         board = new MemoBoard(boardSize);
+        this.challenge = challenge;
     }
 
     protected void load(){
@@ -25,5 +28,15 @@ public class MemoGame extends Game{
 
     protected MemoBoard getBoard(){
         return board;
+    }
+
+    @Override
+    public boolean hasChallenge() {
+        return challenge != null;
+    }
+
+    @Override
+    public MemoChallenge getChallenge() {
+        return challenge;
     }
 }
