@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.fromthemind.quizrush.ChallengeListFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Received Challenges"
+        android:textSize="25dp"
+        android:gravity="center"/>
 
     <ScrollView
         android:id="@+id/ee_scroll"
@@ -34,15 +37,27 @@
             />
     </ScrollView>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:padding="10dp"
+        android:background="@android:color/darker_gray"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sent Challenges"
+            android:textSize="25dp"
+            android:gravity="center"/>
     <ScrollView
         android:id="@+id/er_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/er_list"

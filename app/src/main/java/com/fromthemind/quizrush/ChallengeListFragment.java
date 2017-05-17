@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fromthemind.quizrush.dummy.DummyItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -68,8 +67,33 @@ public class ChallengeListFragment extends Fragment {
                              Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment_challenge_list, container, false);
 
+        list_ee();
+        list_er();
+
+        return layout;
+    }
+
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<Challenge>() {
+            @Override
+            public void onListFragmentInteraction(RushListItem<Challenge> item) {
+                Log.d("clicked", "onListFragmentInteraction: "+item.rushItem().challenger);
+            }
+        };
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public void list_ee(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query ee_query = database.getReference("challenges").orderByChild("challenger").equalTo(User.getInstance().getUsername());
+        Query ee_query = database.getReference("challenges").orderByChild("challenge").equalTo(User.getInstance().getUsername());
         ee_query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -79,6 +103,7 @@ public class ChallengeListFragment extends Fragment {
                 }
                 else {
                     RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.ee_list);
+
                     // Set the adapter
                     if (recyclerView instanceof RecyclerView) {
                         Context context = layout.getContext();
@@ -91,7 +116,7 @@ public class ChallengeListFragment extends Fragment {
 
                         ArrayList<RushListItem> hm = new ArrayList<RushListItem>();
                         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                            hm.add(postSnapshot.getValue(QuizChallenge.class));
+                            hm.add(postSnapshot.getValue(Challenge.class));
                         }
 
 
@@ -105,22 +130,47 @@ public class ChallengeListFragment extends Fragment {
             public void onCancelled(DatabaseError error) {
             }
         });
-
-
-        return layout;
     }
 
+    public void list_er(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        Query ee_query = database.getReference("challenges").orderByChild("challenger").equalTo(User.getInstance().getUsername());
+        ee_query.addListenerForSingleValueEvent(new ValueEventListener() {
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot == null || snapshot.getValue() == null){
+                    Log.wtf("username", "no record after friend add");
+                }
+                else {
+                    RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.er_list);
 
-    }
+                    // Set the adapter
+                    if (recyclerView instanceof RecyclerView) {
+                        Context context = layout.getContext();
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+                        if (mColumnCount <= 1) {
+                            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                        } else {
+                            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                        }
+
+                        ArrayList<RushListItem> hm = new ArrayList<RushListItem>();
+                        for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                            hm.add(postSnapshot.getValue(Challenge.class));
+                        }
+
+
+                        recyclerView.setAdapter(new RushRecyclerViewAdapter(hm, mListener));
+                    }
+                }
+            }
+
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
     }
 
 }

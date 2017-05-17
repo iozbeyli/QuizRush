@@ -14,8 +14,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.fromthemind.quizrush.R.id.username;
-
 /**
  * Created by Melih on 27.02.2017.
  */
@@ -68,7 +66,7 @@ public class ScoreActivity extends Activity implements ClickListener{
         DatabaseReference challengesRef = database.getReference("challenges");
         String key = challengesRef.push().getKey();
 
-        QuizChallenge post = new QuizChallenge(User.getInstance().getUsername(), score, challengee, -1);
+        Challenge post = new Challenge(User.getInstance().getUsername(), score, challengee, -1);
         challengesRef.child(key).setValue(post);
         challengesRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

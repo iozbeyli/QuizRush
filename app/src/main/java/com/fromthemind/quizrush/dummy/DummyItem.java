@@ -6,7 +6,7 @@ import com.fromthemind.quizrush.RushListItem;
  * Created by MEHMET on 17.05.2017.
  */
 
-public class DummyItem implements RushListItem {
+public class DummyItem implements RushListItem<DummyItem> {
 
     public DummyItem(String content) {
         this.content = content;
@@ -24,5 +24,10 @@ public class DummyItem implements RushListItem {
 
     public String getVisibleContent(){
         return content;
+    }
+
+    @Override
+    public DummyItem rushItem() {
+        return this;
     }
 }
