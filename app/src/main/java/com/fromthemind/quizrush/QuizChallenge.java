@@ -4,7 +4,7 @@ package com.fromthemind.quizrush;
  * Created by MEHMET on 5.05.2017.
  */
 
-public class QuizChallenge {
+public class QuizChallenge implements RushListItem{
     public String getChallenger() {
         return challenger;
     }
@@ -46,5 +46,16 @@ public class QuizChallenge {
         this.score_er=score_er;
         this.challengee=challengee;
         this.score_ee = score_ee;
+    }
+
+    public QuizChallenge() {
+
+    }
+    @Override
+    public String getVisibleContent() {
+        return "Challenger: "+challenger
+                +"\nChallengee: "+challengee
+                +"\nscore_er: "+score_er
+                +"\nscore_ee: "+score_ee;
     }
 }

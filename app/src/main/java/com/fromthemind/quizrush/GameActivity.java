@@ -114,7 +114,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                 Intent intent = new Intent(this,MemoActivity.class);
                 startActivity(intent);
             }else{
-                Intent intent = new Intent(this,FriendActivity.class);
+                Intent intent = new Intent(this,ChallengeListActivity.class);
                 startActivity(intent);
             }
         }

@@ -1,7 +1,6 @@
 package com.fromthemind.quizrush;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,35 +12,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.fromthemind.quizrush.Loader.GameLoader;
-import com.fromthemind.quizrush.dummy.DummyContent;
-import com.fromthemind.quizrush.dummy.DummyContent.DummyItem;
+import com.fromthemind.quizrush.dummy.DummyItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Collections;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class FriendFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private RushRecyclerViewAdapter.OnListFragmentInteractionListener mListener;
     private View layout;
     private ClickListener listener=null;
     private String buttonText=null;
@@ -147,10 +136,6 @@ public class FriendFragment extends Fragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(String item);
-    }
 
     public void updateLayout(){
         RecyclerView recyclerView = (RecyclerView) layout.findViewById(R.id.list);
@@ -165,8 +150,14 @@ public class FriendFragment extends Fragment {
             }
 
             ArrayList<String> hm = User.getInstance().getFriends();
+            ArrayList<RushListItem> list = new ArrayList<RushListItem>();
+            for (String s: hm) {
+                RushListItem r = new DummyItem(s);
+                list.add(r);
+            }
 
-            recyclerView.setAdapter(new UrFriendRecyclerViewAdapter(hm, mListener));
+
+            recyclerView.setAdapter(new RushRecyclerViewAdapter(list, mListener));
         }
     }
 

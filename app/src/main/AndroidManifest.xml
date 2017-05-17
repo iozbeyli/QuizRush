@@ -51,6 +51,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FriendActivity"></activity>
+        <activity android:name=".ChallengeListActivity"></activity>
     </application>
 
 </manifest>

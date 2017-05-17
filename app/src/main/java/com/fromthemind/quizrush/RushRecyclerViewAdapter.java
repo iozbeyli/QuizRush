@@ -7,22 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fromthemind.quizrush.FriendFragment.OnListFragmentInteractionListener;
-import com.fromthemind.quizrush.dummy.DummyContent.DummyItem;
-
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
-public class UrFriendRecyclerViewAdapter extends RecyclerView.Adapter<UrFriendRecyclerViewAdapter.ViewHolder> {
+public class RushRecyclerViewAdapter extends RecyclerView.Adapter<RushRecyclerViewAdapter.ViewHolder> {
 
-    private final List<String> mValues;
+    private final List<RushListItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public UrFriendRecyclerViewAdapter(List<String> items, OnListFragmentInteractionListener listener) {
+    public RushRecyclerViewAdapter(List<RushListItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +29,8 @@ public class UrFriendRecyclerViewAdapter extends RecyclerView.Adapter<UrFriendRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        Log.d("Value",mValues.get(position));
-        holder.mContentView.setText(mValues.get(position));
+        Log.d("Value",mValues.get(position).getVisibleContent());
+        holder.mContentView.setText(mValues.get(position).getVisibleContent());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +46,13 @@ public class UrFriendRecyclerViewAdapter extends RecyclerView.Adapter<UrFriendRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return mValues==null ? 0 : mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mContentView;
-        public String mItem;
+        public RushListItem mItem;
 
         public ViewHolder(View view) {
             super(view);
@@ -73,5 +65,10 @@ public class UrFriendRecyclerViewAdapter extends RecyclerView.Adapter<UrFriendRe
         public String toString() {
             return super.toString() + " '" + mContentView.getText() + "'";
         }
+    }
+
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(RushListItem item);
     }
 }

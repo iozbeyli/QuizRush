@@ -37,7 +37,7 @@ public class User {
         this.friends = friends;
     }
 
-    public ArrayList<String> friends;
+    public ArrayList<String> friends = new ArrayList<String>();
     public String username;
     public String name;
     public String surname;
