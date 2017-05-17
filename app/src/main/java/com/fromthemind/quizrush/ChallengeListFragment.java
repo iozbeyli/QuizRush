@@ -77,9 +77,9 @@ public class ChallengeListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<Challenge>() {
+        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<QuizChallenge>() {
             @Override
-            public void onListFragmentInteraction(RushListItem<Challenge> item) {
+            public void onListFragmentInteraction(RushListItem<QuizChallenge> item) {
                 Log.d("clicked", "onListFragmentInteraction: "+item.rushItem().challenger);
             }
         };
@@ -116,7 +116,7 @@ public class ChallengeListFragment extends Fragment {
 
                         ArrayList<RushListItem> hm = new ArrayList<RushListItem>();
                         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                            hm.add(postSnapshot.getValue(Challenge.class));
+                            hm.add(postSnapshot.getValue(QuizChallenge.class));
                         }
 
 
@@ -157,7 +157,7 @@ public class ChallengeListFragment extends Fragment {
 
                         ArrayList<RushListItem> hm = new ArrayList<RushListItem>();
                         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                            hm.add(postSnapshot.getValue(Challenge.class));
+                            hm.add(postSnapshot.getValue(QuizChallenge.class));
                         }
 
 
