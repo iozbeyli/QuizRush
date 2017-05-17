@@ -67,8 +67,8 @@ public class RushRecyclerViewAdapter extends RecyclerView.Adapter<RushRecyclerVi
         }
     }
 
-    public interface OnListFragmentInteractionListener {
+    public interface OnListFragmentInteractionListener<T> {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(RushListItem item);
+        void onListFragmentInteraction(RushListItem<T> item);
     }
 }

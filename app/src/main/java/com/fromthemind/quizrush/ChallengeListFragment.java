@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fromthemind.quizrush.dummy.DummyItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -78,7 +77,12 @@ public class ChallengeListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
+        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<Challenge>() {
+            @Override
+            public void onListFragmentInteraction(RushListItem<Challenge> item) {
+                Log.d("clicked", "onListFragmentInteraction: "+item.rushItem().challenger);
+            }
+        };
     }
 
     @Override
@@ -112,7 +116,7 @@ public class ChallengeListFragment extends Fragment {
 
                         ArrayList<RushListItem> hm = new ArrayList<RushListItem>();
                         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                            hm.add(postSnapshot.getValue(QuizChallenge.class));
+                            hm.add(postSnapshot.getValue(Challenge.class));
                         }
 
 
@@ -153,7 +157,7 @@ public class ChallengeListFragment extends Fragment {
 
                         ArrayList<RushListItem> hm = new ArrayList<RushListItem>();
                         for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                            hm.add(postSnapshot.getValue(QuizChallenge.class));
+                            hm.add(postSnapshot.getValue(Challenge.class));
                         }
 
 
