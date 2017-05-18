@@ -2,9 +2,13 @@ package com.fromthemind.quizrush;
 
 import android.app.Fragment;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +19,15 @@ import android.widget.TextView;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Loader.GameLoader;
+import com.fromthemind.quizrush.SQLite.RushDatabaseHelper;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -39,7 +51,8 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         private ArrayList<String> foundTags = new ArrayList<>();
         private LinearLayout.LayoutParams horizontalParams = new LinearLayout.LayoutParams(0,LinearLayout.LayoutParams.WRAP_CONTENT);
         private LinearLayout.LayoutParams verticalParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,0);
-
+        private Bitmap[][] boardFlagsBitmaps;
+        private Bitmap secret=null;
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
@@ -87,15 +100,14 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             if(savedInstanceState!=null){
                 foundTags = savedInstanceState.getStringArrayList("foundTags");
                 for (int i = 0; i < boardImages.size() ; i++) {
-                    boardImages.get(i).setImageResource(R.mipmap.secret);
+                    //boardImages.get(i).setImageResource(R.mipmap.secret);
+                    drawFlag(boardImages.get(i),"secret",-1,-1);
                 }
 
                 for (int i = 0; i < foundTags.size(); i++) {
-                    ImageView iv = (ImageView) layout.findViewWithTag(foundTags.get(i));
+                    final ImageView iv = (ImageView) layout.findViewWithTag(foundTags.get(i));
                     int id = iv.getId();
-                    String imageID = "flag_"+id;
-                    int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
-                    iv.setImageResource(resID);
+                    drawFlag(iv,"flat_"+id,-1,-1);
                 }
 
             }
@@ -115,9 +127,15 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         }
         ImageView iv = (ImageView)view;
         String imageID = "flag_"+id;
-        int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
-        iv.setImageResource(resID);
+
+        //drawFlag(iv,id);
+        //int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
+        //iv.setImageResource(resID);
         String currentTag = (String)view.getTag();
+        int j = Integer.parseInt(currentTag.substring(4,5));
+        int i = Integer.parseInt(currentTag.substring(6,7));
+        Log.wtf("Indices",""+j+","+i);
+        iv.setImageBitmap(boardFlagsBitmaps[j][i]);
         if(foundTags.contains(currentTag))
             return;
 
@@ -154,11 +172,15 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             if(!lastSelectedTags.contains(currentTag)){
                 if(!foundTags.contains(lastSelectedTags.get(0)) || !foundTags.contains(lastSelectedTags.get(1))) {
                     ImageView lastImageView = (ImageView) layout.findViewWithTag(lastSelectedTags.get(0));
-                    lastImageView.setImageResource(R.mipmap.secret);
-                    lastImageView.setImageResource(R.mipmap.secret);
+                   // lastImageView.setImageResource(R.mipmap.secret);
+                   // lastImageView.setImageResource(R.mipmap.secret);
+                    drawFlag(lastImageView,"secret",-1,-1);
+                    drawFlag(lastImageView,"secret",-1,-1);
                     lastImageView = (ImageView) layout.findViewWithTag(lastSelectedTags.get(1));
-                    lastImageView.setImageResource(R.mipmap.secret);
-                    lastImageView.setImageResource(R.mipmap.secret);
+                   // lastImageView.setImageResource(R.mipmap.secret);
+                   // lastImageView.setImageResource(R.mipmap.secret);
+                    drawFlag(lastImageView,"secret",-1,-1);
+                    drawFlag(lastImageView,"secret",-1,-1);
                     lastSelectedIDs.clear();
                     lastSelectedTags.clear();
                     lastSelectedIDs.add(id);
@@ -196,7 +218,8 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
 
     public void hideFlags(){
         for (int i = 0; i < boardImages.size(); i++) {
-            boardImages.get(i).setImageResource(R.mipmap.secret);
+            //boardImages.get(i).setImageResource(R.mipmap.secret);
+            drawFlag(boardImages.get(i),"secret",-1,-1);
         }
     }
 
@@ -204,7 +227,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         LinearLayout board = (LinearLayout) layout.findViewById(R.id.boardLayout);
         int size = GameController.getMemoBoard().getBoardSize();
         int[][] boardFlags = GameController.getMemoBoard().getFlags();
-
+        boardFlagsBitmaps = new Bitmap[size][size];
         verticalParams.weight = 1f;
         verticalParams.setMargins(5,5,5,5);
 
@@ -214,11 +237,13 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             LinearLayout ll = new LinearLayout(GameLoader.getContext());
             ll.setLayoutParams(verticalParams);
             for (int j = 0; j < size ; j++) {
-                ImageView iv = new ImageView(getActivity());
+                final ImageView iv = new ImageView(getActivity());
                 boardImages.add(iv);
-                String imageID = "flag_"+boardFlags[j][i];
-                int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
-                iv.setImageResource(resID);
+                //String imageID = "flag_"+boardFlags[j][i];
+                drawFlag(iv,"flag_"+boardFlags[j][i],j,i);
+
+                //int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
+                //iv.setImageResource(resID);
                 iv.setId(boardFlags[j][i]);
                 iv.setTag("flag"+j+","+i);
                 iv.setLayoutParams(horizontalParams);
@@ -237,9 +262,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         horizontalParams.setMargins(5,5,5,5);
         for (int i = 0; i < size ; i++) {
             ImageView iv = new ImageView(getActivity());
-            String imageID = "flag_"+targetFlags[i];
-            int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
-            iv.setImageResource(resID);
+            drawFlag(iv,"flag_"+targetFlags[i],-1,-1);
             iv.setLayoutParams(horizontalParams);
             iv.setTag("target"+targetFlags[i]);
             targets.addView(iv);
@@ -257,13 +280,17 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                         ImageView lastImageView;
                         if(!foundTags.contains(lastSelectedTags.get(0))){
                             lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(0));
-                            lastImageView.setImageResource(R.mipmap.secret);
-                            lastImageView.setImageResource(R.mipmap.secret);
+                            //lastImageView.setImageResource(R.mipmap.secret);
+                            //lastImageView.setImageResource(R.mipmap.secret);
+                            drawFlag(lastImageView,"secret",-1,-1);
+                            drawFlag(lastImageView,"secret",-1,-1);
                         }
                         if(lastSelectedTags.size()==2 && !foundTags.contains(lastSelectedTags.get(1))){
                             lastImageView = (ImageView)layout.findViewWithTag(lastSelectedTags.get(1));
-                            lastImageView.setImageResource(R.mipmap.secret);
-                            lastImageView.setImageResource(R.mipmap.secret);
+                            //lastImageView.setImageResource(R.mipmap.secret);
+                            //lastImageView.setImageResource(R.mipmap.secret);
+                            drawFlag(lastImageView,"secret",-1,-1);
+                            drawFlag(lastImageView,"secret",-1,-1);
                         }
                         User.getInstance().loseLife();
                         updateHearts();
@@ -276,5 +303,67 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 handler.postDelayed(this, 1000);
             }
         });
+    }
+    public void drawFlag(final ImageView iv,final String imageName,final int indexI,final int indexJ){
+
+        RushDatabaseHelper helper = new RushDatabaseHelper(getActivity());
+        SQLiteDatabase db = helper.getReadableDatabase();
+        byte[] imageArray = RushDatabaseHelper.retrieveFlag(db,imageName);
+        db.close();
+        if(imageName.equals("secret")&&secret!=null){
+            iv.setImageBitmap(secret);
+        }else if(imageArray!=null){
+            Log.d("SQLLite Draw","giriyor");
+            Bitmap temp = Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length), 250,250, false);
+            iv.setImageBitmap(temp);
+            if(indexI!=-1&&indexJ!=-1){
+                boardFlagsBitmaps[indexI][indexJ]=temp;
+            }
+            if(imageName.equals("secret")){
+                secret=temp;
+            }
+           // iv.setImageBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length));
+        }else{
+            StorageReference storageRef = FirebaseStorage.getInstance().getReferenceFromUrl("gs://quiz-6b08b.appspot.com/flags/");
+
+// Create a reference with an initial file path and name
+            StorageReference pathReference = storageRef.child("/ic_launcher.png");
+            File localFile = null;
+            try {
+                localFile = File.createTempFile("images", "jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            final File finalLocalFile = localFile;
+            storageRef.child(imageName+".png").getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+
+                    RushDatabaseHelper rushDatabaseHelper = new RushDatabaseHelper(getActivity());
+
+                    SQLiteDatabase database = rushDatabaseHelper.getWritableDatabase();
+                    RushDatabaseHelper.insertFlag(database,1,imageName,bytes);
+                    database.close();
+
+                    Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    Bitmap temp =Bitmap.createScaledBitmap(bmp, 250,250, false);
+                    iv.setImageBitmap(temp);
+                    if(indexI!=-1&&indexJ!=-1){
+                        boardFlagsBitmaps[indexI][indexJ]=temp;
+                    }
+                    if(imageName.equals("secret")){
+                        secret=temp;
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle any errors
+                }
+            });
+        }
+        //int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
+        //iv.setImageResource(resID);
     }
 }

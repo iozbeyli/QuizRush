@@ -5,6 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fromthemind.quizrush.Loader.GameLoader;
+import com.fromthemind.quizrush.SQLite.RushDatabaseHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
@@ -46,6 +50,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -120,6 +125,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        Bitmap image = BitmapFactory.decodeResource(getResources(),R.mipmap.flag_1);
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG,100,out);
+        byte[] buffer = out.toByteArray();
+        RushDatabaseHelper rushDatabaseHelper = new RushDatabaseHelper(this);
+
+        SQLiteDatabase database = rushDatabaseHelper.getWritableDatabase();
+        RushDatabaseHelper.insertFlag(database,1,"flag_1",buffer);
+        database.close();
+        ImageView loginLogo = (ImageView) findViewById(R.id.login_logo);
+        SQLiteDatabase db = rushDatabaseHelper.getReadableDatabase();
+        byte[] imageArray = RushDatabaseHelper.retrieveFlag(db,"flag_1");
+        loginLogo.setImageBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length));
+
     }
 
     private void populateAutoComplete() {
