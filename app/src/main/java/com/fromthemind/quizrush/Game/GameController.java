@@ -36,10 +36,10 @@ public class GameController {
                 break;
 
             case MEMO:
-                game = new MemoGame(4,(MemoChallenge)challenge);
-                ((MemoGame)game).load();
+                MemoChallenge memoChallenge = (MemoChallenge)challenge;
+                MemoGame memoGame = new MemoGame(memoChallenge.getTargetFlags().size(),memoChallenge);
+                memoGame.load(memoChallenge);
                 break;
-
             default:
                 throw new Exception("Unknown Game Type");
         }

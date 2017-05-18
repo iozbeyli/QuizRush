@@ -22,6 +22,10 @@ public class MemoGame extends Game implements Challengable<Challenge>{
         MemoLoader.loadGame();
     }
 
+    protected void load(MemoChallenge memoChallenge){
+        MemoLoader.loadGame(memoChallenge);
+    }
+
     protected void setBoard(MemoBoard board){
         this.board = board;
     }
