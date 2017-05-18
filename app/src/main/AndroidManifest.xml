@@ -53,7 +53,11 @@
         <activity android:name=".FriendActivity" />
         <activity android:name=".ChallengeListActivity" />
         <activity android:name=".MemoChallengeListActivity" />
-        <activity android:name=".MemoSelectActivity"></activity>
+        <activity android:name=".MemoSelectActivity" />
+        <activity
+            android:name=".GameDrawerActivity"
+            android:label="@string/title_activity_game_drawer"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>

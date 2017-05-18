@@ -3,7 +3,7 @@ package com.fromthemind.quizrush;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,7 +82,7 @@ public class MemoChallengeListFragment extends Fragment {
         mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<MemoChallenge>() {
             @Override
             public void onListFragmentInteraction(RushListItem<MemoChallenge> item) {
-                ((MemoChallengeListActivity) getActivity()).goMemo(item.rushItem());
+                ((GameDrawerActivity) getActivity()).goMemo(item.rushItem());
             }
 
         };

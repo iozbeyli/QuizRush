@@ -234,7 +234,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }else{
                             User.setInstance(the);
                             GameLoader.setContext(getApplicationContext());
-                            Intent intent = new Intent(LoginActivity.this, GameActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, GameDrawerActivity.class);
                             startActivity(intent);
                         }
                         /*for(DataSnapshot snap: snapshot.getChildren()){
