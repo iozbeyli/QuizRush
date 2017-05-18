@@ -16,7 +16,7 @@ import com.fromthemind.quizrush.Question.QuestionStatus;
  * Created by MEHMET on 31.03.2017.
  */
 
-public class GameActivity extends Activity implements QuizSelectFragment.Listener, GameSelectFragment.Listener, MemoQuestionFragment.MemoInterface, QuizQuestionFragment.QuizInterface {
+public class GameActivity extends Activity implements QuizSelectFragment.Listener, GameSelectFragment.Listener, MemoQuestionFragment.MemoInterface, QuizQuestionFragment.QuizInterface,MemoSelector {
     private boolean inQuestion = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,13 +78,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                 fragment = new QuizSelectFragment();
 
             }else if(id==1){
-                try {
-                    GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                fragment = new MemoQuestionFragment();
-
+                fragment = new MemoSelectFragment();
             }else{
                 fragment = new FriendFragment();
             }
@@ -106,12 +100,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
                 //startActivity(intent);
 
             }else if(id==1){
-                try {
-                    GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Intent intent = new Intent(this,MemoActivity.class);
+                Intent intent = new Intent(this,MemoSelectActivity.class);
                 startActivity(intent);
             }else{
                 Intent intent = new Intent(this,ChallengeListActivity.class);
@@ -138,6 +127,29 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+
+    }
+
+    @Override
+    public void goToMemoGame(int boardSize) {
+        View fragmentContainer = findViewById(R.id.fragment_container);
+        try {
+            GameController.loadGame(GameType.MEMO,boardSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(fragmentContainer != null){
+            Fragment fragment;
+            fragment = new MemoQuestionFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_container, fragment);
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+        }else{
+            Intent intent = new Intent(this,MemoActivity.class);
+            startActivity(intent);
+        }
 
     }
 }

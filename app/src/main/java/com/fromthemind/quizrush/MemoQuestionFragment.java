@@ -136,8 +136,10 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 lastSelectedTags.clear();
                 if(found.size() == GameController.getMemoBoard().getBoardSize()){
                     User.getInstance().levelUpMemo();
+                    /*MemoInterface activity = (MemoInterface) getActivity();
+                    activity.loadNextMemoLevel();*/
                     MemoInterface activity = (MemoInterface) getActivity();
-                    activity.loadNextMemoLevel();
+                    activity.showScore();
                 }
                 clickedSeconds=-1;
             }else if(lastSelectedIDs.get(0)==id&&lastSelectedTags.get(0).equals(currentTag)){
