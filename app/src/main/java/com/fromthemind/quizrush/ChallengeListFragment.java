@@ -2,7 +2,7 @@ package com.fromthemind.quizrush;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -88,7 +88,7 @@ public class ChallengeListFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                ((ChallengeListActivity) getActivity()).goQuiz();
+                ((GameDrawerActivity) getActivity()).goQuiz();
             }
 
         };
