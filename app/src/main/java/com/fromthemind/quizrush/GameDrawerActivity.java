@@ -110,14 +110,22 @@ public class GameDrawerActivity extends AppCompatActivity
             fragment = new FriendFragment();
         } else if (id == R.id.nav_memo_challenge) {
             fragment = new MemoChallengeListFragment();
-        } else {
+        } else if(id == R.id.logout_challenge){
+            SaveSharedPreference.setUser(GameDrawerActivity.this,"","");
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            fragment=null;
+        }else{
             fragment = new ChallengeListFragment();
         }
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_game_activity, fragment);
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+        if(id!=R.id.logout_challenge){
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.frame_game_activity, fragment);
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+        }
+
 
 
         return true;

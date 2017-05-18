@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    attemptLogin(null, null);
                     return true;
                 }
                 return false;
@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
+                attemptLogin(null, null);
             }
         });
 
@@ -139,6 +139,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         SQLiteDatabase db = rushDatabaseHelper.getReadableDatabase();
         byte[] imageArray = RushDatabaseHelper.retrieveFlag(db,"flag_1");
         loginLogo.setImageBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length));
+        if(SaveSharedPreference.getUserName(LoginActivity.this).length() != 0)
+        {
+
+            attemptLogin(SaveSharedPreference.getUserName(LoginActivity.this),
+                    SaveSharedPreference.getPassword(LoginActivity.this));
+            return;
+        }
 
     }
 
@@ -191,7 +198,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptLogin(String uname , String pwd) {
         if (mAuthTask != null) {
             return;
         }
@@ -201,8 +208,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        final String username = usernameView.getText().toString();
-        final String password = mPasswordView.getText().toString();
+        final String username;
+        final String password;
+        if(uname == null){
+            username = usernameView.getText().toString();
+        }else{
+            username = uname;
+        }
+
+        if(pwd == null){
+            password = mPasswordView.getText().toString();
+        }else{
+            password = pwd;
+        }
 
         boolean cancel = false;
         View focusView = null;
@@ -254,6 +272,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }else{
                             User.setInstance(the);
                             GameLoader.setContext(getApplicationContext());
+                            SaveSharedPreference.setUser(LoginActivity.this, username, password);
                             Intent intent = new Intent(LoginActivity.this, GameDrawerActivity.class);
                             startActivity(intent);
                         }

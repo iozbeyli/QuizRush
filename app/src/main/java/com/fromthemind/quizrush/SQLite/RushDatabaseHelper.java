@@ -36,7 +36,7 @@ public class RushDatabaseHelper extends SQLiteOpenHelper {
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             Log.d("SQL","giriyor");
-            db.execSQL("DROP TABLE FLAG");
+            //db.execSQL("DROP TABLE FLAG");
             db.execSQL("CREATE TABLE FLAG (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "FLAG_NUMBER INTEGER, "
                     + "NAME TEXT, "
