@@ -102,7 +102,7 @@ public class ChallengeListFragment extends Fragment {
 
     public void list_ee(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        Query ee_query = database.getReference("challenges").orderByChild("challenge").equalTo(User.getInstance().getUsername());
+        Query ee_query = database.getReference("challenges").orderByChild("challengee").equalTo(User.getInstance().getUsername());
         ee_query.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override

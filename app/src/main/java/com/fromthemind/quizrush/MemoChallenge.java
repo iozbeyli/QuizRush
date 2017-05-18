@@ -29,8 +29,8 @@ public class MemoChallenge extends Challenge implements RushListItem<MemoChallen
     }
 
     public ArrayList<ArrayList<Integer>> boardFlags = new ArrayList<ArrayList<Integer>>();
-    public MemoChallenge(String challenger,int score_er,String challengee,int score_ee,int[] targetFlags,int[][] boardFlags) {
-        super(challenger,score_er,challengee,score_ee);
+    public MemoChallenge(String challenger,int score_er,String challengee,int score_ee,int[] targetFlags,int[][] boardFlags, String key) {
+        super(challenger,score_er,challengee,score_ee, key);
 
         for (int i = 0; i < boardFlags.length; i++) {
             this.targetFlags.add(targetFlags[i]);

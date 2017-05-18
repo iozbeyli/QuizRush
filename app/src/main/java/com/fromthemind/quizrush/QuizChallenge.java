@@ -5,8 +5,8 @@ package com.fromthemind.quizrush;
  */
 
 public class QuizChallenge extends Challenge implements RushListItem<QuizChallenge> {
-    public QuizChallenge(String challenger, int score_er, String challengee, int score_ee) {
-        super(challenger, score_er, challengee, score_ee);
+    public QuizChallenge(String challenger, int score_er, String challengee, int score_ee, String key) {
+        super(challenger, score_er, challengee, score_ee, key);
     }
 
     public QuizChallenge() {

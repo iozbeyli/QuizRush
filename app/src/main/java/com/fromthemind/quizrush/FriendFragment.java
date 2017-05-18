@@ -105,7 +105,7 @@ public class FriendFragment extends Fragment {
                     });
                 }else{
                     EditText addFriendTextEdit =(EditText) layout.findViewById(R.id.add_friend_edit_text);
-                    listener.onClickButton(addFriendTextEdit.getText().toString(),User.getInstance().score);
+                    listener.onClickButton(addFriendTextEdit.getText().toString());
                 }
                 }
 

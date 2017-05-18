@@ -5,6 +5,5 @@ package com.fromthemind.quizrush;
  */
 
 public interface ClickListener {
-    void onClickButton();
-    void onClickButton(String challengee,int score);
+    void onClickButton(String challengee);
 }

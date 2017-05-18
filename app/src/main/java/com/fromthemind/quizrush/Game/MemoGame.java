@@ -1,15 +1,15 @@
 package com.fromthemind.quizrush.Game;
 
+import com.fromthemind.quizrush.Challenge;
 import com.fromthemind.quizrush.Loader.MemoLoader;
 import com.fromthemind.quizrush.MemoChallenge;
 import com.fromthemind.quizrush.Question.MemoBoard;
-import com.fromthemind.quizrush.User;
 
 /**
  * Created by Melih on 24.03.2017.
  */
 
-public class MemoGame extends Game implements Challengable<MemoChallenge>{
+public class MemoGame extends Game implements Challengable<Challenge>{
     private MemoBoard board;
     private MemoChallenge challenge;
     protected MemoGame(int boardSize, MemoChallenge challenge){

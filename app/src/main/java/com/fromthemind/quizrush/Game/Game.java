@@ -3,6 +3,7 @@ package com.fromthemind.quizrush.Game;
 import android.util.Log;
 
 import com.fromthemind.quizrush.Category.Category;
+import com.fromthemind.quizrush.Challenge;
 import com.fromthemind.quizrush.Question.Question;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import java.util.Arrays;
  * Created by Melih on 24.03.2017.
  */
 
-public class Game {
+public class Game implements Challengable<Challenge>{
     private Category[] categories;
     private Question currentQuestion;
     private GameType type;
@@ -69,4 +70,13 @@ public class Game {
         return true;
     }
 
+    @Override
+    public boolean hasChallenge() {
+        return false;
+    }
+
+    @Override
+    public Challenge getChallenge() {
+        return null;
+    }
 }

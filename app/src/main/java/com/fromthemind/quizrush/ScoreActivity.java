@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fromthemind.quizrush.Game.Game;
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.MemoGame;
 import com.google.firebase.database.DataSnapshot;
@@ -21,17 +22,30 @@ import com.google.firebase.database.ValueEventListener;
  */
 
 public class ScoreActivity extends Activity implements ClickListener{
+    private int score = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
-        int score = User.getInstance().getScore();
+        score = User.getInstance().getScore();
+
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
         scoreText.setText(""+score);
 
         TextView nicknameText = (TextView) findViewById(R.id.nickname);
         String nick = User.getInstance().getUsername();
         nicknameText.setText(nick);
+
+        Game game = GameController.getGame();
+        if(game.hasChallenge()){
+            View view = findViewById(R.id.challengeButton);
+            view.setVisibility(View.INVISIBLE);
+            Challenge ch = game.getChallenge();
+            if(ch.getScore_ee() == -1) ch.setScore_ee(score);
+            if(ch.getScore_er() == -1) ch.setScore_er(score);
+            updateChallenges(null, 0, ch);
+
+        }
 
     }
 
@@ -56,68 +70,63 @@ public class ScoreActivity extends Activity implements ClickListener{
         startActivity(intent);
     }
 
+
+
     @Override
-    public void onClickButton() {
+    public void onClickButton(String challengee) {
+        updateChallenges(challengee,score, null);
 
     }
 
-    @Override
-    public void onClickButton(String challengee, int score) {
-
+    private void updateChallenges(String challengee, int score, Challenge challenge){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference challengesRef;
+        Challenge post;
+        String key;
         if(GameController.getGame() instanceof MemoGame){
-            DatabaseReference challengesRef = database.getReference("memoChallenges");
-            String key = challengesRef.push().getKey();
-
-            Challenge post = new MemoChallenge(User.getInstance().getUsername(), score, challengee, -1,GameController.getMemoBoard().getTargets(),GameController.getMemoBoard().getFlags());
-            challengesRef.child(key).setValue(post);
-            challengesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    if (snapshot == null || snapshot.getValue() == null){
-                        Toast.makeText(ScoreActivity.this,
-                                "No record found",
-                                Toast.LENGTH_LONG).show();
-                    }
-                    else {Toast.makeText(ScoreActivity.this,
-                            snapshot.getValue().toString(),
-                            Toast.LENGTH_LONG).show();
-                        //showProgress(false);
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                }
-            });
+            challengesRef = database.getReference("memoChallenges");
+            if(challenge == null){
+                key = challengesRef.push().getKey();
+                post = new MemoChallenge(User.getInstance().getUsername(), score, challengee, -1,GameController.getMemoBoard().getTargets(),GameController.getMemoBoard().getFlags(), key);
+            }else {
+                post = challenge;
+                key = challenge.getKey();
+            }
         }else{
-            DatabaseReference challengesRef = database.getReference("challenges");
-            String key = challengesRef.push().getKey();
+            challengesRef = database.getReference("challenges");
 
-            Challenge post = new QuizChallenge(User.getInstance().getUsername(), score, challengee, -1);
-            challengesRef.child(key).setValue(post);
-            challengesRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-                    if (snapshot == null || snapshot.getValue() == null){
-                        Toast.makeText(ScoreActivity.this,
-                                "No record found",
-                                Toast.LENGTH_LONG).show();
-                    }
-                    else {Toast.makeText(ScoreActivity.this,
-                            snapshot.getValue().toString(),
-                            Toast.LENGTH_LONG).show();
-                        //showProgress(false);
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError error) {
-                }
-            });
+            if(challenge == null) {
+                key = challengesRef.push().getKey();
+                post = new QuizChallenge(User.getInstance().getUsername(), score, challengee, -1, key);
+            }else {
+                post = challenge;
+                key = challenge.getKey();
+            }
         }
 
+        challengesRef.child(key).setValue(post);
+        challengesRef.addListenerForSingleValueEvent(eventListener);
+
     }
+
+    private ValueEventListener eventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot snapshot) {
+            if (snapshot == null || snapshot.getValue() == null){
+                Toast.makeText(ScoreActivity.this,
+                        "No record found",
+                        Toast.LENGTH_LONG).show();
+            }
+            else {Toast.makeText(ScoreActivity.this,
+                    snapshot.getValue().toString(),
+                    Toast.LENGTH_LONG).show();
+                //showProgress(false);
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError error) {
+        }
+    };
 }

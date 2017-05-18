@@ -9,6 +9,16 @@ public class Challenge{
         return challenger;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String key;
+
     public void setChallenger(String challenger) {
         this.challenger = challenger;
     }
@@ -41,11 +51,12 @@ public class Challenge{
     public String challengee = "";
     public int score_er = 0;
     public int score_ee = 0;
-    public Challenge(String challenger, int score_er, String challengee, int score_ee) {
+    public Challenge(String challenger, int score_er, String challengee, int score_ee, String key) {
         this.challenger = challenger;
         this.score_er=score_er;
         this.challengee=challengee;
         this.score_ee = score_ee;
+        this.key = key;
     }
 
     public Challenge() {
