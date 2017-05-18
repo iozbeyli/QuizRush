@@ -1,0 +1,46 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fromthemind.quizrush.MemoSelectFragment"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="10dp">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_blank_fragment"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"/>
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/X4Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4X4"
+            />
+
+        <Button
+            android:id="@+id/X5Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5X5"
+            />
+
+        <Button
+            android:id="@+id/X6Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6X6"/>
+
+    </LinearLayout>
+
+</LinearLayout>
