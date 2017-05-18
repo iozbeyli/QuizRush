@@ -57,6 +57,6 @@ public class MemoChallenge extends Challenge implements RushListItem<MemoChallen
 
     @Override
     public MemoChallenge rushItem() {
-        return null;
+        return this;
     }
 }

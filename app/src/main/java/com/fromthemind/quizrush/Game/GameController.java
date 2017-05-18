@@ -1,5 +1,7 @@
 package com.fromthemind.quizrush.Game;
 
+import android.util.Log;
+
 import com.fromthemind.quizrush.Category.Category;
 import com.fromthemind.quizrush.Challenge;
 import com.fromthemind.quizrush.MemoChallenge;
@@ -37,8 +39,9 @@ public class GameController {
 
             case MEMO:
                 MemoChallenge memoChallenge = (MemoChallenge)challenge;
-                MemoGame memoGame = new MemoGame(memoChallenge.getTargetFlags().size(),memoChallenge);
-                memoGame.load(memoChallenge);
+                game = new MemoGame(memoChallenge.getTargetFlags().size(),memoChallenge);
+                ((MemoGame)game).load(memoChallenge);
+
                 break;
             default:
                 throw new Exception("Unknown Game Type");
@@ -104,6 +107,7 @@ public class GameController {
     public static MemoBoard getMemoBoard() {
         if(game instanceof MemoGame)
             return ((MemoGame)game).getBoard();
+
 
         return null;
     }

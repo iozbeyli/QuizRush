@@ -79,16 +79,10 @@ public class MemoChallengeListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<QuizChallenge>() {
+        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<MemoChallenge>() {
             @Override
-            public void onListFragmentInteraction(RushListItem<QuizChallenge> item) {
-                Log.d("clicked", "onListFragmentInteraction: "+item.rushItem().challenger);
-                try {
-                    GameController.loadGame(GameType.MEMO, item.rushItem());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                ((MemoChallengeListActivity) getActivity()).goMemo();
+            public void onListFragmentInteraction(RushListItem<MemoChallenge> item) {
+                ((MemoChallengeListActivity) getActivity()).goMemo(item.rushItem());
             }
 
         };
