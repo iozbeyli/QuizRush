@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.MemoGame;
+import com.fromthemind.quizrush.MemoChallenge;
 import com.fromthemind.quizrush.Question.MemoBoard;
 
 import java.util.ArrayList;
@@ -62,6 +63,25 @@ public class MemoLoader extends GameLoader {
             positionIndex++;
         }
 
+        board.setFlags(flags);
+        board.setTargets(targets);
+        GameController.setMemoBoard(board);
+
+    }
+
+    public static void loadGame(MemoChallenge memoChallenge) {
+        MemoBoard board = GameController.getMemoBoard();
+        int size = board.getBoardSize();
+        int[] targets = new int[size];
+        for(int i=0;i<size;i++){
+            targets[i]=memoChallenge.targetFlags.get(i);
+        }
+        int[][] flags = new int [size][size];
+        for(int i=0;i<size;i++){
+            for(int j=0;j<size;j++){
+                flags[i][j]=memoChallenge.boardFlags.get(i).get(j);
+            }
+        }
         board.setFlags(flags);
         board.setTargets(targets);
         GameController.setMemoBoard(board);
