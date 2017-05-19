@@ -107,7 +107,7 @@ public class GameDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_memo) {
             fragment = new MemoSelectFragment();
         } else if (id == R.id.nav_friend) {
-            fragment = new FriendFragment();
+            fragment = new AddFriendFragment();
         } else if (id == R.id.nav_memo_challenge) {
             fragment = new MemoChallengeListFragment();
         } else if(id == R.id.logout_challenge){

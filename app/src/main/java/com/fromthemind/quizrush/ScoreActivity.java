@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.fromthemind.quizrush.Game.Game;
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.MemoGame;
+import com.fromthemind.quizrush.dummy.DummyItem;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
  * Created by Melih on 27.02.2017.
  */
 
-public class ScoreActivity extends Activity implements ClickListener{
+public class ScoreActivity extends Activity implements ClickListener,RushRecyclerViewAdapter.OnListFragmentInteractionListener<DummyItem>{
     private int score = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -55,14 +56,13 @@ public class ScoreActivity extends Activity implements ClickListener{
     }
 
     public void onClickChallenge(View view){
-        FriendFragment fragment = FriendFragment.newInstance(this,"Challenge");
+        FriendFragment fragment = FriendFragment.newInstance(this);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.challengeFragmentContainer, fragment);
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
         findViewById(R.id.challengeFragmentContainer).setVisibility(View.VISIBLE);
-
     }
 
     public void onBackPressed() {
@@ -75,7 +75,6 @@ public class ScoreActivity extends Activity implements ClickListener{
     @Override
     public void onClickButton(String challengee) {
         updateChallenges(challengee,score, null);
-
     }
 
     private void updateChallenges(String challengee, int score, Challenge challenge){
@@ -129,4 +128,9 @@ public class ScoreActivity extends Activity implements ClickListener{
         public void onCancelled(DatabaseError error) {
         }
     };
+
+    @Override
+    public void onListFragmentInteraction(RushListItem<DummyItem> item) {
+        updateChallenges(item.getVisibleContent(),score, null);
+    }
 }

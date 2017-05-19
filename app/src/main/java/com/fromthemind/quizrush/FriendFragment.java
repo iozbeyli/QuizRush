@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class FriendFragment extends Fragment {
+public class FriendFragment extends Fragment{
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -32,8 +32,6 @@ public class FriendFragment extends Fragment {
     private int mColumnCount = 1;
     private RushRecyclerViewAdapter.OnListFragmentInteractionListener mListener;
     private View layout;
-    private ClickListener listener=null;
-    private String buttonText=null;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -50,10 +48,10 @@ public class FriendFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-    public static FriendFragment newInstance(ClickListener listener,String buttonText) {
+
+    public static FriendFragment newInstance(RushRecyclerViewAdapter.OnListFragmentInteractionListener<DummyItem> mListener) {
         FriendFragment fragment = new FriendFragment();
-        fragment.listener=listener;
-        fragment.buttonText=buttonText;
+        fragment.mListener = mListener;
         return fragment;
     }
 
@@ -72,7 +70,7 @@ public class FriendFragment extends Fragment {
         layout = inflater.inflate(R.layout.fragment_friend_list, container, false);
 
         updateLayout();
-        Button addFriendButton = (Button) layout.findViewById(R.id.add_friend_button);
+        /*Button addFriendButton = (Button) layout.findViewById(R.id.add_friend_button);
         if(buttonText!=null){
             addFriendButton.setText(buttonText);
         }
@@ -109,7 +107,7 @@ public class FriendFragment extends Fragment {
                 }
                 }
 
-        });
+        });*/
         return layout;
     }
 
@@ -160,6 +158,5 @@ public class FriendFragment extends Fragment {
             recyclerView.setAdapter(new RushRecyclerViewAdapter(list, mListener));
         }
     }
-
 
 }
