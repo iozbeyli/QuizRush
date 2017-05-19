@@ -28,4 +28,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string-array name="search_criteria_array">
+        <item>Username</item>
+        <item>Name</item>
+        <item>Surname</item>
+        <item>City</item>
+    </string-array>
 </resources>

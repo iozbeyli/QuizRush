@@ -1,20 +1,37 @@
 package com.fromthemind.quizrush;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.fromthemind.quizrush.Loader.GameLoader;
 import com.fromthemind.quizrush.dummy.DummyItem;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -37,6 +54,8 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
     private String mParam1;
     private String mParam2;
     private View layout;
+    private View progressView;
+    private FriendFragment friends;
     public AddFriendFragment() {
         // Required empty public constructor
     }
@@ -73,14 +92,24 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         layout = inflater.inflate(R.layout.fragment_add_friend,container,false);
-        FriendFragment fragment = FriendFragment.newInstance(this);
+        friends = FriendFragment.newInstance(this);
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_add_friend, fragment);
+        ft.replace(R.id.frame_add_friend, friends);
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
-
-
+        progressView=layout.findViewById(R.id.search_progress);
+        Spinner criteriaSpinner = (Spinner)layout.findViewById(R.id.search_criteria_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.search_criteria_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        criteriaSpinner.setAdapter(adapter);
+        Button searchButton = (Button)layout.findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchForUsers();
+            }
+        });
         return layout;
     }
 
@@ -119,16 +148,112 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
     }
 
     public void searchForUsers(){
-        EditText usernameEdit = (EditText)layout.findViewById(R.id.username_search_edit_text);
-        EditText nameEdit = (EditText)layout.findViewById(R.id.name_search_edit_text);
-        EditText surnameEdit = (EditText)layout.findViewById(R.id.surname_search_edit_text);
-        EditText cityEdit = (EditText)layout.findViewById(R.id.city_search_edit_text);
+        EditText searchEdit = (EditText)layout.findViewById(R.id.search_edit_text);
+        Spinner criteriaSpinner = (Spinner)layout.findViewById(R.id.search_criteria_spinner);
+        String currentCriteria = criteriaSpinner.getSelectedItem().toString().toLowerCase();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("user");
+        showProgress(true);
+        if(searchEdit.getText().toString().isEmpty()){
+            Log.d("username",criteriaSpinner.getSelectedItem().toString());
+            ArrayList<String> empty = new ArrayList<String>();
+            listUsers(empty);
+        }else{
+            Query queryRef = userRef.orderByChild(currentCriteria).equalTo(searchEdit.getText().toString());
+            queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot == null || snapshot.getValue() == null){
+                        Toast.makeText(getActivity(),
+                                "There is no such user, go and register! Or you have blank space in your username",
+                                Toast.LENGTH_LONG).show();
+                        showProgress(false);
+                    }
+                    else {
+                        showProgress(false);
+                        Log.d("users",snapshot.toString());
+                        ArrayList<String> users = new ArrayList<String>();
+                        for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                            User the = postSnapshot.getValue(User.class);
+                            users.add(the.username);
+                        }
+                        listUsers(users);
+                        /*User the = snapshot.child(username).getValue(User.class);
+                        Toast.makeText(LoginActivity.this,
+                                "Your password is "+the.getPassword(),
+                                Toast.LENGTH_LONG).show();
+                        if(!the.getPassword().equals(password)){
+                            mPasswordView.setError(getString(R.string.error_incorrect_password));
+                            mPasswordView.requestFocus();
+                        }else{
+                            User.setInstance(the);
+                            GameLoader.setContext(getApplicationContext());
+                            SaveSharedPreference.setUser(LoginActivity.this, username, password);
+                            Intent intent = new Intent(LoginActivity.this, GameDrawerActivity.class);
+                            startActivity(intent);
+                        }*/
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                }
+            });
+        }
+    }
+
+    public void viewSearchResult(){
 
     }
 
     @Override
-    public void onListFragmentInteraction(RushListItem<DummyItem> item) {
+    public void onListFragmentInteraction(final RushListItem<DummyItem> item) {
+        User.getInstance().getFriends().add(item.getVisibleContent());
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("user");
+        userRef.child(User.getInstance().getUsername()).setValue(User.getInstance());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot == null || snapshot.getValue() == null){
+                    Log.wtf("username", "no record after friend add");
+                }
+                else {
 
+                    User.updateInstance();
+                    friends.updateLayout();
+                    Toast.makeText(getActivity(),"User added to friends",Toast.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    private void showProgress(final boolean show) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            progressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        }
     }
 
     /**
