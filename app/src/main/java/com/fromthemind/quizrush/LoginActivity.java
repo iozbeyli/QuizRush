@@ -47,6 +47,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -90,6 +91,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        Log.d("token", "Refreshed token: " + refreshedToken);
         // Set up the login form.
         usernameView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
