@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -36,6 +37,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fromthemind.quizrush.Game.GameController;
+import com.fromthemind.quizrush.Game.MemoGame;
 import com.fromthemind.quizrush.Loader.GameLoader;
 import com.fromthemind.quizrush.SQLite.RushDatabaseHelper;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -92,8 +95,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
-        Log.d("token", "Refreshed token: " + refreshedToken);
         // Set up the login form.
         usernameView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -277,6 +278,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             User.setInstance(the);
                             GameLoader.setContext(getApplicationContext());
                             SaveSharedPreference.setUser(LoginActivity.this, username, password);
+                            sendDeviceTokenToServer();
                             Intent intent = new Intent(LoginActivity.this, GameDrawerActivity.class);
                             startActivity(intent);
                         }
@@ -477,5 +479,49 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             backButtonCount++;
         }
     }
+
+    public void sendDeviceTokenToServer(){
+        SharedPreferences sharedPref = getSharedPreferences("rushtokens", MODE_PRIVATE);
+        String token = sharedPref.getString("token", "dont_exist");
+        if(token != null && !token.equals("dont_exist")) {
+            send(token);
+        }else{
+            Log.e("Register Token", "sendDeviceTokenToServer: Token empty or null" );
+        }
+        SharedPreferences.Editor edit = sharedPref.edit();
+        edit.clear();
+        edit.commit();
+    }
+
+    private void send(String token){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference devicesref = database.getReference("devices");
+        String user = User.getInstance().getUsername();
+        devicesref.child(user).setValue(token);
+        devicesref.addListenerForSingleValueEvent(eventListener);
+    }
+
+    private ValueEventListener eventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot snapshot) {
+            if (snapshot == null || snapshot.getValue() == null){
+                Toast.makeText(LoginActivity.this,
+                        "No record found",
+                        Toast.LENGTH_LONG).show();
+            }
+            else {Toast.makeText(LoginActivity.this,
+                    snapshot.getValue().toString(),
+                    Toast.LENGTH_LONG).show();
+                //showProgress(false);
+            }
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError error) {
+        }
+    };
+
+
 }
 
