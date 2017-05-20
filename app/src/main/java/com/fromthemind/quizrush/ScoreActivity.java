@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -139,7 +140,7 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
                     AsyncCommunicationTask task = new AsyncCommunicationTask(null,postData, new Communicator() {
                         @Override
                         public void successfulExecute(JSONObject jsonObject) {
-                            
+                            Log.d("Res", jsonObject.toString());
                         }
 
                         @Override
@@ -147,6 +148,7 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
 
                         }
                     });
+                    task.execute((Void)null);
                     //showProgress(false);
                 }
 

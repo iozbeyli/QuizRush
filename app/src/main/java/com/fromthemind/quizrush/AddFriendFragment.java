@@ -24,6 +24,8 @@ import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.fromthemind.quizrush.AsyncCommunication.AsyncCommunicationTask;
+import com.fromthemind.quizrush.AsyncCommunication.Communicator;
 import com.fromthemind.quizrush.Loader.GameLoader;
 import com.fromthemind.quizrush.dummy.DummyItem;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +34,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -224,6 +229,28 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
                     User.updateInstance();
                     friends.updateLayout();
                     Toast.makeText(getActivity(),"User added to friends",Toast.LENGTH_LONG);
+                    JSONObject postData = new JSONObject();
+
+                    try {
+                        postData.put("sub", "New Follower");
+                        postData.put("receiver", item.getVisibleContent());
+                        postData.put("text", User.getInstance().getUsername()+ " Followed You");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    AsyncCommunicationTask task = new AsyncCommunicationTask(null,postData, new Communicator() {
+                        @Override
+                        public void successfulExecute(JSONObject jsonObject) {
+                            Log.d("Res", jsonObject.toString());
+                        }
+
+                        @Override
+                        public void failedExecute() {
+
+                        }
+                    });
+                    task.execute((Void)null);
                 }
             }
 
