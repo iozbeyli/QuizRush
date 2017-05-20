@@ -1,5 +1,8 @@
 package com.fromthemind.quizrush.Game;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.fromthemind.quizrush.Challenge;
 import com.fromthemind.quizrush.Loader.MemoLoader;
 import com.fromthemind.quizrush.MemoChallenge;
@@ -20,6 +23,10 @@ public class MemoGame extends Game implements Challengable<Challenge>{
 
     protected void load(){
         MemoLoader.loadGame();
+    }
+    protected boolean loadOffline(Context applicationContext){
+        Log.d("MemoGame","Loading Offline");
+        return MemoLoader.loadGameOffline(applicationContext);
     }
 
     protected void load(MemoChallenge memoChallenge){

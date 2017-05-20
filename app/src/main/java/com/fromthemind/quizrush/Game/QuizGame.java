@@ -1,5 +1,7 @@
 package com.fromthemind.quizrush.Game;
 
+import android.content.Context;
+
 import com.fromthemind.quizrush.Challenge;
 import com.fromthemind.quizrush.Loader.QuizLoader;
 import com.fromthemind.quizrush.QuizChallenge;
@@ -33,5 +35,10 @@ public class QuizGame extends Game implements Challengable<Challenge>{
     @Override
     public QuizChallenge getChallenge() {
         return challenge;
+    }
+
+
+    public void loadOffline(Context applicationContext) {
+
     }
 }

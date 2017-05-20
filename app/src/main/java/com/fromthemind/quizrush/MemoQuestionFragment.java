@@ -241,6 +241,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 boardImages.add(iv);
                 //String imageID = "flag_"+boardFlags[j][i];
                 drawFlag(iv,"flag_"+boardFlags[j][i],j,i);
+                Log.d("MemoQuestion","flag_"+boardFlags[j][i]);
 
                 //int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
                 //iv.setImageResource(resID);
@@ -343,7 +344,17 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                     RushDatabaseHelper rushDatabaseHelper = new RushDatabaseHelper(getActivity());
 
                     SQLiteDatabase database = rushDatabaseHelper.getWritableDatabase();
-                    RushDatabaseHelper.insertFlag(database,1,imageName,bytes);
+                    int flagNumber=-1;
+                    if(imageName.equals("secret")){
+                        flagNumber=-1;
+                    }else{
+                        Log.d("Flag name",imageName);
+                        String parsableString = imageName.substring(5,imageName.length());
+                        if(!parsableString.equals("")){
+                            flagNumber=Integer.parseInt(parsableString);
+                        }
+                    }
+                    RushDatabaseHelper.insertFlag(database,flagNumber,imageName,bytes);
                     database.close();
 
                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);

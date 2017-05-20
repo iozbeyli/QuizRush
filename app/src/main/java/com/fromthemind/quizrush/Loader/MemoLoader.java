@@ -1,12 +1,18 @@
 package com.fromthemind.quizrush.Loader;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.IntegerRes;
 import android.util.Log;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.MemoGame;
+import com.fromthemind.quizrush.GameDrawerActivity;
 import com.fromthemind.quizrush.MemoChallenge;
 import com.fromthemind.quizrush.Question.MemoBoard;
+import com.fromthemind.quizrush.SQLite.RushDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,10 +94,51 @@ public class MemoLoader extends GameLoader {
 
     }
 
+
     private static void placeFlag(int position,int[][] flags,int flag){
 
         int x = position%flags.length;
         int y = position/flags.length;
         flags[x][y]=flag;
+    }
+
+    public static boolean loadGameOffline(Context applicationContext) {
+        Log.d("MemoLoader","LoadingOffline");
+        MemoBoard board = GameController.getMemoBoard();
+        int size = board.getBoardSize();
+        int[] targets = new int[size];
+        int[][] flags = new int [size][size];
+        ArrayList<Integer> positions = new ArrayList<Integer>();
+        ArrayList<Integer> flagsGeneral = new ArrayList<Integer>();
+        RushDatabaseHelper helper = new RushDatabaseHelper(applicationContext);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        ArrayList<Integer> offlineFlags=RushDatabaseHelper.retrieveOfflineFlags(db);
+        for(int i=0;i<size*size;i++) {
+            positions.add(i);
+        }
+        Collections.shuffle(positions);
+        if(offlineFlags.size()<(size*size-size)){
+            return false;
+        }
+        for(int i=0;i<offlineFlags.size();i++){
+            flagsGeneral.add(offlineFlags.get(i));
+        }
+        Collections.shuffle(flagsGeneral);
+        int positionIndex=0;
+        for(int i=0;i<size;i++){
+            targets[i]=flagsGeneral.get(i);
+            placeFlag(positions.get(positionIndex),flags,flagsGeneral.get(i));
+            positionIndex++;
+            placeFlag(positions.get(positionIndex),flags,flagsGeneral.get(i));
+            positionIndex++;
+        }
+        for(int i=size;i<((size*size)-size);i++){
+            placeFlag(positions.get(positionIndex),flags,flagsGeneral.get(i));
+            positionIndex++;
+        }
+        board.setFlags(flags);
+        board.setTargets(targets);
+        GameController.setMemoBoard(board);
+        return true;
     }
 }

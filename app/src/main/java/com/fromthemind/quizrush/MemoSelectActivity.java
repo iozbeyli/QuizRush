@@ -18,7 +18,7 @@ public class MemoSelectActivity extends AppCompatActivity implements MemoSelecto
     @Override
     public void goToMemoGame(int boardSize) {
         try {
-            GameController.loadGame(GameType.MEMO,boardSize);
+            //GameController.loadGame(GameType.MEMO,boardSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

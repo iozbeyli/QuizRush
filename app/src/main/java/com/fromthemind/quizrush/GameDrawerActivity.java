@@ -2,7 +2,10 @@ package com.fromthemind.quizrush;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.GameType;
@@ -133,21 +137,39 @@ public class GameDrawerActivity extends AppCompatActivity
 
     @Override
     public void goToMemoGame(int boardSize) {
+        boolean loadingSuccesful=true;
         try {
-            GameController.loadGame(GameType.MEMO,boardSize);
+            if(isNetworkAvailable()){
+                GameController.loadGame(GameType.MEMO,boardSize);
+            }else{
+                Log.d("GameDrawerActivity","No internet");
+                loadingSuccesful=GameController.loadGameOffline(GameType.MEMO,boardSize,getApplicationContext());
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Fragment fragment;
-        fragment = new MemoQuestionFragment();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.frame_game_activity, fragment);
-        ft.addToBackStack(null);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        ft.commit();
+        if(loadingSuccesful){
+            Fragment fragment;
+            fragment = new MemoQuestionFragment();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.frame_game_activity, fragment);
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+        }else{
+            Toast.makeText(this,"Not enough flags to play offline",Toast.LENGTH_LONG);
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+    }
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     protected void goQuiz(){

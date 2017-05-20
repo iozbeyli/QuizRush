@@ -134,7 +134,7 @@ public class GameActivity extends Activity implements QuizSelectFragment.Listene
     public void goToMemoGame(int boardSize) {
         View fragmentContainer = findViewById(R.id.fragment_container);
         try {
-            GameController.loadGame(GameType.MEMO,boardSize);
+            //GameController.loadGame(GameType.MEMO,boardSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

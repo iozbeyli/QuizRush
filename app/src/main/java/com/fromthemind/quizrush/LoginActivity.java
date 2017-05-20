@@ -131,22 +131,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
-        Bitmap image = BitmapFactory.decodeResource(getResources(),R.mipmap.flag_1);
+        /*Bitmap image = BitmapFactory.decodeResource(getResources(),R.mipmap.flag_1);
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG,100,out);
         byte[] buffer = out.toByteArray();
         RushDatabaseHelper rushDatabaseHelper = new RushDatabaseHelper(this);
-
         SQLiteDatabase database = rushDatabaseHelper.getWritableDatabase();
+        rushDatabaseHelper.onCreate(database);
         RushDatabaseHelper.insertFlag(database,1,"flag_1",buffer);
         database.close();
         ImageView loginLogo = (ImageView) findViewById(R.id.login_logo);
         SQLiteDatabase db = rushDatabaseHelper.getReadableDatabase();
         byte[] imageArray = RushDatabaseHelper.retrieveFlag(db,"flag_1");
-        loginLogo.setImageBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length));
+        loginLogo.setImageBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length));*/
         if(SaveSharedPreference.getUserName(LoginActivity.this).length() != 0)
         {
-
             attemptLogin(SaveSharedPreference.getUserName(LoginActivity.this),
                     SaveSharedPreference.getPassword(LoginActivity.this));
             return;

@@ -10,6 +10,7 @@ import android.util.Log;
 import com.fromthemind.quizrush.R;
 
 import java.sql.Blob;
+import java.util.ArrayList;
 
 /**
  * Created by Melih on 18.05.2017.
@@ -36,7 +37,7 @@ public class RushDatabaseHelper extends SQLiteOpenHelper {
     private void updateMyDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 1) {
             Log.d("SQL","giriyor");
-            //db.execSQL("DROP TABLE FLAG");
+            db.execSQL("DROP TABLE FLAG");
             db.execSQL("CREATE TABLE FLAG (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "FLAG_NUMBER INTEGER, "
                     + "NAME TEXT, "
@@ -65,17 +66,44 @@ public class RushDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public static byte[] retrieveFlag(SQLiteDatabase db, String flagName){
+        Log.d("Demanded",flagName);
         byte[] imageArray=null;
         Cursor cursor = db.query("FLAG",new String[]{"NAME", "FLAG_NUMBER", "IMAGE"},"NAME = ?",new String[]{flagName},null,null,null);
         if (cursor.moveToFirst()) {
             //Get the drink details from the cursor
-            imageArray = cursor.getBlob(2);
+            while (!cursor.isAfterLast()) {
+                Log.d("Found flag",cursor.getString(0));
+                imageArray = cursor.getBlob(2);
+                cursor.moveToNext();
+            }
         }
         if(cursor!=null && !cursor.isClosed()){
             cursor.close();
         }
         db.close();
         return imageArray;
+    }
+
+    public static ArrayList<Integer> retrieveOfflineFlags(SQLiteDatabase db){
+        ArrayList<Integer> list=new ArrayList<Integer>();
+        Cursor cursor = db.query("FLAG",new String[]{"FLAG_NUMBER","NAME"},null,null,null,null,null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                int flag_number = cursor.getInt(0);
+                if(flag_number>0){
+                    list.add(flag_number);
+                }
+                Log.d("Helper flag: ",""+cursor.getString(1));
+                cursor.moveToNext();
+            }
+        }
+        if(cursor!=null && !cursor.isClosed()){
+            cursor.close();
+        }
+        db.close();
+        return list;
+
+
     }
 
 

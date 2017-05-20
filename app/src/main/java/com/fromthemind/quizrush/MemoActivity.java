@@ -29,7 +29,7 @@ public class MemoActivity extends Activity implements MemoQuestionFragment.MemoI
             showScore();
         }else{
             try {
-                GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
+                //GameController.loadGame(GameType.MEMO,User.getInstance().getMemoLevel());
             } catch (Exception e) {
                 e.printStackTrace();
             }

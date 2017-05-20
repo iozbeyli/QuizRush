@@ -19,4 +19,5 @@ public class ChallengeListActivity extends AppCompatActivity{
         Intent intent = new Intent(this,QuizSelectionActivity.class);
         startActivity(intent);
     }
+
 }

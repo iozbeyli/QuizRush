@@ -1,5 +1,6 @@
 package com.fromthemind.quizrush.Game;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.fromthemind.quizrush.Category.Category;
@@ -115,5 +116,25 @@ public class GameController {
     public static void setMemoBoard(MemoBoard mb) {
         if(game instanceof MemoGame)
             ((MemoGame)game).setBoard(mb);
+    }
+
+    public static boolean loadGameOffline(GameType type, int size, Context applicationContext) throws Exception {
+        Log.d("Loading","offline");
+        switch (type){
+            case QUIZ:
+                game = new QuizGame();
+                ((QuizGame)game).loadOffline(applicationContext);
+                return true;
+
+            case MEMO:
+                game = new MemoGame(size, null);
+                return ((MemoGame)game).loadOffline(applicationContext);
+
+
+            default:
+                return false;
+
+
+        }
     }
 }
