@@ -30,12 +30,13 @@ import java.net.URL;
  *  userDataTask.execute((Void)null);
  */
 public class AsyncCommunicationTask extends AsyncTask<Void,Void,Boolean> {
-    String apiURL = "";
+    String apiURL = "https://us-central1-quiz-6b08b.cloudfunctions.net/sendNotification";
     String resultsToDisplay = "";
     JSONObject postData;
     Communicator communicator;
     public AsyncCommunicationTask(String apiURL,JSONObject postData,Communicator communicator) {
-        this.apiURL=apiURL;
+
+        if(apiURL != null)this.apiURL=apiURL;
         this.postData = postData;
         this.communicator=communicator;
     }
@@ -84,7 +85,7 @@ public class AsyncCommunicationTask extends AsyncTask<Void,Void,Boolean> {
 
         try {
             JSONObject jsonObject = new JSONObject(resultsToDisplay);
-            Boolean successBool = (Boolean)jsonObject.get("success");
+            Boolean successBool = true;//(Boolean)jsonObject.get("success");
 
             if(successBool){
                 communicator.successfulExecute(jsonObject);

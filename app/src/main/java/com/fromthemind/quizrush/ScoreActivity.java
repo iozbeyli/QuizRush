@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fromthemind.quizrush.AsyncCommunication.AsyncCommunicationTask;
+import com.fromthemind.quizrush.AsyncCommunication.Communicator;
 import com.fromthemind.quizrush.Game.Game;
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.MemoGame;
@@ -17,6 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by Melih on 27.02.2017.
@@ -80,7 +85,7 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
     private void updateChallenges(String challengee, int score, Challenge challenge){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference challengesRef;
-        Challenge post;
+        final Challenge post;
         String key;
         if(GameController.getGame() instanceof MemoGame){
             challengesRef = database.getReference("memoChallenges");
@@ -104,30 +109,56 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
         }
 
         challengesRef.child(key).setValue(post);
-        challengesRef.addListenerForSingleValueEvent(eventListener);
+        challengesRef.addListenerForSingleValueEvent( new ValueEventListener() {
+            public void setCh(Challenge ch) {
+                this.ch = ch;
+            }
+
+            public Challenge ch;
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot == null || snapshot.getValue() == null){
+                    Toast.makeText(ScoreActivity.this,
+                            "No record found",
+                            Toast.LENGTH_LONG).show();
+                }
+                else {Toast.makeText(ScoreActivity.this,
+                        snapshot.getValue().toString(),
+                        Toast.LENGTH_LONG).show();
+                    JSONObject postData = new JSONObject();
+
+                    try {
+                        postData.put("sub", "New Challenge Received");
+                        postData.put("receiver", post.getChallengee());
+                        postData.put("text", post.getChallenger()+ " Challenges You");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    AsyncCommunicationTask task = new AsyncCommunicationTask(null,postData, new Communicator() {
+                        @Override
+                        public void successfulExecute(JSONObject jsonObject) {
+                            
+                        }
+
+                        @Override
+                        public void failedExecute() {
+
+                        }
+                    });
+                    //showProgress(false);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
 
     }
 
-    private ValueEventListener eventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot snapshot) {
-            if (snapshot == null || snapshot.getValue() == null){
-                Toast.makeText(ScoreActivity.this,
-                        "No record found",
-                        Toast.LENGTH_LONG).show();
-            }
-            else {Toast.makeText(ScoreActivity.this,
-                    snapshot.getValue().toString(),
-                    Toast.LENGTH_LONG).show();
-                //showProgress(false);
-            }
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError error) {
-        }
-    };
 
     @Override
     public void onListFragmentInteraction(RushListItem<DummyItem> item) {
