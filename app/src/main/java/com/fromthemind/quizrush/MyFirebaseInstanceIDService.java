@@ -16,8 +16,18 @@ package com.fromthemind.quizrush;
  * limitations under the License.
  */
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.fromthemind.quizrush.Game.GameController;
+import com.fromthemind.quizrush.Game.MemoGame;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -43,7 +53,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
-        sendRegistrationToServer(refreshedToken);
+        saveTokenOnPref(refreshedToken);
     }
     // [END refresh_token]
 
@@ -55,7 +65,15 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void saveTokenOnPref(String token) {
         // TODO: Implement this method to send token to your app server.
+        SharedPreferences sharedPref = this.getSharedPreferences("rushtokens", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPref.edit();
+        edit.clear();
+        edit.putString("token", token);
+        edit.commit();
     }
+
 }
+
+
