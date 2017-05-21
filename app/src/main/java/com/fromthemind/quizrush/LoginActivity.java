@@ -281,8 +281,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 edit.commit();
                                 String refreshedToken = FirebaseInstanceId.getInstance().getToken();
                                 send(refreshedToken);
-                            }else{
                                 SaveSharedPreference.setUser(LoginActivity.this, username, password);
+                            }else{
                                 sendDeviceTokenToServer();
                             }
                             Intent intent = new Intent(LoginActivity.this, GameDrawerActivity.class);
