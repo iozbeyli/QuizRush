@@ -216,4 +216,11 @@ public class User {
             }
         });
     }
+
+    public static Query getUser(String username){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("user");
+        Query queryRef = userRef.orderByChild("username").equalTo(username);
+        return queryRef;
+    }
 }
