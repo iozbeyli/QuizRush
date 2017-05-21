@@ -179,6 +179,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                     /*MemoInterface activity = (MemoInterface) getActivity();
                     activity.loadNextMemoLevel();*/
                     MemoInterface activity = (MemoInterface) getActivity();
+                    Log.d("Seconds",""+memoTimeFragment.getSeconds());
                     User.getInstance().setSeconds(memoTimeFragment.getSeconds());
                     activity.showScore();
                 }
@@ -223,6 +224,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         int lives = user.getLives();
         if(lives == 0){
             MemoInterface activity = (MemoInterface) getActivity();
+
             User.getInstance().setSeconds(memoTimeFragment.getSeconds());
             activity.showScore();
         }else{
