@@ -35,7 +35,7 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
         score = User.getInstance().getScore();
-
+        User.getInstance().setScore(0);
         TextView scoreText = (TextView) findViewById(R.id.scoreText);
         scoreText.setText(""+score);
 
