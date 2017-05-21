@@ -3,72 +3,92 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
-        android:id="@+id/topLayout"
+    <ProgressBar
+        android:id="@+id/memo_question_loader"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:id="@+id/memoScoreText"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/memo_question_rest"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
         <LinearLayout
-            android:id="@+id/healthLayout"
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:id="@+id/topLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_gravity="right"
-            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
             >
-            <ImageView
-                android:layout_weight="1"
+            <TextView
+                android:id="@+id/memoScoreText"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:src="@drawable/heart"
-                />
-            <ImageView
                 android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <FrameLayout
+                android:id="@+id/memo_time_fragment"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:src="@drawable/heart"
-                />
-            <ImageView
+                android:layout_height="match_parent"
+                android:layout_weight="1"></FrameLayout>
+            <LinearLayout
+                android:id="@+id/healthLayout"
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:src="@drawable/heart"
-                />
-            <ImageView
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:src="@drawable/heart"
-                />
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                >
+                <ImageView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/heart"
+                    />
+                <ImageView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/heart"
+                    />
+                <ImageView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/heart"
+                    />
+                <ImageView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/heart"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/targetLayout"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:layout_margin="40dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/boardLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="40dp"
+            android:layout_weight="7"
+            />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/targetLayout"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
-        android:layout_margin="40dp"
-        />
-
-    <LinearLayout
-        android:id="@+id/boardLayout"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="40dp"
-        android:layout_weight="7"
-        />
 
 </LinearLayout>

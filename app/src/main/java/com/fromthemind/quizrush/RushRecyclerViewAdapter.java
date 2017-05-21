@@ -57,7 +57,6 @@ public class RushRecyclerViewAdapter extends RecyclerView.Adapter<RushRecyclerVi
         public ViewHolder(View view) {
             super(view);
             mView = view;
-
             mContentView = (TextView) view.findViewById(R.id.content);
         }
 

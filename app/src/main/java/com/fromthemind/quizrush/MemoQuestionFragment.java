@@ -2,6 +2,7 @@ package com.fromthemind.quizrush;
 
 import android.app.Fragment;
 
+import android.app.FragmentTransaction;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,7 +44,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
     }
         private int currentSeconds = 0;
         private int clickedSeconds = -1;
-
+        private ViewControllers.LoaderController loaderController;
         private ArrayList<Integer> lastSelectedIDs = new ArrayList<>();
         private ArrayList<String> lastSelectedTags = new ArrayList<>();
         private ArrayList<ImageView> boardImages = new ArrayList<>();
@@ -57,9 +58,28 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             super.onCreate(savedInstanceState);
         }
         private View layout;
+        private View loader;
+        private View rest;
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
             User.getInstance().resetLives();
             layout = inflater.inflate(R.layout.fragment_memoquestion, container, false);
+            loader= layout.findViewById(R.id.memo_question_loader);
+            rest = layout.findViewById(R.id.memo_question_rest);
+            FragmentTransaction ft;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                ft = getChildFragmentManager().beginTransaction();
+            }else{
+                ft = getFragmentManager().beginTransaction();
+            }
+            MemoTimeFragment timeFragment = new MemoTimeFragment();
+            ft.replace(R.id.memo_time_fragment, timeFragment);
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+
+            loaderController = new ViewControllers.LoaderController(loader,rest,getActivity().getApplicationContext());
+
+
             initializeTargetFlags();
             initializeAllFlags();
             final Handler handler = new Handler();
@@ -71,6 +91,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
 
             },5000);
             questionTime();
+
             return layout;
         }
 
@@ -256,6 +277,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
     }
 
     public void initializeTargetFlags(){
+        loaderController.showProgress(true);
         LinearLayout targets = (LinearLayout) layout.findViewById(R.id.targetLayout);
         int size = GameController.getMemoBoard().getBoardSize();
         int[] targetFlags = GameController.getMemoBoard().getTargets();
@@ -317,6 +339,10 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             Log.d("SQLLite Draw","giriyor");
             Bitmap temp = Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length), 250,250, false);
             iv.setImageBitmap(temp);
+            int lastIndex=GameController.getMemoBoard().getBoardSize()-1;
+            if(indexI==lastIndex&&indexJ==lastIndex){
+                loaderController.showProgress(false);
+            }
             if(indexI!=-1&&indexJ!=-1){
                 boardFlagsBitmaps[indexI][indexJ]=temp;
             }
@@ -360,6 +386,10 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     Bitmap temp =Bitmap.createScaledBitmap(bmp, 250,250, false);
                     iv.setImageBitmap(temp);
+                    int lastIndex=GameController.getMemoBoard().getBoardSize()-1;
+                    if(indexI==lastIndex&&indexJ==lastIndex){
+                        loaderController.showProgress(false);
+                    }
                     if(indexI!=-1&&indexJ!=-1){
                         boardFlagsBitmaps[indexI][indexJ]=temp;
                     }
@@ -374,6 +404,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                 }
             });
         }
+
         //int resID = getResources().getIdentifier(imageID, "mipmap", getActivity().getPackageName());
         //iv.setImageResource(resID);
     }
