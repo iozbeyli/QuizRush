@@ -37,7 +37,9 @@ public class GameDrawerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
         setSupportActionBar(toolbar);
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -144,12 +146,13 @@ public class GameDrawerActivity extends AppCompatActivity
             fragment = new AddFriendFragment();
         } else if (id == R.id.nav_memo_challenge) {
             fragment = new MemoChallengeListFragment();
-        } else if(id == R.id.logout_challenge){
-            SaveSharedPreference.setUser(GameDrawerActivity.this,"","");
-            Intent intent = new Intent(this,LoginActivity.class);
+        } else if(id == R.id.logout_challenge) {
+            SaveSharedPreference.setUser(GameDrawerActivity.this, "", "");
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-            fragment=null;
-
+            fragment = null;
+        }else if(id == R.id.nav_edit_profile){
+            fragment = new EditProfileFragment();
         }else{
             fragment = new ChallengeListFragment();
         }

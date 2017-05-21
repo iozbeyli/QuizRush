@@ -27,6 +27,10 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="Memo Challenges" />
             <item
+                android:id="@+id/nav_edit_profile"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Edit Profile" />
+            <item
                 android:id="@+id/logout_challenge"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Logout" />
