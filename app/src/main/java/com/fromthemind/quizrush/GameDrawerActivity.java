@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.GameType;
 import com.fromthemind.quizrush.Question.QuestionStatus;
+import com.fromthemind.quizrush.Ranking.RankingFragment;
 
 import org.w3c.dom.Text;
 
@@ -153,6 +154,8 @@ public class GameDrawerActivity extends AppCompatActivity
             fragment = null;
         }else if(id == R.id.nav_edit_profile){
             fragment = new EditProfileFragment();
+        }else if(id == R.id.nav_ranking){
+            fragment = new RankingFragment();
         }else{
             fragment = new ChallengeListFragment();
         }
