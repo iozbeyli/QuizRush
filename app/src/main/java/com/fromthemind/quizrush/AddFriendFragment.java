@@ -39,6 +39,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -214,11 +216,15 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
 
     @Override
     public void onListFragmentInteraction(final RushListItem<DummyItem> item) {
-        User.getInstance().getFriends().add(item.getVisibleContent());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference userRef = database.getReference("user");
-        userRef.child(User.getInstance().getUsername()).setValue(User.getInstance());
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference devicesref = database.getReference("friendRequests");
+        String user = User.getInstance().getUsername();
+        String key = devicesref.push().getKey();
+        Map<String, String> req= new HashMap<String, String>();
+        req.put("requester",user);
+        req.put("requestee",item.getVisibleContent());
+        devicesref.child(key).setValue(req);
+        devicesref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 if (snapshot == null || snapshot.getValue() == null){
@@ -233,9 +239,9 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
                     String name = this.getClass().getName();
                     int index = name.indexOf('$');
                     try {
-                        postData.put("sub", "New Follower");
+                        postData.put("sub", "New Friend Request!");
                         postData.put("receiver", item.getVisibleContent());
-                        postData.put("text", User.getInstance().getUsername()+ " Followed You");
+                        postData.put("text", User.getInstance().getUsername()+ " sent a friend request");
                         postData.put("act", this.getClass().getName().substring(0,index));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -299,4 +305,5 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
