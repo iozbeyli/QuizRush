@@ -230,11 +230,13 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
                     friends.updateLayout();
                     Toast.makeText(getActivity(),"User added to friends",Toast.LENGTH_LONG);
                     JSONObject postData = new JSONObject();
-
+                    String name = this.getClass().getName();
+                    int index = name.indexOf('$');
                     try {
                         postData.put("sub", "New Follower");
                         postData.put("receiver", item.getVisibleContent());
                         postData.put("text", User.getInstance().getUsername()+ " Followed You");
+                        postData.put("act", this.getClass().getName().substring(0,index));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

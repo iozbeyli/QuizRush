@@ -25,7 +25,9 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.firebase.messaging.FirebaseMessagingService;
+        import com.fromthemind.quizrush.Game.MemoGame;
+        import com.fromthemind.quizrush.Game.QuizGame;
+        import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -59,6 +61,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(RemoteMessage.Notification message) {
         Intent intent = new Intent(this, LoginActivity.class);
+        try {
+            Class cl = Class.forName(message.getClickAction());
+
+            if(MemoGame.class.isAssignableFrom(cl)) {
+                intent.putExtra("op", "memo");
+            }else if(QuizGame.class.isAssignableFrom(cl)){
+                intent.putExtra("op", "quiz");
+            }else if(AddFriendFragment.class.isAssignableFrom(cl)){
+                intent.putExtra("op", "friend");
+            }else{
+                Log.wtf("Unknown Click Action FCM: ", message.getClickAction());
+                Log.wtf("Unknown Class : ", cl.getName());
+                Log.wtf("Unknown Class : ", AddFriendFragment.class.getName());
+            }
+        } catch (ClassNotFoundException e) {
+
+            e.printStackTrace();
+        }
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
