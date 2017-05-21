@@ -28,8 +28,28 @@ public class MemoChallenge extends Challenge implements RushListItem<MemoChallen
         this.boardFlags = boardFlags;
     }
 
+    public int getSecond_ee() {
+        return second_ee;
+    }
+
+    public void setSecond_ee(int second_ee) {
+        this.second_ee = second_ee;
+    }
+
+    public int second_ee=-1;
+
+    public int getSecond_er() {
+        return second_er;
+    }
+
+    public void setSecond_er(int second_er) {
+        this.second_er = second_er;
+    }
+
+    public int second_er=-1;
+
     public ArrayList<ArrayList<Integer>> boardFlags = new ArrayList<ArrayList<Integer>>();
-    public MemoChallenge(String challenger,int score_er,String challengee,int score_ee,int[] targetFlags,int[][] boardFlags, String key) {
+    public MemoChallenge(String challenger,int score_er,String challengee,int score_ee,int[] targetFlags,int[][] boardFlags, String key,int second_ee,int second_er) {
         super(challenger,score_er,challengee,score_ee, key);
 
         for (int i = 0; i < boardFlags.length; i++) {

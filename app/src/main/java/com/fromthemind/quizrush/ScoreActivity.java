@@ -61,20 +61,33 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
             view.setVisibility(View.GONE);
             Challenge ch = game.getChallenge();
             int otherScore=-1;
+            int otherSeconds = -1;
             if(ch.getScore_ee() == -1) {
                 ch.setScore_ee(score);
                 otherScore = ch.getScore_er();
+                if(game instanceof MemoGame){
+                    otherSeconds = ((MemoChallenge) ch).getSecond_er();
+                }
             }
             if(ch.getScore_er() == -1) {
                 ch.setScore_er(score);
                 otherScore = ch.getScore_ee();
+                if(game instanceof MemoGame){
+                    otherSeconds = ((MemoChallenge) ch).getSecond_ee();
+                }
             }
             TextView winLoseText = (TextView)findViewById(R.id.winOrLoseText);
             winLoseText.setVisibility(View.VISIBLE);
             if(score>otherScore){
                 winLoseText.setText("YOU WIN");
             }else if(score==otherScore){
-                winLoseText.setText("DRAW");
+                if(otherSeconds<User.getInstance().getSeconds()){
+                    winLoseText.setText("YOU LOSE");
+                }else if(otherSeconds==User.getInstance().getSeconds()){
+                    winLoseText.setText("DRAW");
+                }else{
+                    winLoseText.setText("YOU WIN");
+                }
             }else{
                 winLoseText.setText("YOU LOSE");
             }
@@ -120,7 +133,7 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
             challengesRef = database.getReference("memoChallenges");
             if(challenge == null){
                 key = challengesRef.push().getKey();
-                post = new MemoChallenge(User.getInstance().getUsername(), score, challengee, -1,GameController.getMemoBoard().getTargets(),GameController.getMemoBoard().getFlags(), key);
+                post = new MemoChallenge(User.getInstance().getUsername(), score, challengee, -1,GameController.getMemoBoard().getTargets(),GameController.getMemoBoard().getFlags(), key,User.getInstance().getSeconds(),-1);
             }else {
                 post = challenge;
                 key = challenge.getKey();

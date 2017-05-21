@@ -42,6 +42,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         void loadNextMemoLevel();
         void showScore();
     }
+        private MemoTimeFragment memoTimeFragment;
         private int currentSeconds = 0;
         private int clickedSeconds = -1;
         private ViewControllers.LoaderController loaderController;
@@ -71,8 +72,8 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             }else{
                 ft = getFragmentManager().beginTransaction();
             }
-            MemoTimeFragment timeFragment = new MemoTimeFragment();
-            ft.replace(R.id.memo_time_fragment, timeFragment);
+            memoTimeFragment = new MemoTimeFragment();
+            ft.replace(R.id.memo_time_fragment, memoTimeFragment);
             ft.addToBackStack(null);
             ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             ft.commit();
@@ -178,6 +179,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                     /*MemoInterface activity = (MemoInterface) getActivity();
                     activity.loadNextMemoLevel();*/
                     MemoInterface activity = (MemoInterface) getActivity();
+                    User.getInstance().setSeconds(memoTimeFragment.getSeconds());
                     activity.showScore();
                 }
                 clickedSeconds=-1;
@@ -221,6 +223,7 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
         int lives = user.getLives();
         if(lives == 0){
             MemoInterface activity = (MemoInterface) getActivity();
+            User.getInstance().setSeconds(memoTimeFragment.getSeconds());
             activity.showScore();
         }else{
             LinearLayout healthLayout = (LinearLayout)layout.findViewById(R.id.healthLayout);

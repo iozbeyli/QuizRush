@@ -47,6 +47,16 @@ public class User {
     public int lives = 4;
     public int memoLevel = 4;
 
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
+    public int seconds = 0;
+
     public int getHighestMemo() {
         return highestMemo;
     }
