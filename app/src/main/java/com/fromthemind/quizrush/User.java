@@ -47,6 +47,26 @@ public class User {
     public int lives = 4;
     public int memoLevel = 4;
 
+    public int getHighestMemo() {
+        return highestMemo;
+    }
+
+    public void setHighestMemo(int highestMemo) {
+        this.highestMemo = highestMemo;
+    }
+
+    public int highestMemo = -1;
+
+    public int getHighestQuiz() {
+        return highestQuiz;
+    }
+
+    public void setHighestQuiz(int highestQuiz) {
+        this.highestQuiz = highestQuiz;
+    }
+
+    public int highestQuiz = -1;
+
     private static User instance=null;
     public static User getInstance(){
         if(instance==null){

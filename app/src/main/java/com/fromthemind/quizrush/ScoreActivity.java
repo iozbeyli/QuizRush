@@ -44,6 +44,18 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
         nicknameText.setText(nick);
 
         Game game = GameController.getGame();
+        if(game instanceof MemoGame){
+            if(score>User.getInstance().highestMemo){
+                User.getInstance().highestMemo=score;
+                updateUserScore();
+            }
+        }else{
+            if(score>User.getInstance().highestQuiz){
+                User.getInstance().highestQuiz=score;
+                updateUserScore();
+            }
+        }
+
         if(game.hasChallenge()){
             View view = findViewById(R.id.challengeButton);
             view.setVisibility(View.GONE);
@@ -182,5 +194,27 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
     @Override
     public void onListFragmentInteraction(RushListItem<DummyItem> item) {
         updateChallenges(item.getVisibleContent(),score, null);
+    }
+
+    public void updateUserScore(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference userRef = database.getReference("user");
+        userRef.child(User.getInstance().getUsername()).setValue(User.getInstance());
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot == null || snapshot.getValue() == null){
+                    Log.wtf("username", "no record after friend add");
+                }
+                else {
+                    User.updateInstance();
+                    Toast.makeText(getApplicationContext(),"User score added to highest scores",Toast.LENGTH_LONG);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
     }
 }
