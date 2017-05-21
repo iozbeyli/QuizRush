@@ -21,6 +21,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/winOrLoseText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="40sp"
+                android:visibility="gone"
+                />
+            <TextView
                 android:id="@+id/nickname"
                 android:text="Nickname"
                 android:layout_width="match_parent"

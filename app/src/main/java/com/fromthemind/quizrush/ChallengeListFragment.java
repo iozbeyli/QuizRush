@@ -79,19 +79,7 @@ public class ChallengeListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<QuizChallenge>() {
-            @Override
-            public void onListFragmentInteraction(RushListItem<QuizChallenge> item) {
-                Log.d("clicked", "onListFragmentInteraction: "+item.rushItem().challenger);
-                try {
-                    GameController.loadGame(GameType.QUIZ, item.rushItem());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                ((GameDrawerActivity) getActivity()).goQuiz();
-            }
 
-        };
     }
 
     @Override
@@ -128,7 +116,19 @@ public class ChallengeListFragment extends Fragment {
                             hm.add(postSnapshot.getValue(QuizChallenge.class));
                         }
 
+                        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<QuizChallenge>() {
+                            @Override
+                            public void onListFragmentInteraction(RushListItem<QuizChallenge> item) {
+                                Log.d("clicked", "onListFragmentInteraction: "+item.rushItem().challenger);
+                                try {
+                                    GameController.loadGame(GameType.QUIZ, item.rushItem());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                ((GameDrawerActivity) getActivity()).goQuiz();
+                            }
 
+                        };
                         recyclerView.setAdapter(new RushRecyclerViewAdapter(hm, mListener));
                     }
                 }

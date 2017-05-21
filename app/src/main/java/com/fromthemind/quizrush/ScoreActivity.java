@@ -46,10 +46,26 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
         Game game = GameController.getGame();
         if(game.hasChallenge()){
             View view = findViewById(R.id.challengeButton);
-            view.setVisibility(View.INVISIBLE);
+            view.setVisibility(View.GONE);
             Challenge ch = game.getChallenge();
-            if(ch.getScore_ee() == -1) ch.setScore_ee(score);
-            if(ch.getScore_er() == -1) ch.setScore_er(score);
+            int otherScore=-1;
+            if(ch.getScore_ee() == -1) {
+                ch.setScore_ee(score);
+                otherScore = ch.getScore_er();
+            }
+            if(ch.getScore_er() == -1) {
+                ch.setScore_er(score);
+                otherScore = ch.getScore_ee();
+            }
+            TextView winLoseText = (TextView)findViewById(R.id.winOrLoseText);
+            winLoseText.setVisibility(View.VISIBLE);
+            if(score>otherScore){
+                winLoseText.setText("YOU WIN");
+            }else if(score==otherScore){
+                winLoseText.setText("DRAW");
+            }else{
+                winLoseText.setText("YOU LOSE");
+            }
             updateChallenges(null, 0, ch);
 
         }

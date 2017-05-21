@@ -79,13 +79,6 @@ public class MemoChallengeListFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<MemoChallenge>() {
-            @Override
-            public void onListFragmentInteraction(RushListItem<MemoChallenge> item) {
-                ((GameDrawerActivity) getActivity()).goMemo(item.rushItem());
-            }
-
-        };
     }
 
     @Override
@@ -122,7 +115,14 @@ public class MemoChallengeListFragment extends Fragment {
                             hm.add(postSnapshot.getValue(MemoChallenge.class));
                         }
 
+                        mListener = new RushRecyclerViewAdapter.OnListFragmentInteractionListener<MemoChallenge>() {
+                            @Override
+                            public void onListFragmentInteraction(RushListItem<MemoChallenge> item) {
+                                Log.d("Memo Challenge Click","clcked");
+                                ((GameDrawerActivity) getActivity()).goMemo(item.rushItem());
+                            }
 
+                        };
                         recyclerView.setAdapter(new RushRecyclerViewAdapter(hm, mListener));
                     }
                 }
