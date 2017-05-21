@@ -1,6 +1,7 @@
 package com.fromthemind.quizrush;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -121,7 +122,7 @@ public class RequestFragment extends Fragment {
                                 User.updateInstance();
                                 User.getInstance().getFriends().add(item.getVisibleContent());
                                 DatabaseReference ref = database.getReference("user");
-                                String user = User.getInstance().getUsername();
+                                final String user = User.getInstance().getUsername();
                                 ref.child(user).setValue(User.getInstance());
                                 Log.d("clicked", "onListFragmentInteraction: "+user);
 
@@ -131,14 +132,17 @@ public class RequestFragment extends Fragment {
                                         if (snapshot2 == null || snapshot2.getValue() == null){Log.wtf("username", "error for friend listing");}
                                         else {
                                             User the = snapshot2.child(item.getVisibleContent()).getValue(User.class);
-                                            the.getFriends().add(item.getVisibleContent());
+                                            the.getFriends().add(user);
                                             DatabaseReference ref = database.getReference("user");
                                             String user = the.getUsername();
                                             ref.child(user).setValue(the);
                                             Log.d("clicked", "onListFragmentInteraction: "+key);
                                             Query ref2 = database.getReference("friendRequests").child(key);
                                             ref2.getRef().removeValue();
-                                            list_requests();
+                                            Intent in = new Intent(getActivity(), GameDrawerActivity.class);
+                                            in.putExtra("op","friend");
+                                            startActivity(in);
+
 
                                         }
                                     }

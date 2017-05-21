@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin(null, null);
+                    attemptLogin(null, null, false);
                     return true;
                 }
                 return false;
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin(null, null);
+                attemptLogin(null, null, false);
             }
         });
 
@@ -146,8 +146,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if(SaveSharedPreference.getUserName(LoginActivity.this).length() != 0)
         {
             attemptLogin(SaveSharedPreference.getUserName(LoginActivity.this),
-                    SaveSharedPreference.getPassword(LoginActivity.this));
-            return;
+                    SaveSharedPreference.getPassword(LoginActivity.this), true);
         }
 
     }
@@ -201,7 +200,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin(String uname , String pwd) {
+    private void attemptLogin(String uname , String pwd, final boolean isAuto) {
         if (mAuthTask != null) {
             return;
         }
@@ -275,8 +274,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }else{
                             User.setInstance(the);
                             GameLoader.setContext(getApplicationContext());
-                            SaveSharedPreference.setUser(LoginActivity.this, username, password);
-                            sendDeviceTokenToServer();
+                            if(!isAuto){
+                                SharedPreferences sharedPref = getSharedPreferences("rushtokens", MODE_PRIVATE);
+                                SharedPreferences.Editor edit = sharedPref.edit();
+                                edit.clear();
+                                edit.commit();
+                                String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+                                send(refreshedToken);
+                            }else{
+                                SaveSharedPreference.setUser(LoginActivity.this, username, password);
+                                sendDeviceTokenToServer();
+                            }
                             Intent intent = new Intent(LoginActivity.this, GameDrawerActivity.class);
                             Bundle extras = getIntent().getExtras();
                             if(extras != null) {

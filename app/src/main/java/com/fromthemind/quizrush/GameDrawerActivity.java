@@ -26,6 +26,9 @@ import com.fromthemind.quizrush.Game.GameController;
 import com.fromthemind.quizrush.Game.GameType;
 import com.fromthemind.quizrush.Question.QuestionStatus;
 import com.fromthemind.quizrush.Ranking.RankingFragment;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import org.w3c.dom.Text;
 
@@ -65,7 +68,7 @@ public class GameDrawerActivity extends AppCompatActivity
                         fragment = new ChallengeListFragment();
                         break;
                     case "friend":
-                        fragment = new AddFriendFragment();
+                        fragment = new RequestFragment();
                         break;
                     default:
                         fragment = null;
@@ -152,6 +155,8 @@ public class GameDrawerActivity extends AppCompatActivity
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             fragment = null;
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("devices");
+            ref.child(User.getInstance().getUsername()).getRef().removeValue();
         }else if(id == R.id.nav_edit_profile){
             fragment = new EditProfileFragment();
         }else if(id == R.id.nav_ranking){
