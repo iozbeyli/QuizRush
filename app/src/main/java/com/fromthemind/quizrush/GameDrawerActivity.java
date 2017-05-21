@@ -156,6 +156,8 @@ public class GameDrawerActivity extends AppCompatActivity
             fragment = new EditProfileFragment();
         }else if(id == R.id.nav_ranking){
             fragment = new RankingFragment();
+        }else if(id==R.id.nav_friend_requests){
+            fragment = new RequestFragment();
         }else{
             fragment = new ChallengeListFragment();
         }
