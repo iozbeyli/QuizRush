@@ -2,9 +2,11 @@ package com.fromthemind.quizrush.Loader;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.fromthemind.quizrush.SQLite.RushDatabaseHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -55,20 +57,27 @@ public class GameLoader {
     protected Document loadDocument(String DocLocation){
         Document doc = null;
         try {
-            FirebaseStorage fs = FirebaseStorage.getInstance();
-            Log.d("Firebase read File1", "onSuccess: "+fs);
-            StorageReference sf = fs.getReference().child(DocLocation);
-            Log.d("Firebase read File2", "onSuccess: "+sf);
+            RushDatabaseHelper helper = new RushDatabaseHelper(context);
+            SQLiteDatabase db = helper.getReadableDatabase();
+            byte[] imageArray = RushDatabaseHelper.retrieveFlag(db,"game.xml");
+            db.close();
+            if(imageArray==null){
+                FirebaseStorage fs = FirebaseStorage.getInstance();
+                StorageReference sf = fs.getReference().child(DocLocation);
+                final long ONE_MB = 1024*1024;
+                Task<byte[]> task = sf.getBytes(ONE_MB);
 
+                while(!task.isComplete()){
 
-            final long ONE_MB = 1024*1024;
-            Task<byte[]> task = sf.getBytes(ONE_MB);
-
-            while(!task.isComplete()){
-
+                }
+                imageArray = task.getResult();
+                dataRaw = IOUtils.toString(imageArray, "UTF-8");
+                db = helper.getWritableDatabase();
+                RushDatabaseHelper.insertFlag(db, -2, "game.xml",imageArray);
+                db.close();
+            }else{
+                dataRaw = IOUtils.toString(imageArray, "UTF-8");;
             }
-            dataRaw = IOUtils.toString(task.getResult(), "UTF-8");
-            Log.d("Comm", "getDocument: "+task);
             DocumentBuilder dBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             InputSource iso = new InputSource(new StringReader(dataRaw));
             doc = dBuilder.parse(iso);

@@ -65,6 +65,7 @@ public class RushDatabaseHelper extends SQLiteOpenHelper {
         db.insert("FLAG", null, flagValues);
     }
 
+
     public static byte[] retrieveFlag(SQLiteDatabase db, String flagName){
         Log.d("Demanded",flagName);
         byte[] imageArray=null;
