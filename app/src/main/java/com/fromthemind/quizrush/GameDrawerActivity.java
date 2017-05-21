@@ -43,12 +43,12 @@ public class GameDrawerActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
         toolbar.setVisibility(View.VISIBLE);
-        findViewById(R.id.search_toolbar).setVisibility(View.GONE);
+        findViewById(R.id.toolbar).setVisibility(View.GONE);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        Fragment fragmentMain = new AddFriendFragment();
+        Fragment fragmentMain = AddFriendFragment.newInstance((EditText) toolbar.findViewById(R.id.search_action_bar_edit_text),(Button)toolbar.findViewById(R.id.search_action_bar_button),(Spinner)toolbar.findViewById(R.id.search_action_bar_criteria_spinner));
         FragmentTransaction ftMain = getFragmentManager().beginTransaction();
         ftMain.replace(R.id.frame_game_activity, fragmentMain);
         ftMain.addToBackStack(null);
