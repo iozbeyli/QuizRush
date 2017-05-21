@@ -133,6 +133,7 @@ public class ScoreActivity extends Activity implements ClickListener,RushRecycle
                         postData.put("sub", "New Challenge Received");
                         postData.put("receiver", post.getChallengee());
                         postData.put("text", post.getChallenger()+ " Challenges You");
+                        postData.put("act", GameController.getGame().getClass().getName());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

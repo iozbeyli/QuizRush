@@ -278,6 +278,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             SaveSharedPreference.setUser(LoginActivity.this, username, password);
                             sendDeviceTokenToServer();
                             Intent intent = new Intent(LoginActivity.this, GameDrawerActivity.class);
+                            Bundle extras = getIntent().getExtras();
+                            if(extras != null) {
+                                String op = extras.getString("op");
+                                if(op != null && !op.equals("")){
+                                    intent.putExtra("op", op);
+                                }
+                            }
                             startActivity(intent);
                         }
                         /*for(DataSnapshot snap: snapshot.getChildren()){

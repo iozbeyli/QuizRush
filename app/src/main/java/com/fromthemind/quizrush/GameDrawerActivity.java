@@ -49,6 +49,36 @@ public class GameDrawerActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         TextView usernameText= (TextView)navigationView.getHeaderView(0).findViewById(R.id.drawer_username);
         usernameText.setText(User.getInstance().username);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null) {
+            String op = extras.getString("op");
+            if(op != null && !op.equals("")){
+                Fragment fragment = null;
+                switch (op){
+                    case "memo":
+                        fragment = new MemoChallengeListFragment();
+                        break;
+                    case "quiz":
+                        fragment = new ChallengeListFragment();
+                        break;
+                    case "friend":
+                        fragment = new AddFriendFragment();
+                        break;
+                    default:
+                        fragment = null;
+                        break;
+                }
+                if(fragment != null){
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.replace(R.id.frame_game_activity, fragment);
+                    ft.addToBackStack(null);
+                    ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                    ft.commit();
+                }else{
+                    Log.wtf("Extra of gamedrawer intent", "Not working");
+                }
+            }
+        }
     }
 
     @Override
@@ -119,6 +149,7 @@ public class GameDrawerActivity extends AppCompatActivity
             Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
             fragment=null;
+
         }else{
             fragment = new ChallengeListFragment();
         }
