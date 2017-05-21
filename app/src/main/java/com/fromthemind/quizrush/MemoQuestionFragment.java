@@ -37,11 +37,11 @@ import java.util.ArrayList;
  */
 
 public class MemoQuestionFragment extends Fragment implements  View.OnClickListener{
-
     static interface MemoInterface{
         void loadNextMemoLevel();
         void showScore();
     }
+        private int flagCounter = 0;
         private MemoTimeFragment memoTimeFragment;
         private int currentSeconds = 0;
         private int clickedSeconds = -1;
@@ -344,8 +344,9 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
             Log.d("SQLLite Draw","giriyor");
             Bitmap temp = Bitmap.createScaledBitmap(BitmapFactory.decodeByteArray(imageArray,0,imageArray.length), 250,250, false);
             iv.setImageBitmap(temp);
-            int lastIndex=GameController.getMemoBoard().getBoardSize()-1;
-            if(indexI==lastIndex&&indexJ==lastIndex){
+            flagCounter++;
+            int size=GameController.getMemoBoard().getBoardSize();
+            if(flagCounter==size*size){
                 loaderController.showProgress(false);
             }
             if(indexI!=-1&&indexJ!=-1){
@@ -391,8 +392,9 @@ public class MemoQuestionFragment extends Fragment implements  View.OnClickListe
                     Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                     Bitmap temp =Bitmap.createScaledBitmap(bmp, 250,250, false);
                     iv.setImageBitmap(temp);
-                    int lastIndex=GameController.getMemoBoard().getBoardSize()-1;
-                    if(indexI==lastIndex&&indexJ==lastIndex){
+                    flagCounter++;
+                    int size=GameController.getMemoBoard().getBoardSize();
+                    if(flagCounter==size*size){
                         loaderController.showProgress(false);
                     }
                     if(indexI!=-1&&indexJ!=-1){
