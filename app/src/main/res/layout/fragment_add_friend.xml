@@ -38,7 +38,9 @@
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                >
                 <EditText
                     android:id="@+id/search_edit_text"
                     android:layout_width="0dp"
@@ -70,11 +72,13 @@
                 android:layout_marginTop="16dp"
                 android:text="Search For Friends"
                 android:textStyle="bold"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"/>
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/hello_blank_fragment" />
+                android:layout_height="wrap_content"
+                android:text="Search Results"/>
+
             <ScrollView
                 android:id="@+id/addFriendScroll"
                 android:layout_width="match_parent"

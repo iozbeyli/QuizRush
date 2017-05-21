@@ -13,6 +13,7 @@ import android.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,25 +64,20 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
     private View layout;
     private View progressView;
     private FriendFragment friends;
+    private EditText searchEditTextActionBar;
+    private Button searchButtonActionBar;
+    private Spinner searchSpinnerActionBar;
     public AddFriendFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AddFriendFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
-    public static AddFriendFragment newInstance(String param1, String param2) {
+    public static AddFriendFragment newInstance(EditText searchEditTextActionBar, Button searchButtonActionBar,Spinner searchSpinnerActionBar) {
         AddFriendFragment fragment = new AddFriendFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        fragment.searchButtonActionBar=searchButtonActionBar;
+        fragment.searchEditTextActionBar=searchEditTextActionBar;
+        fragment.searchSpinnerActionBar = searchSpinnerActionBar;
         return fragment;
     }
 
@@ -107,9 +103,20 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
         ft.commit();
         progressView=layout.findViewById(R.id.search_progress);
         Spinner criteriaSpinner = (Spinner)layout.findViewById(R.id.search_criteria_spinner);
+        if(searchSpinnerActionBar!=null){
+            criteriaSpinner =searchSpinnerActionBar;
+        }
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.search_criteria_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         criteriaSpinner.setAdapter(adapter);
+        if(searchButtonActionBar!=null){
+            searchButtonActionBar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    searchForUsers();
+                }
+            });
+        }
         Button searchButton = (Button)layout.findViewById(R.id.search_button);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,7 +163,13 @@ public class AddFriendFragment extends Fragment implements RushRecyclerViewAdapt
 
     public void searchForUsers(){
         EditText searchEdit = (EditText)layout.findViewById(R.id.search_edit_text);
+        if(searchEditTextActionBar!=null){
+            searchEdit= searchEditTextActionBar;
+        }
         Spinner criteriaSpinner = (Spinner)layout.findViewById(R.id.search_criteria_spinner);
+        if(searchSpinnerActionBar!=null){
+            criteriaSpinner = searchSpinnerActionBar;
+        }
         String currentCriteria = criteriaSpinner.getSelectedItem().toString().toLowerCase();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference userRef = database.getReference("user");

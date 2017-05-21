@@ -19,6 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +44,16 @@ public class GameDrawerActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        findViewById(R.id.search_toolbar).setVisibility(View.GONE);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-
+        Fragment fragmentMain = new AddFriendFragment();
+        FragmentTransaction ftMain = getFragmentManager().beginTransaction();
+        ftMain.replace(R.id.frame_game_activity, fragmentMain);
+        ftMain.addToBackStack(null);
+        ftMain.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        ftMain.commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -109,7 +119,7 @@ public class GameDrawerActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.game_drawer, menu);
+        //getMenuInflater().inflate(R.menu.game_drawer, menu);
         return true;
     }
 
@@ -136,6 +146,7 @@ public class GameDrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         Fragment fragment;
+        generalToolbar();
         if (id == R.id.nav_quiz) {
             // Handle the camera action
             try {
@@ -147,7 +158,9 @@ public class GameDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_memo) {
             fragment = new MemoSelectFragment();
         } else if (id == R.id.nav_friend) {
-            fragment = new AddFriendFragment();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
+            searchToolbar();
+            fragment = AddFriendFragment.newInstance((EditText) toolbar.findViewById(R.id.search_action_bar_edit_text),(Button)toolbar.findViewById(R.id.search_action_bar_button),(Spinner)toolbar.findViewById(R.id.search_action_bar_criteria_spinner));
         } else if (id == R.id.nav_memo_challenge) {
             fragment = new MemoChallengeListFragment();
         } else if(id == R.id.logout_challenge) {
@@ -283,5 +296,36 @@ public class GameDrawerActivity extends AppCompatActivity
         ft.addToBackStack(null);
         ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         ft.commit();
+    }
+
+    private void generalToolbar(){
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        findViewById(R.id.search_toolbar).setVisibility(View.GONE);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+    private void searchToolbar(){
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.search_toolbar);
+        toolbar.setVisibility(View.VISIBLE);
+        findViewById(R.id.toolbar).setVisibility(View.GONE);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 }
